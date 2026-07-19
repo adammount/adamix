@@ -1,0 +1,43 @@
+$ease: cubic-bezier(0.4, 0, 0.2, 1);
+
+.initialSidebar > aside {
+	transition: width 0.45s $ease;
+	flex-shrink: 0;
+
+	:global(.menuLabel) {
+		transition: opacity 0.25s $ease;
+		opacity: 1;
+		white-space: nowrap;
+	}
+
+	:global(.subscriptionsBlock) {
+		transition: opacity 0.25s $ease;
+		opacity: 1;
+	}
+}
+
+.showedSidebar > aside {
+	width: var(--sidebar-width);
+}
+
+.hidedSidebar > aside {
+	width: 72rem;
+
+	:global(.menuLabel) {
+		position: absolute;
+		left: 40rem;
+		opacity: 0;
+		pointer-events: none;
+	}
+
+	:global(.menuLink) {
+		position: relative;
+	}
+
+	:global(.subscriptionsBlock) {
+		height: 0;
+		opacity: 0;
+		overflow: hidden;
+		pointer-events: none;
+	}
+}

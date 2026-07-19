@@ -1,0 +1,14 @@
+**/node_modules
+**/.next
+**/dist
+**/.turbo
+**/coverage
+**/.git
+**/*.log
+**/.DS_Store
+.env
+.env.*
+**/.env
+**/.env.*
+apps/backend/uploads
+apps/backend/src/generated

@@ -1,0 +1,26 @@
+{
+  "name": "adamix",
+  "version": "1.0.0",
+  "private": true,
+  "packageManager": "bun@1.2.8",
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "start": "turbo run start",
+    "format": "prettier --write \"apps/**/*.{ts,tsx,js,jsx,json,scss,css,md}\"",
+    "db:dev": "docker compose -f docker-compose.dev.yml up -d",
+    "db:dev:down": "docker compose -f docker-compose.dev.yml down"
+  },
+  "devDependencies": {
+    "prettier": "3.8.4",
+    "turbo": "2.10.0"
+  },
+  "trustedDependencies": [
+    "@parcel/watcher",
+    "unrs-resolver"
+  ]
+}

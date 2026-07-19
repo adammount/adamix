@@ -1,0 +1,27 @@
+model UserSettings {
+  id String @id @default(cuid())
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @unique @map("user_id")
+
+  emailNotifications Boolean @default(true) @map("email_notifications")
+  pushNotifications  Boolean @default(true) @map("push_notifications")
+  newVideoAlerts     Boolean @default(true) @map("new_video_alerts")
+  commentMentions    Boolean @default(true) @map("comment_mentions")
+  frequency          Int     @default(50)
+
+  profileVisibility Boolean @default(true) @map("profile_visibility")
+  watchHistory      Boolean @default(true) @map("watch_history")
+  activityStatus    Boolean @default(true) @map("activity_status")
+
+  defaultQuality String  @default("1080p") @map("default_quality")
+  autoplay       Boolean @default(true)
+  language       String  @default("English")
+  dataSaver      Boolean @default(false) @map("data_saver")
+  bufferSize     Int     @default(50) @map("buffer_size")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("user_settings")
+}

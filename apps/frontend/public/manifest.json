@@ -1,0 +1,72 @@
+{
+	"id": "/",
+	"name": "RED Video",
+	"short_name": "RED Video",
+	"description": "Best youtube's alternative platform.",
+	"lang": "en",
+	"dir": "ltr",
+	"start_url": "/",
+	"scope": "/",
+	"display": "standalone",
+	"display_override": ["window-controls-overlay", "standalone", "browser"],
+	"orientation": "any",
+	"theme_color": "#191B28",
+	"background_color": "#191B28",
+	"categories": ["entertainment", "video", "social"],
+	"icons": [
+		{
+			"src": "/images/icon-192.png",
+			"sizes": "192x192",
+			"type": "image/png",
+			"purpose": "any"
+		},
+		{
+			"src": "/images/icon-512.png",
+			"sizes": "512x512",
+			"type": "image/png",
+			"purpose": "any"
+		},
+		{
+			"src": "/images/icon-maskable.png",
+			"sizes": "512x512",
+			"type": "image/png",
+			"purpose": "maskable"
+		}
+	],
+	"screenshots": [
+		{
+			"src": "/images/screen-desk.png",
+			"sizes": "1920x1037",
+			"type": "image/png",
+			"form_factor": "wide",
+			"label": "RED Video on desktop"
+		},
+		{
+			"src": "/images/screen-mob.png",
+			"sizes": "399x874",
+			"type": "image/png",
+			"form_factor": "narrow",
+			"label": "RED Video on mobile"
+		}
+	],
+	"shortcuts": [
+		{
+			"name": "Trending",
+			"short_name": "Trending",
+			"url": "/trending",
+			"icons": [{ "src": "/images/icon-192.png", "sizes": "192x192" }]
+		},
+		{
+			"name": "Subscriptions",
+			"short_name": "Subs",
+			"url": "/my/subscriptions",
+			"icons": [{ "src": "/images/icon-192.png", "sizes": "192x192" }]
+		},
+		{
+			"name": "Upload",
+			"short_name": "Upload",
+			"url": "/studio/upload",
+			"icons": [{ "src": "/images/icon-192.png", "sizes": "192x192" }]
+		}
+	]
+}

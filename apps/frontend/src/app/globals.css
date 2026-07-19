@@ -1,0 +1,307 @@
+@import 'tailwindcss';
+
+@custom-variant hover-desktop {
+	@media (hover: hover) and (pointer: fine) {
+		&:hover {
+			@slot;
+		}
+	}
+}
+
+@theme {
+	--color-primary: #d99a7a;
+	--color-bg: #151414;
+	--color-dark-brown: #151414;
+	--color-brown-light: #d99a7a;
+
+	--color-white: #f6f8ff;
+	--color-white-60: #f6f8ff99;
+	--color-white-40: #f6f8ff66;
+	--color-white-25: #f6f8ff40;
+	--color-white-15: #f6f8ff26;
+
+	--color-green-60: #59736a99;
+	--color-pinq-60: #f4c2c299;
+
+	--color-black-60: #00000099;
+
+	--color-danger: #f87171;
+	--color-success: #4ade80;
+
+	--color-border: #f6f8ff26;
+
+	--font-sans: var(--font-jakarta), sans-serif;
+	--font-heading: var(--font-playfair), serif;
+
+	--spacing-layout: 1.4rem;
+
+	--default-transition-duration: 333ms;
+	--default-transition-timing-function: ease-in-out;
+}
+
+:root {
+	--sidebar-width: 220rem;
+}
+
+* {
+	box-sizing: border-box;
+	-webkit-tap-highlight-color: transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+		scroll-behavior: auto !important;
+	}
+}
+
+:focus-visible {
+	outline: 2px solid var(--color-brown-light);
+	outline-offset: 2px;
+}
+
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+	outline: none;
+}
+
+@keyframes fade-in {
+	from {
+		opacity: 0;
+		transform: translateY(10rem);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+.animate-fade-in {
+	animation: fade-in 300ms ease-in-out;
+}
+
+@keyframes blob-drift-1 {
+	0% {
+		transform: translate(0, 0) scale(1);
+	}
+	33% {
+		transform: translate(120rem, 80rem) scale(1.15);
+	}
+	66% {
+		transform: translate(40rem, 180rem) scale(0.9);
+	}
+	100% {
+		transform: translate(0, 0) scale(1);
+	}
+}
+
+@keyframes blob-drift-2 {
+	0% {
+		transform: translate(0, 0) scale(1);
+	}
+	33% {
+		transform: translate(-160rem, 100rem) scale(0.85);
+	}
+	66% {
+		transform: translate(-60rem, -120rem) scale(1.2);
+	}
+	100% {
+		transform: translate(0, 0) scale(1);
+	}
+}
+
+@keyframes blob-drift-3 {
+	0% {
+		transform: translate(0, 0) scale(1);
+	}
+	33% {
+		transform: translate(140rem, -90rem) scale(1.1);
+	}
+	66% {
+		transform: translate(200rem, 60rem) scale(0.95);
+	}
+	100% {
+		transform: translate(0, 0) scale(1);
+	}
+}
+
+.blob-1 {
+	animation: blob-drift-1 28s ease-in-out infinite;
+}
+
+.blob-2 {
+	animation: blob-drift-2 34s ease-in-out infinite;
+}
+
+.blob-3 {
+	animation: blob-drift-3 31s ease-in-out infinite;
+}
+
+.popover {
+	transform-origin: top;
+	transition:
+		opacity 200ms ease-in-out,
+		transform 200ms ease-in-out;
+}
+
+.popover[data-open='false'] {
+	pointer-events: none;
+	opacity: 0;
+	transform: translateY(8rem) scale(0.97);
+}
+
+.popover[data-open='true'] {
+	opacity: 1;
+	transform: translateY(0) scale(1);
+}
+
+html {
+	font-size: calc(100 / 1440 * 1vw);
+}
+
+@media screen and (max-width: 767px) {
+	html {
+		font-size: calc(100 / 375 * 1vw);
+	}
+}
+
+body {
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-rendering: optimizeLegibility;
+	min-height: 100dvh;
+	@apply text-white bg-bg font-sans;
+}
+
+img,
+video,
+svg {
+	display: block;
+	max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+	font-family: inherit;
+	font-weight: inherit;
+	font-style: inherit;
+	letter-spacing: inherit;
+	color: inherit;
+}
+
+button:not(:disabled),
+[role='button']:not([aria-disabled='true']),
+[role='switch'],
+label[for],
+summary,
+a {
+	cursor: pointer;
+}
+
+button:disabled,
+[aria-disabled='true'],
+input:disabled,
+select:disabled,
+textarea:disabled {
+	cursor: not-allowed;
+}
+
+@utility grid-6-cols {
+	@apply grid grid-cols-6 gap-6;
+}
+
+@utility glass {
+	@apply border border-white-15 bg-white-15 backdrop-blur-[8rem];
+}
+
+@utility glass-strong {
+	@apply border border-white-15 bg-black-60 backdrop-blur-[16rem];
+}
+
+@utility glass-input {
+	@apply transition-base h-[44rem] w-full rounded-[24rem] border border-white-15 bg-white-15 px-[20rem] text-[14rem] text-white outline-none backdrop-blur-[16rem] placeholder:text-white-40 focus:border-brown-light;
+}
+
+@utility glass-pill {
+	@apply transition-base not-disabled:hover-desktop:bg-white-25 flex h-[44rem] items-center gap-[8rem] rounded-[24rem] border border-white-15 bg-white-15 px-[21rem] text-[14rem] text-white backdrop-blur-[8rem];
+}
+
+@utility field-label {
+	@apply text-[12rem] text-white-60;
+}
+
+@utility divider {
+	@apply block h-[1rem] w-full rounded-full bg-white-15;
+}
+
+@utility transition-slow {
+	transition-property:
+		color, background-color, border-color, text-decoration-color, fill,
+		stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+	transition-timing-function: ease-in-out;
+	transition-duration: 500ms;
+}
+
+@utility transition-base {
+	transition-property:
+		color, background-color, border-color, text-decoration-color, fill,
+		stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+	transition-timing-function: ease-in-out;
+	transition-duration: 300ms;
+}
+
+@utility transition-fast {
+	transition-property:
+		color, background-color, border-color, text-decoration-color, fill,
+		stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+	transition-timing-function: ease-in-out;
+	transition-duration: 150ms;
+}
+
+@utility disabled-state {
+	@apply disabled:cursor-not-allowed disabled:opacity-50;
+}
+
+@utility glass-icon-btn {
+	@apply transition-fast flex size-[36rem] items-center justify-center rounded-full border border-white-15 bg-white-15 backdrop-blur-[8rem];
+}
+
+@utility glass-action {
+	@apply transition-base disabled-state not-disabled:hover-desktop:bg-white-25 rounded-[24rem] border border-white-25 bg-white-15 px-[24rem] py-[12rem] text-[14rem] font-semibold text-white backdrop-blur-[8rem];
+}
+
+@utility menu-row {
+	@apply transition-base flex w-full items-center gap-[12rem] border-b border-white-15 p-[8rem] text-[16rem] font-medium text-white-60 not-disabled:hover-desktop:text-white;
+}
+
+.volume-slider::-webkit-slider-thumb {
+	appearance: none;
+	width: 10.5px;
+	height: 10.5px;
+	background-color: white;
+	border-radius: 50%;
+	cursor: pointer;
+}
+
+.volume-slider::-moz-range-thumb {
+	width: 10.5px;
+	height: 10.5px;
+	background-color: white;
+	border-radius: 50%;
+	cursor: pointer;
+}
+
+.volume-slider::-ms-thumb {
+	width: 10.5px;
+	height: 10.5px;
+	background-color: white;
+	border-radius: 50%;
+	cursor: pointer;
+}

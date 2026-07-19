@@ -1,0 +1,29 @@
+.slider {
+	-webkit-appearance: none;
+	appearance: none;
+	height: 4rem;
+	width: 64rem;
+	border-radius: 100px;
+	cursor: pointer;
+	transition: all 0.2s;
+
+	&::-webkit-slider-thumb {
+		-webkit-appearance: none;
+		appearance: none;
+		width: 12rem;
+		height: 12rem;
+		border-radius: 100px;
+		background: var(--color-brown-light);
+		box-shadow: 0 0 6rem 0 var(--color-brown-light);
+		border: none;
+	}
+
+	&::-moz-range-thumb {
+		width: 12rem;
+		height: 12rem;
+		border-radius: 100px;
+		background: var(--color-brown-light);
+		box-shadow: 0 0 6rem 0 var(--color-brown-light);
+		border: none;
+	}
+}
