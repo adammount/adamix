@@ -1,7 +1,6 @@
 services:
   db:
     image: postgres:17-alpine
-    container_name: adamix-db
     restart: unless-stopped
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
@@ -22,7 +21,6 @@ services:
     build:
       context: .
       dockerfile: apps/backend/Dockerfile
-    container_name: adamix-backend
     restart: unless-stopped
     environment:
       NODE_ENV: production
@@ -41,6 +39,9 @@ services:
         condition: service_healthy
     networks:
       - adamix-net
+      - dokploy-network
+    expose:
+      - 4200
     healthcheck:
       test: ['CMD-SHELL', 'node -e "require(''http'').get(''http://127.0.0.1:4200/api'', r => process.exit(r.statusCode < 500 ? 0 : 1)).on(''error'', () => process.exit(1))"']
       interval: 15s
@@ -57,7 +58,6 @@ services:
         NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
         NEXT_PUBLIC_RECAPTCHA_SITE_KEY: ${NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
         SERVER_URL: http://backend:4200
-    container_name: adamix-frontend
     restart: unless-stopped
     environment:
       NODE_ENV: production
@@ -70,11 +70,14 @@ services:
         condition: service_healthy
     networks:
       - adamix-net
-    ports:
-      - '${FRONTEND_PORT:-3000}:3000'
+      - dokploy-network
+    expose:
+      - 3000
 
 networks:
   adamix-net:
+  dokploy-network:
+    external: true
 
 volumes:
   pgdata:
