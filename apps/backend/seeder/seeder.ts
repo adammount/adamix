@@ -2,7 +2,7 @@ import 'dotenv/config'
 
 import { faker } from '@faker-js/faker'
 import { PrismaPg } from '@prisma/adapter-pg'
-import { PrismaClient, UserRole } from '@/generated/prisma'
+import { PrismaClient } from '@/generated/prisma'
 import { hash } from 'argon2'
 import { nanoid } from 'nanoid'
 import { CATEGORIES } from './categories.data'
@@ -25,6 +25,12 @@ const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL as str
 const prisma = new PrismaClient({ adapter })
 
 async function main() {
+	if (process.env.NODE_ENV === 'production' && process.env.SEED_CONFIRM !== 'yes') {
+		throw new Error(
+			'Сидер удаляет все данные. Для запуска в production задайте SEED_CONFIRM=yes'
+		)
+	}
+
 	console.log('Начало заполнения базы данных...')
 
 	console.log('Очистка существующих данных...')

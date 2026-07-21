@@ -33,6 +33,9 @@ COPY --from=builder --chown=node:node /repo/apps/backend/dist ./dist
 COPY --from=builder --chown=node:node /repo/apps/backend/prisma ./prisma
 COPY --from=builder --chown=node:node /repo/apps/backend/prisma.config.ts ./prisma.config.ts
 COPY --from=builder --chown=node:node /repo/apps/backend/package.json ./package.json
+COPY --from=builder --chown=node:node /repo/apps/backend/tsconfig.json ./tsconfig.json
+COPY --from=builder --chown=node:node /repo/apps/backend/seeder ./seeder
+COPY --from=builder --chown=node:node /repo/apps/backend/src/generated ./src/generated
 
 RUN mkdir -p uploads && chown -R node:node /repo/apps/backend
 USER node
