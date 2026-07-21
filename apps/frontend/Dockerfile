@@ -34,9 +34,9 @@ WORKDIR /app
 RUN addgroup --system --gid 1001 nodejs \
 	&& adduser --system --uid 1001 nextjs
 
-COPY --from=builder /repo/apps/frontend/.next/standalone ./
-COPY --from=builder /repo/apps/frontend/.next/static ./apps/frontend/.next/static
-COPY --from=builder /repo/apps/frontend/public ./apps/frontend/public
+COPY --from=builder --chown=nextjs:nodejs /repo/apps/frontend/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /repo/apps/frontend/.next/static ./apps/frontend/.next/static
+COPY --from=builder --chown=nextjs:nodejs /repo/apps/frontend/public ./apps/frontend/public
 
 USER nextjs
 
