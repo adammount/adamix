@@ -1,6 +1,6 @@
 'use server'
 
-import { API_URL } from '@/constants/constants'
+import { API_URL, SITE_URL } from '@/constants/constants'
 
 import type { IUser } from '@/types/user.types'
 
@@ -10,11 +10,16 @@ interface IAuthResponse {
 }
 
 export async function getNewTokensByRefresh(refreshToken: string) {
-	const response = await fetch(`${API_URL}/auth/access-token`, {
+	const serverUrl = process.env.SERVER_URL
+	const baseUrl = serverUrl ? `${serverUrl}/api` : API_URL
+	const origin = process.env.CLIENT_URL || SITE_URL
+
+	const response = await fetch(`${baseUrl}/auth/access-token`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
-			Cookie: `refreshToken=${refreshToken}`
+			Cookie: `refreshToken=${refreshToken}`,
+			Origin: origin
 		},
 		credentials: 'include'
 	})
