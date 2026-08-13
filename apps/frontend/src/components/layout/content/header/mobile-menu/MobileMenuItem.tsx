@@ -1,6 +1,6 @@
 import cn from 'clsx'
-import Link from 'next/link'
 import type { LucideIcon } from 'lucide-react'
+import Link from 'next/link'
 
 interface BaseProps {
 	icon: LucideIcon
@@ -11,17 +11,8 @@ interface BaseProps {
 
 type Props = BaseProps & ({ href: string } | { onClick: () => void })
 
-export function MobileMenuItem({
-	icon: Icon,
-	label,
-	isActive,
-	onNavigate,
-	...rest
-}: Props) {
-	const className = cn(
-		'menu-row',
-		isActive && 'border-white-60 text-white'
-	)
+export function MobileMenuItem({ icon: Icon, label, isActive, onNavigate, ...rest }: Props) {
+	const className = cn('menu-row', isActive && 'border-white-60 text-white')
 
 	const content = (
 		<>

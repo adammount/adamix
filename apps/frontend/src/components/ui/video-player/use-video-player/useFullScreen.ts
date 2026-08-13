@@ -1,21 +1,39 @@
 import { type RefObject } from 'react'
 
-import type { HTMLCustomVideoElement } from '../video-player.types'
+interface FullScreenElement extends HTMLElement {
+	mozRequestFullScreen?: () => Promise<void>
+	webkitRequestFullscreen?: () => Promise<void>
+	msRequestFullscreen?: () => Promise<void>
+}
 
-export function useFullScreen(playerRef: RefObject<HTMLCustomVideoElement | null>) {
+interface FullScreenDocument extends Document {
+	mozCancelFullScreen?: () => Promise<void>
+	webkitExitFullscreen?: () => Promise<void>
+	msExitFullscreen?: () => Promise<void>
+}
+
+export function useFullScreen(containerRef: RefObject<HTMLDivElement | null>) {
 	const toggleFullScreen = () => {
-		if (!playerRef.current) return
+		const container = containerRef.current as FullScreenElement | null
+		if (!container) return
 
-		if (playerRef.current.requestFullscreen) {
-			playerRef.current.requestFullscreen()
-		} else if (playerRef.current?.mozRequestFullScreen) {
-			playerRef.current.mozRequestFullScreen()
-		} else if (playerRef.current.webkitRequestFullscreen) {
-			playerRef.current.webkitRequestFullscreen()
-		} else if (playerRef.current.msRequestFullscreen) {
-			playerRef.current.msRequestFullscreen()
+		const doc = document as FullScreenDocument
+		const isFullScreen = Boolean(doc.fullscreenElement)
+
+		if (isFullScreen) {
+			if (doc.exitFullscreen) doc.exitFullscreen()
+			else if (doc.mozCancelFullScreen) doc.mozCancelFullScreen()
+			else if (doc.webkitExitFullscreen) doc.webkitExitFullscreen()
+			else if (doc.msExitFullscreen) doc.msExitFullscreen()
+			return
 		}
+
+		if (container.requestFullscreen) container.requestFullscreen()
+		else if (container.mozRequestFullScreen) container.mozRequestFullScreen()
+		else if (container.webkitRequestFullscreen) container.webkitRequestFullscreen()
+		else if (container.msRequestFullscreen) container.msRequestFullscreen()
 	}
+
 	return {
 		toggleFullScreen
 	}

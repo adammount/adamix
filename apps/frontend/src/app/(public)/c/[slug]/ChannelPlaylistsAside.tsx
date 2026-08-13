@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { PlaylistAside } from '@/ui/playlist-aside/PlaylistAside'
 
 import { getPlaylistCover } from '@/utils/get-playlist-cover'
+
 import type { IPlaylistPreview } from '@/types/playlist.types'
 
 interface Props {
@@ -29,9 +30,7 @@ export function ChannelPlaylistsAside({ playlists, activeId, onSelect }: Props) 
 							onClick={() => onSelect(playlist.id)}
 							className={cn(
 								'flex items-center gap-[8rem] rounded-[16rem] p-[4rem] text-left transition-base',
-								playlist.id === activeId
-									? 'bg-white-15'
-									: 'hover-desktop:bg-white-15'
+								playlist.id === activeId ? 'bg-white-15' : 'hover-desktop:bg-white-15'
 							)}
 						>
 							<div className='relative size-[64rem] shrink-0 overflow-hidden rounded-[16rem]'>
@@ -44,12 +43,8 @@ export function ChannelPlaylistsAside({ playlists, activeId, onSelect }: Props) 
 								/>
 							</div>
 							<div className='flex flex-col gap-[4rem]'>
-								<p className='line-clamp-1 text-[14rem] text-white'>
-									{playlist.title}
-								</p>
-								<p className='text-[9rem] text-white-60'>
-									{playlist._count.videos} videos
-								</p>
+								<p className='line-clamp-1 text-[14rem] text-white'>{playlist.title}</p>
+								<p className='text-[9rem] text-white-60'>{playlist._count.videos} videos</p>
 							</div>
 						</button>
 					)

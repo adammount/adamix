@@ -1,13 +1,9 @@
-import { PlaylistMiniCard } from '@/ui/playlist/PlaylistMiniCard'
 import { PlaylistAside } from '@/ui/playlist-aside/PlaylistAside'
+import { PlaylistMiniCard } from '@/ui/playlist/PlaylistMiniCard'
 
 import type { IPlaylistPreview } from '@/types/playlist.types'
 
-export function OtherPlaylistsAside({
-	playlists
-}: {
-	playlists: IPlaylistPreview[]
-}) {
+export function OtherPlaylistsAside({ playlists }: { playlists: IPlaylistPreview[] }) {
 	return (
 		<PlaylistAside
 			title='Other Playlists by this Author'

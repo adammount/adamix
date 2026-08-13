@@ -15,14 +15,8 @@ import { LikedPlaylistAside } from './LikedPlaylistAside'
 
 export function LikedVideosContent() {
 	const isClient = useIsClient()
-	const {
-		count,
-		videos,
-		isLoading,
-		isFetchingNextPage,
-		fetchNextPage,
-		hasNextPage
-	} = useLikedVideos()
+	const { count, videos, isLoading, isFetchingNextPage, fetchNextPage, hasNextPage } =
+		useLikedVideos()
 
 	useEffectScroll({ fetchNextPage, hasNextPage, isFetchingNextPage })
 

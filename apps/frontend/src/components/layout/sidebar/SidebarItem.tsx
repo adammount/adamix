@@ -1,7 +1,7 @@
 import cn from 'clsx'
+import type { LucideIcon } from 'lucide-react'
 import Link from 'next/link'
 import { memo } from 'react'
-import type { LucideIcon } from 'lucide-react'
 
 interface BaseProps {
 	icon: LucideIcon

@@ -1,35 +1,28 @@
 import { useInfiniteQuery, useMutation } from '@tanstack/react-query'
 
-import { watchHistoryService } from '@/services/watch-history.service'
-
 import { useAuth } from './useAuth'
+import { watchHistoryService } from '@/services/watch-history.service'
 
 const LIMIT = 30
 
 export function useWatchHistory() {
 	const { isLoggedIn } = useAuth()
 
-	const {
-		data,
-		isLoading,
-		isFetchingNextPage,
-		fetchNextPage,
-		hasNextPage,
-		refetch
-	} = useInfiniteQuery({
-		queryKey: ['watch-history'],
-		queryFn: async ({ pageParam }) => {
-			const res = await watchHistoryService.getUserHistory({
-				page: pageParam,
-				limit: LIMIT
-			})
-			return res.data
-		},
-		initialPageParam: 1,
-		getNextPageParam: lastPage =>
-			lastPage.page < lastPage.totalPages ? lastPage.page + 1 : undefined,
-		enabled: isLoggedIn
-	})
+	const { data, isLoading, isFetchingNextPage, fetchNextPage, hasNextPage, refetch } =
+		useInfiniteQuery({
+			queryKey: ['watch-history'],
+			queryFn: async ({ pageParam }) => {
+				const res = await watchHistoryService.getUserHistory({
+					page: pageParam,
+					limit: LIMIT
+				})
+				return res.data
+			},
+			initialPageParam: 1,
+			getNextPageParam: lastPage =>
+				lastPage.page < lastPage.totalPages ? lastPage.page + 1 : undefined,
+			enabled: isLoggedIn
+		})
 
 	const { mutate: clearHistory, isPending: isClearing } = useMutation({
 		mutationKey: ['clear-history'],

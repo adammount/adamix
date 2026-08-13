@@ -9,12 +9,7 @@ interface Props {
 	sizePreview?: [number, number]
 }
 
-export function ImagePreview({
-	isLoading,
-	overlay,
-	value,
-	sizePreview = [100, 100]
-}: Props) {
+export function ImagePreview({ isLoading, overlay, value, sizePreview = [100, 100] }: Props) {
 	const [width, height] = sizePreview
 	const size = {
 		width: `${width}rem`,

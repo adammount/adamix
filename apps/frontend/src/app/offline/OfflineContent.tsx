@@ -9,12 +9,10 @@ export function OfflineContent() {
 				<WifiOff className='size-[28rem] text-white-60 md:size-[36rem]' />
 			</div>
 			<div className='flex flex-col gap-[6rem]'>
-				<p className='font-heading text-[20rem] text-white md:text-[24rem]'>
-					You are offline
-				</p>
+				<p className='font-heading text-[20rem] text-white md:text-[24rem]'>You are offline</p>
 				<p className='max-w-[320rem] text-[13rem] text-white-60 md:text-[14rem]'>
-					Check your connection and try again. Some pages you have already
-					visited may still be available.
+					Check your connection and try again. Some pages you have already visited may still be
+					available.
 				</p>
 			</div>
 			<button

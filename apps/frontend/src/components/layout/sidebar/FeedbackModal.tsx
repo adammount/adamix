@@ -38,9 +38,7 @@ export function FeedbackModal({ onClose }: { onClose: () => void }) {
 					<span
 						className={cn(
 							'transition-base flex size-[20rem] items-center justify-center rounded-[6rem] border border-white-15',
-							withScreenshot
-								? 'bg-brown-light'
-								: 'bg-white-15 group-hover:bg-white-25'
+							withScreenshot ? 'bg-brown-light' : 'bg-white-15 group-hover:bg-white-25'
 						)}
 					>
 						{withScreenshot && <Check className='size-[12rem] text-dark-brown' />}

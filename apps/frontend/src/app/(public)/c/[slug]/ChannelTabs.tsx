@@ -1,6 +1,6 @@
 'use client'
 
-import { Tabs, type TabItem } from '@/ui/Tabs'
+import { type TabItem, Tabs } from '@/ui/Tabs'
 
 export type ChannelTab = 'home' | 'videos' | 'playlists' | 'about'
 
@@ -17,5 +17,11 @@ interface Props {
 }
 
 export function ChannelTabs({ active, onChange }: Props) {
-	return <Tabs tabs={TABS} active={active} onChange={onChange} />
+	return (
+		<Tabs
+			tabs={TABS}
+			active={active}
+			onChange={onChange}
+		/>
+	)
 }

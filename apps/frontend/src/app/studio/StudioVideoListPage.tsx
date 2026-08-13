@@ -1,8 +1,8 @@
 'use client'
 
+import { Plus } from 'lucide-react'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
-import { Plus } from 'lucide-react'
 
 import { PageHeading } from '@/ui/PageHeading'
 import { SkeletonLoader } from '@/ui/SkeletonLoader'

@@ -7,6 +7,7 @@ import { ChannelName } from '@/ui/ChannelName'
 import { PAGE } from '@/config/public-page.config'
 
 import { transformCount } from '@/utils/transform-count'
+
 import type { IVideo } from '@/types/video.types'
 
 export function TrendingCard({ video }: { video: IVideo }) {

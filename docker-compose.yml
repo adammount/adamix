@@ -34,7 +34,10 @@ services:
       SMTP_SERVER: ${SMTP_SERVER}
       SMTP_LOGIN: ${SMTP_LOGIN}
     volumes:
-      - uploads:/repo/apps/backend/uploads
+      - videos:/repo/apps/backend/uploads/videos
+      - avatars:/repo/apps/backend/uploads/avatars
+      - banners:/repo/apps/backend/uploads/banners
+      - thumbnails:/repo/apps/backend/uploads/thumbnails
     depends_on:
       db:
         condition: service_healthy
@@ -82,4 +85,7 @@ networks:
 
 volumes:
   pgdata:
-  uploads:
+  videos:
+  avatars:
+  banners:
+  thumbnails:

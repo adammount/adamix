@@ -1,5 +1,5 @@
-import Image from 'next/image'
 import { Play, Shuffle } from 'lucide-react'
+import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 
 import { GlassButton } from '@/ui/button/GlassButton'
@@ -7,6 +7,7 @@ import { GlassButton } from '@/ui/button/GlassButton'
 import { PAGE } from '@/config/public-page.config'
 
 import { transformCount } from '@/utils/transform-count'
+
 import type { IPlaylistDetail } from '@/types/playlist.types'
 
 export function PlaylistHeader({ playlist }: { playlist: IPlaylistDetail }) {

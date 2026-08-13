@@ -6,11 +6,11 @@ import { useState } from 'react'
 import { EmptyState } from '@/ui/EmptyState'
 import { PageHeading } from '@/ui/PageHeading'
 import { SkeletonLoader } from '@/ui/SkeletonLoader'
-
 import { VideoCard } from '@/ui/video-card/VideoCard'
 
-import { TrendingTabs } from './TrendingTabs'
 import { useEffectScroll } from '@/hooks/useEffectScroll'
+
+import { TrendingTabs } from './TrendingTabs'
 import { categoryService } from '@/services/category.service'
 import { videoService } from '@/services/video.service'
 
@@ -22,17 +22,10 @@ export function TrendingPageContent() {
 	const { data: categories } = useQuery({
 		queryKey: ['categories'],
 		queryFn: () => categoryService.getAll(),
-		select: res =>
-			res.data.map(category => ({ slug: category.slug, name: category.name }))
+		select: res => res.data.map(category => ({ slug: category.slug, name: category.name }))
 	})
 
-	const {
-		data,
-		isLoading,
-		isFetchingNextPage,
-		fetchNextPage,
-		hasNextPage
-	} = useInfiniteQuery({
+	const { data, isLoading, isFetchingNextPage, fetchNextPage, hasNextPage } = useInfiniteQuery({
 		queryKey: ['trending', activeCategory],
 		queryFn: async ({ pageParam }) => {
 			if (activeCategory) {

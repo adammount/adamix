@@ -12,9 +12,7 @@ interface Props {
 }
 
 export function Avatar({ src, name, size, className, sizeClassName }: Props) {
-	const style = sizeClassName
-		? undefined
-		: { width: `${size}rem`, height: `${size}rem` }
+	const style = sizeClassName ? undefined : { width: `${size}rem`, height: `${size}rem` }
 
 	if (!src)
 		return (
@@ -26,20 +24,14 @@ export function Avatar({ src, name, size, className, sizeClassName }: Props) {
 					className
 				)}
 			>
-				<span style={{ fontSize: `${size * 0.4}rem` }}>
-					{getInitials(name || 'Anonym')}
-				</span>
+				<span style={{ fontSize: `${size * 0.4}rem` }}>{getInitials(name || 'Anonym')}</span>
 			</div>
 		)
 
 	return (
 		<div
 			style={style}
-			className={cn(
-				'relative shrink-0 overflow-hidden rounded-full',
-				sizeClassName,
-				className
-			)}
+			className={cn('relative shrink-0 overflow-hidden rounded-full', sizeClassName, className)}
 		>
 			<Image
 				src={src}

@@ -5,6 +5,7 @@ import { VideoThumbnail } from '@/ui/VideoThumbnail'
 import { PAGE } from '@/config/public-page.config'
 
 import { getPlaylistCover } from '@/utils/get-playlist-cover'
+
 import type { IPlaylistPreview } from '@/types/playlist.types'
 
 export function PlaylistMiniCard({ playlist }: { playlist: IPlaylistPreview }) {
@@ -26,9 +27,7 @@ export function PlaylistMiniCard({ playlist }: { playlist: IPlaylistPreview }) {
 				<p className='transition-fast line-clamp-1 text-[14rem] text-white-60 group-hover:text-white'>
 					{playlist.title}
 				</p>
-				<p className='text-[9rem] text-white-60'>
-					{playlist._count.videos} videos
-				</p>
+				<p className='text-[9rem] text-white-60'>{playlist._count.videos} videos</p>
 			</div>
 		</Link>
 	)

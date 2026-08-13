@@ -8,6 +8,7 @@ import { VideoThumbnail } from '@/ui/VideoThumbnail'
 import { PAGE } from '@/config/public-page.config'
 
 import { transformCount } from '@/utils/transform-count'
+
 import type { IVideo } from '@/types/video.types'
 
 interface Props {
@@ -58,9 +59,7 @@ export function VideoRow({ video, caption }: Props) {
 						</div>
 					</div>
 					{caption && (
-						<span className='text-right text-[14rem] text-white-60 md:text-left'>
-							{caption}
-						</span>
+						<span className='text-right text-[14rem] text-white-60 md:text-left'>{caption}</span>
 					)}
 				</div>
 			</div>

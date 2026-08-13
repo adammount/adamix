@@ -13,13 +13,7 @@ interface Props {
 	isClearing: boolean
 }
 
-export function HistoryControlsAside({
-	count,
-	searchTerm,
-	onSearch,
-	onClear,
-	isClearing
-}: Props) {
+export function HistoryControlsAside({ count, searchTerm, onSearch, onClear, isClearing }: Props) {
 	return (
 		<PlaylistAside
 			title='History controls'

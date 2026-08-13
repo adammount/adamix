@@ -7,6 +7,7 @@ import { VideoThumbnail } from '@/ui/VideoThumbnail'
 import { PAGE } from '@/config/public-page.config'
 
 import { transformCount } from '@/utils/transform-count'
+
 import type { IVideo } from '@/types/video.types'
 
 export function VideoCard({ video }: { video: IVideo }) {
@@ -25,9 +26,7 @@ export function VideoCard({ video }: { video: IVideo }) {
 				className='h-[198rem] w-full md:h-[158rem]'
 			/>
 			<div className='flex flex-col gap-[8rem]'>
-				<h3 className='line-clamp-1 font-heading text-[18rem] text-white'>
-					{video.title}
-				</h3>
+				<h3 className='line-clamp-1 font-heading text-[18rem] text-white'>{video.title}</h3>
 				<div className='flex items-center gap-[4rem]'>
 					<Avatar
 						src={

@@ -10,9 +10,10 @@ import { PAGE } from '@/config/public-page.config'
 import { useAuth } from '@/hooks/useAuth'
 import { useProfileSelector } from '@/hooks/useProfile'
 
-import { channelService } from '@/services/channel.service'
 import { stripHtmlWithBreak } from '@/utils/strip-html'
 import { transformCount } from '@/utils/transform-count'
+
+import { channelService } from '@/services/channel.service'
 import type { IChannelDetail } from '@/types/channel.types'
 
 export function ChannelAbout({ channel }: { channel: IChannelDetail }) {
@@ -23,8 +24,7 @@ export function ChannelAbout({ channel }: { channel: IChannelDetail }) {
 
 	const status = useProfileSelector(data => ({
 		isOwner: data?.channel?.slug === channel.slug,
-		isSubscribed:
-			data?.subscriptions.some(sub => sub.slug === channel.slug) ?? false
+		isSubscribed: data?.subscriptions.some(sub => sub.slug === channel.slug) ?? false
 	}))
 	const isOwner = status?.isOwner ?? false
 	const isSubscribed = status?.isSubscribed ?? false
@@ -64,9 +64,7 @@ export function ChannelAbout({ channel }: { channel: IChannelDetail }) {
 							</div>
 						</div>
 						<div className='flex flex-col'>
-							<span className='font-heading text-[18rem] text-white'>
-								{channel.user?.name}
-							</span>
+							<span className='font-heading text-[18rem] text-white'>{channel.user?.name}</span>
 							<span className='text-[10rem] text-white-60'>
 								{transformCount(channel._count.subscribers)} subscribers
 							</span>
@@ -79,11 +77,7 @@ export function ChannelAbout({ channel }: { channel: IChannelDetail }) {
 							disabled={isPending}
 							className='glass-pill h-[36rem] shrink-0 px-[16rem] text-[12rem] font-semibold disabled-state md:h-[44rem] md:px-[21rem] md:text-[14rem]'
 						>
-							{isPending
-								? 'Subscribing...'
-								: isSubscribed
-									? 'Subscribed'
-									: 'Subscribe'}
+							{isPending ? 'Subscribing...' : isSubscribed ? 'Subscribed' : 'Subscribe'}
 						</button>
 					)}
 				</div>

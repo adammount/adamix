@@ -17,9 +17,7 @@ export function SubscriptionsContent() {
 	return (
 		<section className='flex flex-col gap-[20rem] md:gap-[36rem]'>
 			<div className='flex flex-col gap-[20rem] md:gap-[16rem]'>
-				<PageHeading className='text-[30rem] md:text-[36rem]'>
-					Subscriptions
-				</PageHeading>
+				<PageHeading className='text-[30rem] md:text-[36rem]'>Subscriptions</PageHeading>
 				{!!subscriptions.length && (
 					<div className='-mx-[8rem] flex gap-[16rem] overflow-x-auto px-[8rem] [scrollbar-width:none] md:mx-0 md:flex-wrap md:gap-[24rem] md:px-0 [&::-webkit-scrollbar]:hidden'>
 						{subscriptions.map(channel => (

@@ -42,9 +42,7 @@ export function StudioVideoItem({ video }: Props) {
 				>
 					{video.title}
 				</Link>
-				<div className='line-clamp-1 text-[12rem] text-white-60'>
-					{parse(initialContent)}
-				</div>
+				<div className='line-clamp-1 text-[12rem] text-white-60'>{parse(initialContent)}</div>
 				<div className='mt-[4rem] flex flex-wrap gap-x-[16rem] gap-y-[2rem] text-[12rem] text-white-40'>
 					<span>{transformFullDate(video.createdAt)}</span>
 					<span>{transformCount(video.viewsCount)} views</span>

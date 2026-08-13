@@ -14,6 +14,7 @@ export function VolumeControl({ changeVolume, isMuted, toggleMute, value }: Prop
 		<div className='flex items-center gap-[8rem]'>
 			<button
 				onClick={toggleMute}
+				title={isMuted ? 'Unmute' : 'Mute'}
 				aria-label={isMuted ? 'Unmute' : 'Mute'}
 				className='transition-fast hover-desktop:text-brown-light'
 			>

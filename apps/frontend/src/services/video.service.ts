@@ -20,10 +20,9 @@ class VideoService {
 	}
 
 	byChannel(channelId: string, params?: IPaginationParams) {
-		return axiosClassic.get<IVideosPagination>(
-			`${this._VIDEOS}/by-channel/${channelId}`,
-			{ params }
-		)
+		return axiosClassic.get<IVideosPagination>(`${this._VIDEOS}/by-channel/${channelId}`, {
+			params
+		})
 	}
 
 	getTrendingVideos() {

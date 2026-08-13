@@ -2,6 +2,7 @@ import { useMutation } from '@tanstack/react-query'
 import { useEffect } from 'react'
 
 import { useAuth } from '@/hooks/useAuth'
+
 import { videoService } from '@/services/video.service'
 import { watchHistoryService } from '@/services/watch-history.service'
 import type { ISingleVideoResponse } from '@/types/video.types'

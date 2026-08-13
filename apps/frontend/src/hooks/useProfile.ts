@@ -1,8 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 
-import { userService } from '@/services/studio/user.service'
-
 import { useAuth } from './useAuth'
+import { userService } from '@/services/studio/user.service'
 
 export function useProfile() {
 	const { isLoggedIn } = useAuth()

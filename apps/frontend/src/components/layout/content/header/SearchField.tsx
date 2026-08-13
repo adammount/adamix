@@ -53,18 +53,18 @@ export function SearchField() {
 	return (
 		<div
 			ref={ref}
-			className='relative min-w-0 max-w-[164rem] flex-1 md:w-[300rem] md:max-w-none md:flex-none'
+			className='relative min-w-0 max-w-[200rem] flex-1 md:w-[300rem] md:max-w-none md:flex-none'
 		>
 			<div
 				className={cn(
-					'transition-base flex h-[26rem] items-center justify-between gap-[8rem] border border-white-15 bg-white-15 px-[12rem] backdrop-blur-[16rem] focus-within:border-brown-light md:h-[44rem]',
+					'transition-base flex h-[36rem] items-center justify-between gap-[8rem] border border-white-15 bg-white-15 px-[14rem] backdrop-blur-[16rem] focus-within:border-brown-light md:h-[44rem] md:px-[12rem]',
 					isOpen ? 'rounded-t-[24rem]' : 'rounded-[40rem]'
 				)}
 			>
 				<input
 					type='search'
 					placeholder='Search curated content...'
-					className='h-full w-full bg-transparent text-[10rem] leading-none text-white outline-none placeholder:text-white-60 md:text-[14rem]'
+					className='h-full w-full bg-transparent text-[13rem] leading-none text-white outline-none placeholder:text-white-60 md:text-[14rem]'
 					value={searchTerm}
 					onChange={e => onChange(e.target.value)}
 					onFocus={() => setIsShow(true)}
@@ -72,9 +72,10 @@ export function SearchField() {
 				/>
 				<button
 					onClick={goToSearch}
+					aria-label='Search'
 					className='shrink-0 text-white-60 transition-fast hover-desktop:text-white'
 				>
-					<Search className='size-[12rem]' />
+					<Search className='size-[16rem] md:size-[14rem]' />
 				</button>
 			</div>
 
@@ -87,10 +88,10 @@ export function SearchField() {
 								router.push(PAGE.VIDEO(video.publicId))
 								setIsShow(false)
 							}}
-							className='flex h-[28rem] items-center gap-[4rem] px-[12rem] text-left transition-fast hover-desktop:bg-white-25'
+							className='flex h-[38rem] items-center gap-[8rem] px-[14rem] text-left transition-fast hover-desktop:bg-white-25 md:h-[32rem] md:gap-[6rem] md:px-[12rem]'
 						>
-							<Search className='size-[8rem] shrink-0 text-white-60' />
-							<span className='line-clamp-1 text-[10rem] text-white-60'>
+							<Search className='size-[12rem] shrink-0 text-white-60 md:size-[10rem]' />
+							<span className='line-clamp-1 text-[12rem] text-white-60 md:text-[11rem]'>
 								{video.title}
 							</span>
 						</button>

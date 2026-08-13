@@ -3,21 +3,19 @@ export function processHtmlContent(htmlContent: string, limit: number) {
 	let remainingContent = ''
 	let isShouldShowToggle = false
 
-	// Проверяем, есть ли теги </p> в контенте
 	const hasPTags = /<\/p>/i.test(htmlContent)
 
 	if (hasPTags) {
-		// Разбиваем контент по тегам </p>
 		const contentParts = htmlContent.split(/(<\/p>)/i)
 
 		let count = 0
-		let index = 0
+		let index = contentParts.length
 		for (let i = 0; i < contentParts.length; i++) {
 			if (contentParts[i].toLowerCase() === '</p>') {
 				count++
 			}
 			if (count === limit) {
-				index = i + 1 // Включаем закрывающий тег </p>
+				index = i + 1
 				break
 			}
 		}
@@ -26,7 +24,6 @@ export function processHtmlContent(htmlContent: string, limit: number) {
 		remainingContent = contentParts.slice(index).join('')
 		isShouldShowToggle = remainingContent.trim().length > 0
 	} else {
-		// Если тегов <p> нет, ограничиваем по количеству символов
 		const charLimit = 150
 		if (htmlContent.length > charLimit) {
 			initialContent = htmlContent.slice(0, charLimit) + '...'

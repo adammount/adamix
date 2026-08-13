@@ -1,10 +1,6 @@
 import { axiosClassic, instance } from '@/api/axios'
 
-import type {
-	IComment,
-	ICommentData,
-	ICommentUpdateData
-} from '@/types/comment.types'
+import type { IComment, ICommentData, ICommentUpdateData } from '@/types/comment.types'
 
 class CommentService {
 	private _COMMENTS = '/comments'

@@ -1,10 +1,7 @@
 import { axiosClassic } from '@/api/axios'
 
+import type { ICategoryVideosResponse, ICategoryWithPreview } from '@/types/category.types'
 import type { IPaginationParams } from '@/types/pagination.types'
-import type {
-	ICategoryVideosResponse,
-	ICategoryWithPreview
-} from '@/types/category.types'
 
 class CategoryService {
 	private _CATEGORIES = '/categories'
@@ -14,10 +11,7 @@ class CategoryService {
 	}
 
 	getBySlug(slug: string, params?: IPaginationParams) {
-		return axiosClassic.get<ICategoryVideosResponse>(
-			`${this._CATEGORIES}/${slug}`,
-			{ params }
-		)
+		return axiosClassic.get<ICategoryVideosResponse>(`${this._CATEGORIES}/${slug}`, { params })
 	}
 }
 

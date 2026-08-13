@@ -22,13 +22,7 @@ export function VideoThumbnail({
 	children
 }: Props) {
 	return (
-		<div
-			className={twMerge(
-				'relative overflow-hidden',
-				rounded,
-				className
-			)}
-		>
+		<div className={twMerge('relative overflow-hidden', rounded, className)}>
 			<Image
 				src={src}
 				alt={alt}

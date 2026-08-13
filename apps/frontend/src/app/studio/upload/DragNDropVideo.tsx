@@ -67,9 +67,7 @@ export function DragNDropVideo({ reset }: Props) {
 		>
 			<Upload className='size-[24rem] text-brown-light md:size-[36rem]' />
 			<p className='text-center text-[12rem] text-white md:text-[14rem]'>
-				{isDragging
-					? 'Drop here'
-					: 'Drag and drop files here or click to select'}
+				{isDragging ? 'Drop here' : 'Drag and drop files here or click to select'}
 			</p>
 			<span className='flex h-[28rem] items-center rounded-[8rem] bg-white px-[16rem] text-[12rem] !text-dark-brown md:h-auto md:rounded-[12rem] md:px-[24rem] md:py-[10rem] md:text-[14rem]'>
 				Select files to upload

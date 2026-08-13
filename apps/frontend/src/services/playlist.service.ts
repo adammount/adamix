@@ -1,10 +1,6 @@
 import { instance } from '@/api/axios'
 
-import type {
-	IPlaylist,
-	IPlaylistData,
-	IPlaylistDetail
-} from '@/types/playlist.types'
+import type { IPlaylist, IPlaylistData, IPlaylistDetail } from '@/types/playlist.types'
 
 class PlaylistService {
 	private _PLAYLISTS = '/playlists'

@@ -29,9 +29,7 @@ export function VideoFormRightSide({ watch }: Props) {
 			</div>
 			<div className='flex flex-col gap-[2rem] p-[12rem]'>
 				<span className='text-[12rem] text-white-40'>File name:</span>
-				<span className='line-clamp-1 text-[12rem] text-white'>
-					{watch('videoFileName')}
-				</span>
+				<span className='line-clamp-1 text-[12rem] text-white'>{watch('videoFileName')}</span>
 			</div>
 		</div>
 	)

@@ -41,26 +41,14 @@ export const PlaybackPanel = memo(function PlaybackPanel({
 	bufferSize,
 	update
 }: Props) {
-	const onQuality = useCallback(
-		(value: string) => update({ defaultQuality: value }),
-		[update]
-	)
+	const onQuality = useCallback((value: string) => update({ defaultQuality: value }), [update])
 	const onAutoplay = useCallback(
 		(value: string) => update({ autoplay: value === 'true' }),
 		[update]
 	)
-	const onLanguage = useCallback(
-		(value: string) => update({ language: value }),
-		[update]
-	)
-	const onDataSaver = useCallback(
-		(value: boolean) => update({ dataSaver: value }),
-		[update]
-	)
-	const onBufferSize = useCallback(
-		(value: number) => update({ bufferSize: value }),
-		[update]
-	)
+	const onLanguage = useCallback((value: string) => update({ language: value }), [update])
+	const onDataSaver = useCallback((value: boolean) => update({ dataSaver: value }), [update])
+	const onBufferSize = useCallback((value: number) => update({ bufferSize: value }), [update])
 
 	return (
 		<SettingsPanel title='Playback and Performance'>

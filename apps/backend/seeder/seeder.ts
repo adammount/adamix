@@ -17,15 +17,21 @@ function resolveCategorySlugs(title: string, tags: string[] = []) {
 
 	if (matched.length) return matched
 
-	const fallback = CATEGORIES[faker.number.int({ min: 0, max: CATEGORIES.length - 1 })]
+	const fallback =
+		CATEGORIES[faker.number.int({ min: 0, max: CATEGORIES.length - 1 })]
 	return [fallback.slug]
 }
 
-const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL as string })
+const adapter = new PrismaPg({
+	connectionString: process.env.DATABASE_URL as string
+})
 const prisma = new PrismaClient({ adapter })
 
 async function main() {
-	if (process.env.NODE_ENV === 'production' && process.env.SEED_CONFIRM !== 'yes') {
+	if (
+		process.env.NODE_ENV === 'production' &&
+		process.env.SEED_CONFIRM !== 'yes'
+	) {
 		throw new Error(
 			'Сидер удаляет все данные. Для запуска в production задайте SEED_CONFIRM=yes'
 		)
@@ -140,9 +146,11 @@ async function main() {
 					}))
 				},
 				categories: {
-					connect: resolveCategorySlugs(videoData.title, videoData.tags).map(slug => ({
-						slug
-					}))
+					connect: resolveCategorySlugs(videoData.title, videoData.tags).map(
+						slug => ({
+							slug
+						})
+					)
 				}
 			}
 		})

@@ -14,9 +14,10 @@ import { PAGE } from '@/config/public-page.config'
 import { useAuth } from '@/hooks/useAuth'
 import { useProfileSelector } from '@/hooks/useProfile'
 
-import { channelService } from '@/services/channel.service'
 import { processHtmlContent } from '@/utils/process-html-content'
 import { transformCount } from '@/utils/transform-count'
+
+import { channelService } from '@/services/channel.service'
 import type { ISingleVideoResponse } from '@/types/video.types'
 
 export function VideoChannel({ video }: { video: ISingleVideoResponse }) {
@@ -28,8 +29,7 @@ export function VideoChannel({ video }: { video: ISingleVideoResponse }) {
 
 	const status = useProfileSelector(data => ({
 		isOwner: data?.channel?.slug === channel.slug,
-		isSubscribed:
-			data?.subscriptions.some(sub => sub.slug === channel.slug) ?? false
+		isSubscribed: data?.subscriptions.some(sub => sub.slug === channel.slug) ?? false
 	}))
 	const isOwner = status?.isOwner ?? false
 	const isSubscribed = status?.isSubscribed ?? false
@@ -47,10 +47,7 @@ export function VideoChannel({ video }: { video: ISingleVideoResponse }) {
 		else router.push(PAGE.AUTH)
 	}
 
-	const { initialContent, isShouldShowToggle } = processHtmlContent(
-		video.description,
-		3
-	)
+	const { initialContent, isShouldShowToggle } = processHtmlContent(video.description, 3)
 
 	return (
 		<div className='flex flex-col gap-[12rem] rounded-[24rem] border border-white-15 bg-white-15 px-[13rem] py-[17rem] backdrop-blur-[16rem] md:rounded-[40rem] md:p-[25rem]'>
@@ -87,11 +84,7 @@ export function VideoChannel({ video }: { video: ISingleVideoResponse }) {
 						disabled={isPending}
 						className='glass-pill h-[36rem] px-[16rem] text-[12rem] font-semibold disabled-state md:h-[44rem] md:px-[21rem] md:text-[14rem]'
 					>
-						{isPending
-							? 'Subscribing...'
-							: isSubscribed
-								? 'Subscribed'
-								: 'Subscribe'}
+						{isPending ? 'Subscribing...' : isSubscribed ? 'Subscribed' : 'Subscribe'}
 					</button>
 				)}
 			</div>

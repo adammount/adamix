@@ -1,13 +1,6 @@
 'use client'
 
-import {
-	Lightbulb,
-	LightbulbOff,
-	Maximize,
-	Pause,
-	Play,
-	RectangleHorizontal
-} from 'lucide-react'
+import { Lightbulb, LightbulbOff, Maximize, Pause, Play, RectangleHorizontal } from 'lucide-react'
 
 import { PlayerProgressBar } from './progress-bar/PlayerProgressBar'
 import { SelectQuality } from './quality/SelectQuality'
@@ -20,19 +13,31 @@ interface Props {
 	fileName: string
 	toggleTheaterMode: () => void
 	maxResolution: EnumVideoPlayerQuality
+	onEnded?: () => void
 }
 
-export function VideoPlayer({ fileName, toggleTheaterMode, maxResolution }: Props) {
-	const { fn, playerRef, bgRef, state } = useVideoPlayer({ fileName, toggleTheaterMode })
+export function VideoPlayer({ fileName, toggleTheaterMode, maxResolution, onEnded }: Props) {
+	const { fn, playerRef, bgRef, containerRef, state } = useVideoPlayer({
+		fileName,
+		toggleTheaterMode,
+		maxResolution,
+		onEnded
+	})
+
+	const playPauseLabel = state.isPlaying ? 'Pause' : 'Play'
+	const lightingLabel = state.isLightingMode ? 'Turn off ambient light' : 'Turn on ambient light'
 
 	return (
-		<div className='relative overflow-hidden bg-white-15/5 backdrop-blur-[16rem] md:rounded-[40rem] md:border md:border-white-15'>
+		<div
+			ref={containerRef}
+			className='relative overflow-hidden bg-white-15/5 backdrop-blur-[16rem] md:rounded-[40rem] md:border md:border-white-15'
+		>
 			{state.isLightingMode && (
 				<video
 					ref={bgRef}
 					aria-hidden='true'
 					className='absolute left-0 top-0 size-full scale-[1.02] object-cover blur-3xl brightness-90 contrast-125 saturate-150 mix-blend-lighten filter'
-					src={`/uploads/videos/${EnumVideoPlayerQuality['720p']}/${fileName}`}
+					src={`/uploads/videos/${EnumVideoPlayerQuality['360p']}/${fileName}`}
 					muted
 				>
 					<track kind='captions' />
@@ -43,7 +48,7 @@ export function VideoPlayer({ fileName, toggleTheaterMode, maxResolution }: Prop
 				ref={playerRef}
 				className='relative z-[1] aspect-video w-full'
 				controls={false}
-				src={`/uploads/videos/${EnumVideoPlayerQuality['1080p']}/${fileName}`}
+				src={`/uploads/videos/${maxResolution}/${fileName}`}
 				preload='metadata'
 			>
 				<track kind='captions' />
@@ -61,7 +66,8 @@ export function VideoPlayer({ fileName, toggleTheaterMode, maxResolution }: Prop
 					<div className='flex items-center gap-[8rem] md:gap-[12rem]'>
 						<button
 							onClick={fn.togglePlayPause}
-							aria-label={state.isPlaying ? 'Pause' : 'Play'}
+							title={playPauseLabel}
+							aria-label={playPauseLabel}
 							className='transition-fast hover-desktop:text-brown-light'
 						>
 							{state.isPlaying ? (
@@ -82,9 +88,7 @@ export function VideoPlayer({ fileName, toggleTheaterMode, maxResolution }: Prop
 							value={state.volume}
 							isMuted={state.isMuted}
 						/>
-						<span className='text-[12rem] text-white-60'>
-							{getTime(state.videoTime)}
-						</span>
+						<span className='text-[12rem] text-white-60'>{getTime(state.videoTime)}</span>
 					</div>
 
 					<div className='flex items-center gap-[12rem]'>
@@ -96,12 +100,8 @@ export function VideoPlayer({ fileName, toggleTheaterMode, maxResolution }: Prop
 						<button
 							className='transition-fast hover-desktop:text-brown-light'
 							onClick={fn.toggleLightingMode}
-							title={state.isLightingMode ? 'Off lightning' : 'On lightning'}
-							aria-label={
-								state.isLightingMode
-									? 'Turn off ambient light'
-									: 'Turn on ambient light'
-							}
+							title={lightingLabel}
+							aria-label={lightingLabel}
 						>
 							{state.isLightingMode ? (
 								<Lightbulb
@@ -116,8 +116,9 @@ export function VideoPlayer({ fileName, toggleTheaterMode, maxResolution }: Prop
 							)}
 						</button>
 						<button
-							className='transition-fast hover-desktop:text-brown-light'
+							className='hidden transition-fast hover-desktop:text-brown-light md:block'
 							onClick={toggleTheaterMode}
+							title='Theater mode'
 							aria-label='Toggle theater mode'
 						>
 							<RectangleHorizontal
@@ -127,6 +128,7 @@ export function VideoPlayer({ fileName, toggleTheaterMode, maxResolution }: Prop
 						</button>
 						<button
 							onClick={fn.toggleFullScreen}
+							title='Fullscreen'
 							aria-label='Toggle fullscreen'
 							className='transition-fast hover-desktop:text-brown-light'
 						>

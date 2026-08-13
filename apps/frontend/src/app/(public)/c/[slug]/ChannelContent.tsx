@@ -6,9 +6,8 @@ import { ChannelAbout } from './ChannelAbout'
 import { ChannelHeader } from './ChannelHeader'
 import { ChannelHome } from './ChannelHome'
 import { ChannelPlaylistsTab } from './ChannelPlaylistsTab'
-import { ChannelTabs, type ChannelTab } from './ChannelTabs'
+import { type ChannelTab, ChannelTabs } from './ChannelTabs'
 import { ChannelVideosTab } from './ChannelVideosTab'
-
 import type { IChannelDetail } from '@/types/channel.types'
 
 export function ChannelContent({ channel }: { channel: IChannelDetail }) {
@@ -25,9 +24,7 @@ export function ChannelContent({ channel }: { channel: IChannelDetail }) {
 
 			{tab === 'home' && <ChannelHome videos={channel.videos} />}
 			{tab === 'videos' && <ChannelVideosTab channelId={channel.id} />}
-			{tab === 'playlists' && (
-				<ChannelPlaylistsTab playlists={channel.playlists} />
-			)}
+			{tab === 'playlists' && <ChannelPlaylistsTab playlists={channel.playlists} />}
 			{tab === 'about' && <ChannelAbout channel={channel} />}
 		</section>
 	)

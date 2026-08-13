@@ -1,11 +1,12 @@
 import { useRef, useState } from 'react'
 
-import { type HTMLCustomVideoElement } from '../video-player.types'
+import { type EnumVideoPlayerQuality, type HTMLCustomVideoElement } from '../video-player.types'
 
 import { useFullScreen } from './useFullScreen'
 import { useOnSeek } from './useOnSeek'
 import { usePlayPause } from './usePlayPause'
 import { useSkipTime } from './useSkipTime'
+import { useVideoEnded } from './useVideoEnded'
 import { useVideoHotkeys } from './useVideoHotkeys'
 import { useVideoProgress } from './useVideoProgress'
 import { useVideoQuality } from './useVideoQuality'
@@ -14,11 +15,14 @@ import { useVideoVolume } from './useVideoVolume'
 interface Props {
 	fileName: string
 	toggleTheaterMode: () => void
+	maxResolution: EnumVideoPlayerQuality
+	onEnded?: () => void
 }
 
-export function useVideoPlayer({ fileName, toggleTheaterMode }: Props) {
+export function useVideoPlayer({ fileName, toggleTheaterMode, maxResolution, onEnded }: Props) {
 	const playerRef = useRef<HTMLCustomVideoElement>(null)
 	const bgRef = useRef<HTMLCustomVideoElement>(null)
+	const containerRef = useRef<HTMLDivElement>(null)
 
 	const [isLightingMode, setIsLightingMode] = useState(true)
 
@@ -27,13 +31,16 @@ export function useVideoPlayer({ fileName, toggleTheaterMode }: Props) {
 	const { quality, changeQuality } = useVideoQuality(playerRef, {
 		fileName,
 		currentTime,
-		setIsPlaying
+		setIsPlaying,
+		maxResolution
 	})
-	const { toggleFullScreen } = useFullScreen(playerRef)
+	const { toggleFullScreen } = useFullScreen(containerRef)
 	const { skipTime } = useSkipTime(playerRef, bgRef)
 
 	const { changeVolume, isMuted, toggleMute, volume } = useVideoVolume(playerRef)
 	const { onSeek } = useOnSeek(playerRef, bgRef, setCurrentTime)
+
+	useVideoEnded(playerRef, { setIsPlaying, onEnded })
 
 	const fn = {
 		togglePlayPause,
@@ -61,6 +68,7 @@ export function useVideoPlayer({ fileName, toggleTheaterMode }: Props) {
 		},
 		fn,
 		playerRef,
-		bgRef
+		bgRef,
+		containerRef
 	}
 }

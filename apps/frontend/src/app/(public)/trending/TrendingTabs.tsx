@@ -1,15 +1,8 @@
 'use client'
 
-import {
-	Clapperboard,
-	Gamepad2,
-	type LucideIcon,
-	Music,
-	Newspaper,
-	TrendingUp
-} from 'lucide-react'
+import { Clapperboard, Gamepad2, type LucideIcon, Music, Newspaper, TrendingUp } from 'lucide-react'
 
-import { Tabs, type TabItem } from '@/ui/Tabs'
+import { type TabItem, Tabs } from '@/ui/Tabs'
 
 const ALL_TAB = 'all'
 

@@ -34,9 +34,7 @@ export function HistoryContent() {
 	const groups = useMemo(() => {
 		const filtered = searchTerm.trim()
 			? history.filter(item =>
-					item.video.title
-						.toLowerCase()
-						.includes(searchTerm.trim().toLowerCase())
+					item.video.title.toLowerCase().includes(searchTerm.trim().toLowerCase())
 				)
 			: history
 
@@ -72,9 +70,7 @@ export function HistoryContent() {
 									key={group.label}
 									className='flex flex-col gap-[20rem]'
 								>
-									<h2 className='font-heading text-[18rem] text-white/80'>
-										{group.label}
-									</h2>
+									<h2 className='font-heading text-[18rem] text-white/80'>{group.label}</h2>
 									{group.items.map(item => (
 										<VideoRow
 											key={item.id}

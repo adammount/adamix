@@ -2,9 +2,14 @@
 
 import cn from 'clsx'
 import dynamic from 'next/dynamic'
-import { useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { useCallback, useState } from 'react'
 
 import { VideoPlayer } from '@/ui/video-player/VideoPlayer'
+
+import { PAGE } from '@/config/public-page.config'
+
+import { useUserSettings } from '@/hooks/useUserSettings'
 
 import { transformCount } from '@/utils/transform-count'
 
@@ -14,9 +19,7 @@ import { VideoActions } from './video-actions/VideoActions'
 import { VideoChannel } from './video-channel/VideoChannel'
 import type { ISingleVideoResponse } from '@/types/video.types'
 
-const DynamicComments = dynamic(() =>
-	import('./comments/Comments').then(mod => mod.Comments)
-)
+const DynamicComments = dynamic(() => import('./comments/Comments').then(mod => mod.Comments))
 
 interface Props {
 	video: ISingleVideoResponse
@@ -24,17 +27,29 @@ interface Props {
 
 export function SingleVideo({ video }: Props) {
 	const [isTheaterMode, setIsTheaterMode] = useState(false)
+	const router = useRouter()
+	const { settings } = useUserSettings()
 
 	useUpdateViews({ video })
+
+	const nextVideo = video.similarVideos[0]
+
+	const handleEnded = useCallback(() => {
+		if (!settings?.autoplay || !nextVideo) return
+		router.push(PAGE.VIDEO(nextVideo.publicId))
+	}, [settings?.autoplay, nextVideo, router])
 
 	return (
 		<section className='flex flex-col items-start gap-[12rem] md:flex-row md:gap-[16rem]'>
 			<div className='flex w-full min-w-0 flex-1 flex-col gap-[12rem]'>
-				<div className={cn(isTheaterMode ? 'absolute left-0 top-0 w-full' : 'relative')}>
+				<div
+					className={cn(isTheaterMode ? 'md:absolute md:left-0 md:top-0 md:w-full' : 'relative')}
+				>
 					<VideoPlayer
 						fileName={video.videoFileName}
 						toggleTheaterMode={() => setIsTheaterMode(!isTheaterMode)}
 						maxResolution={video.maxResolution}
+						onEnded={handleEnded}
 					/>
 				</div>
 
@@ -42,7 +57,7 @@ export function SingleVideo({ video }: Props) {
 					<div
 						className={cn(
 							'flex flex-col gap-[6rem] md:flex-row md:items-start md:justify-between md:gap-[16rem]',
-							{ 'pt-[55rem]': isTheaterMode }
+							{ 'md:pt-[55rem]': isTheaterMode }
 						)}
 					>
 						<div className='flex min-w-0 flex-col gap-[2rem]'>

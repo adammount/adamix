@@ -18,11 +18,7 @@ interface Props {
 	isShowedSidebar: boolean
 }
 
-export const SidebarMenu = memo(function SidebarMenu({
-	menu,
-	title,
-	isShowedSidebar
-}: Props) {
+export const SidebarMenu = memo(function SidebarMenu({ menu, title, isShowedSidebar }: Props) {
 	const pathname = usePathname()
 	const { isLoggedIn } = useTypedSelector(state => state.auth)
 

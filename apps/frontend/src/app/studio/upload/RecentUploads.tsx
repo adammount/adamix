@@ -37,9 +37,7 @@ export function RecentUploads() {
 								className='object-cover transition-transform duration-500 group-hover:scale-105'
 							/>
 						</div>
-						<span className='line-clamp-1 text-[12rem] text-white'>
-							{video.title}
-						</span>
+						<span className='line-clamp-1 text-[12rem] text-white'>{video.title}</span>
 					</Link>
 				))}
 			</div>

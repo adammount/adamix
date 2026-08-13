@@ -21,7 +21,7 @@ export interface IVideo {
 }
 
 export interface IFullVideo extends IVideo {
-	likes: []
+	likes: { userId: string }[]
 	comments: IComment[]
 }
 

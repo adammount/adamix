@@ -25,26 +25,14 @@ export const NotificationsPanel = memo(function NotificationsPanel({
 	frequency,
 	update
 }: Props) {
-	const onEmail = useCallback(
-		(value: boolean) => update({ emailNotifications: value }),
-		[update]
-	)
-	const onPush = useCallback(
-		(value: boolean) => update({ pushNotifications: value }),
-		[update]
-	)
-	const onNewVideo = useCallback(
-		(value: boolean) => update({ newVideoAlerts: value }),
-		[update]
-	)
+	const onEmail = useCallback((value: boolean) => update({ emailNotifications: value }), [update])
+	const onPush = useCallback((value: boolean) => update({ pushNotifications: value }), [update])
+	const onNewVideo = useCallback((value: boolean) => update({ newVideoAlerts: value }), [update])
 	const onCommentMentions = useCallback(
 		(value: boolean) => update({ commentMentions: value }),
 		[update]
 	)
-	const onFrequency = useCallback(
-		(value: number) => update({ frequency: value }),
-		[update]
-	)
+	const onFrequency = useCallback((value: number) => update({ frequency: value }), [update])
 
 	return (
 		<SettingsPanel title='Notifications'>

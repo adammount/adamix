@@ -7,8 +7,7 @@ import type { ICategoryWithPreview } from '@/types/category.types'
 
 export function CategoryBanner({ category }: { category: ICategoryWithPreview }) {
 	const preview =
-		category.videos?.[0]?.thumbnailUrl ||
-		`https://picsum.photos/seed/${category.slug}/572/344`
+		category.videos?.[0]?.thumbnailUrl || `https://picsum.photos/seed/${category.slug}/572/344`
 
 	return (
 		<Link

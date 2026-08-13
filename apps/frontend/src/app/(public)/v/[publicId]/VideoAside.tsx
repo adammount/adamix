@@ -13,6 +13,7 @@ import { useUserSettings } from '@/hooks/useUserSettings'
 import { stripHtml } from '@/utils/strip-html'
 import { transformCount } from '@/utils/transform-count'
 import { transformDuration } from '@/utils/transform-duration'
+
 import type { ISingleVideoResponse } from '@/types/video.types'
 
 export function VideoAside({ video }: { video: ISingleVideoResponse }) {
@@ -58,9 +59,7 @@ export function VideoAside({ video }: { video: ISingleVideoResponse }) {
 							<p className='line-clamp-2 text-[10rem] text-white-60'>
 								{stripHtml(item.description)}
 							</p>
-							<p className='text-[9rem] text-white-60'>
-								{transformCount(item.viewsCount)} views
-							</p>
+							<p className='text-[9rem] text-white-60'>{transformCount(item.viewsCount)} views</p>
 						</div>
 					</Link>
 				))}

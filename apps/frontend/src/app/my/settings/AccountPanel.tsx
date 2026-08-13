@@ -4,7 +4,6 @@ import { AtSign, Lock, Upload, UserRound } from 'lucide-react'
 import { useId } from 'react'
 
 import { SettingsField } from '@/ui/controls/SettingsField'
-
 import { useUpload } from '@/ui/upload-field/useUpload'
 
 import { SettingsPanel } from './SettingsPanel'

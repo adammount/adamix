@@ -36,7 +36,12 @@ export function Providers({ children }: { children: ReactNode }) {
 					toastOptions={{
 						style: {
 							backgroundColor: '#202937',
-							color: 'white'
+							color: 'white',
+							fontSize: '14px',
+							lineHeight: '20px',
+							maxWidth: '90vw',
+							padding: '12px 16px',
+							borderRadius: '12px'
 						}
 					}}
 				/>

@@ -3,8 +3,8 @@
 import { useMutation } from '@tanstack/react-query'
 import { type SubmitHandler, useForm } from 'react-hook-form'
 
-import { Modal } from '@/ui/modal/Modal'
 import { Field } from '@/ui/field/Field'
+import { Modal } from '@/ui/modal/Modal'
 
 import { playlistService } from '@/services/playlist.service'
 import type { IPlaylistData } from '@/types/playlist.types'
@@ -66,9 +66,7 @@ export function CreatePlaylist({ refetch, onClose }: Props) {
 					type='text'
 					registration={register('videoPublicId', {
 						validate: value =>
-							!value ||
-							value.length === 10 ||
-							'Video public id must be exactly 10 characters!'
+							!value || value.length === 10 || 'Video public id must be exactly 10 characters!'
 					})}
 					error={errors.videoPublicId?.message}
 					placeholder='Enter video public id'

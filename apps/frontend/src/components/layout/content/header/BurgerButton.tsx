@@ -9,7 +9,7 @@ interface Props {
 
 function Burger() {
 	return (
-		<span className='flex h-[26rem] w-[30rem] flex-col justify-center gap-[5rem] px-[4rem]'>
+		<span className='flex h-[32rem] w-[34rem] flex-col justify-center gap-[5rem] px-[4rem] md:h-[26rem] md:w-[30rem]'>
 			<span className='h-[2rem] w-full rounded-full bg-brown-light' />
 			<span className='h-[2rem] w-full rounded-full bg-brown-light' />
 			<span className='h-[2rem] w-full rounded-full bg-brown-light' />
@@ -19,9 +19,9 @@ function Burger() {
 
 function Cross() {
 	return (
-		<span className='flex h-[26rem] w-[30rem] items-center justify-center'>
+		<span className='flex h-[32rem] w-[34rem] items-center justify-center md:h-[26rem] md:w-[30rem]'>
 			<X
-				className='size-[26rem] text-brown-light'
+				className='size-[28rem] text-brown-light md:size-[26rem]'
 				aria-hidden='true'
 			/>
 		</span>

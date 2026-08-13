@@ -26,6 +26,7 @@ export function SelectQuality({ currentValue, onChange, maxResolution }: Props) 
 		>
 			<button
 				onClick={() => setIsShow(!isShow)}
+				title={`Quality: ${currentValue}`}
 				aria-label={`Quality: ${currentValue}`}
 				aria-haspopup='listbox'
 				aria-expanded={isShow}

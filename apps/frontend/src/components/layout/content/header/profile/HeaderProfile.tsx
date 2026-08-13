@@ -15,9 +15,9 @@ export function HeaderProfile() {
 		<Link
 			href={PAGE.AUTH}
 			aria-label='Sign in'
-			className='flex size-[20rem] items-center justify-center text-white opacity-80 transition-fast hover-desktop:opacity-100'
+			className='flex size-[26rem] items-center justify-center text-white opacity-80 transition-fast hover-desktop:opacity-100 md:size-[20rem]'
 		>
-			<LogIn className='size-[12rem] md:size-[16rem]' />
+			<LogIn className='size-[16rem]' />
 		</Link>
 	)
 }

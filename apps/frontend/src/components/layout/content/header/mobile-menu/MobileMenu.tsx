@@ -5,18 +5,15 @@ import { usePathname } from 'next/navigation'
 import { match } from 'path-to-regexp'
 import { useEffect, useState } from 'react'
 
+import { FeedbackModal } from '@/components/layout/sidebar/FeedbackModal'
+import { BOTTOM_SIDEBAR_DATA, SIDEBAR_DATA } from '@/components/layout/sidebar/sidebar.data'
+
 import { PAGE } from '@/config/public-page.config'
 
 import { useProfile } from '@/hooks/useProfile'
 
-import {
-	BOTTOM_SIDEBAR_DATA,
-	SIDEBAR_DATA
-} from '@/components/layout/sidebar/sidebar.data'
-import { FeedbackModal } from '@/components/layout/sidebar/FeedbackModal'
-import { useTypedSelector } from '@/store'
-
 import { MobileMenuItem } from './MobileMenuItem'
+import { useTypedSelector } from '@/store'
 
 export function MobileMenu({ onClose }: { onClose: () => void }) {
 	const pathname = usePathname()
@@ -40,9 +37,7 @@ export function MobileMenu({ onClose }: { onClose: () => void }) {
 		return () => mq.removeEventListener('change', handler)
 	}, [onClose])
 
-	const myChannelLink = profile?.channel?.slug
-		? PAGE.CHANNEL(profile.channel.slug)
-		: null
+	const myChannelLink = profile?.channel?.slug ? PAGE.CHANNEL(profile.channel.slug) : null
 
 	const menu = [...SIDEBAR_DATA, ...BOTTOM_SIDEBAR_DATA]
 

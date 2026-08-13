@@ -9,9 +9,8 @@ import { PlaylistTrackRow } from '@/ui/playlist/PlaylistTrackRow'
 
 import { useIsClient } from '@/hooks/useIsClient'
 
-import { playlistService } from '@/services/playlist.service'
-
 import { OtherPlaylistsAside } from './OtherPlaylistsAside'
+import { playlistService } from '@/services/playlist.service'
 
 export function PlaylistContent({ id }: { id: string }) {
 	const isClient = useIsClient()

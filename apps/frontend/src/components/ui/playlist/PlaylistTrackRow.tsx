@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { PAGE } from '@/config/public-page.config'
 
 import { transformDuration } from '@/utils/transform-duration'
+
 import type { IVideo } from '@/types/video.types'
 
 interface Props {
@@ -30,9 +31,7 @@ export function PlaylistTrackRow({ video, index }: Props) {
 				/>
 			</div>
 			<div className='flex min-w-0 flex-1 flex-col gap-[2rem]'>
-				<h3 className='line-clamp-1 font-heading text-[18rem] text-white'>
-					{video.title}
-				</h3>
+				<h3 className='line-clamp-1 font-heading text-[18rem] text-white'>{video.title}</h3>
 				<p className='line-clamp-1 text-[12rem] leading-[18rem] text-white-60 md:text-[14rem] md:leading-[22rem]'>
 					{video.channel?.user?.name}
 				</p>

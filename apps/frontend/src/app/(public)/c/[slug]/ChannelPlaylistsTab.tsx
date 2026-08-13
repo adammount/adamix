@@ -7,16 +7,11 @@ import { SkeletonLoader } from '@/ui/SkeletonLoader'
 import { PlaylistHeader } from '@/ui/playlist/PlaylistHeader'
 import { PlaylistTrackRow } from '@/ui/playlist/PlaylistTrackRow'
 
+import { ChannelPlaylistsAside } from './ChannelPlaylistsAside'
 import { playlistService } from '@/services/playlist.service'
 import type { IPlaylistPreview } from '@/types/playlist.types'
 
-import { ChannelPlaylistsAside } from './ChannelPlaylistsAside'
-
-export function ChannelPlaylistsTab({
-	playlists
-}: {
-	playlists: IPlaylistPreview[]
-}) {
+export function ChannelPlaylistsTab({ playlists }: { playlists: IPlaylistPreview[] }) {
 	const [activeId, setActiveId] = useState(playlists[0]?.id ?? '')
 
 	const { data, isLoading } = useQuery({
@@ -28,11 +23,7 @@ export function ChannelPlaylistsTab({
 	const playlist = data?.data
 
 	if (!playlists.length) {
-		return (
-			<p className='text-[16rem] text-white-60'>
-				No playlists on this channel yet
-			</p>
-		)
+		return <p className='text-[16rem] text-white-60'>No playlists on this channel yet</p>
 	}
 
 	return (

@@ -46,11 +46,7 @@ export function CreateVideoForm({ form, isReadyToPublish }: Props) {
 				disabled={!isReadyToPublish || isPending}
 				className='glass-action self-end px-[17rem] py-[8rem] text-[12rem] md:px-[24rem] md:py-[12rem] md:text-[14rem]'
 			>
-				{isPending
-					? 'Publishing...'
-					: isReadyToPublish
-						? 'Publish'
-						: 'Wait processing...'}
+				{isPending ? 'Publishing...' : isReadyToPublish ? 'Publish' : 'Wait processing...'}
 			</button>
 		</form>
 	)

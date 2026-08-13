@@ -27,8 +27,7 @@ function styles(variant: Variant, className?: string) {
 	)
 }
 
-type ButtonProps = BaseProps &
-	ButtonHTMLAttributes<HTMLButtonElement> & { href?: undefined }
+type ButtonProps = BaseProps & ButtonHTMLAttributes<HTMLButtonElement> & { href?: undefined }
 type LinkProps = BaseProps & { href: string }
 
 export function GlassButton(props: ButtonProps): ReactNode

@@ -29,10 +29,7 @@ self.addEventListener('activate', event => {
 			.then(keys =>
 				Promise.all(
 					keys
-						.filter(
-							key =>
-								![STATIC_CACHE, RUNTIME_CACHE, IMAGE_CACHE].includes(key)
-						)
+						.filter(key => ![STATIC_CACHE, RUNTIME_CACHE, IMAGE_CACHE].includes(key))
 						.map(key => caches.delete(key))
 				)
 			)
@@ -64,8 +61,7 @@ self.addEventListener('fetch', event => {
 
 	if (url.origin !== self.location.origin) return
 
-	if (url.pathname.startsWith('/api/') || url.pathname.startsWith('/uploads/'))
-		return
+	if (url.pathname.startsWith('/api/') || url.pathname.startsWith('/uploads/')) return
 
 	if (request.mode === 'navigate') {
 		event.respondWith(

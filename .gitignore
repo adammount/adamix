@@ -36,6 +36,13 @@ next-env.d.ts
 # uploads (local dev)
 apps/backend/uploads/*
 !apps/backend/uploads/.gitkeep
+!apps/backend/uploads/videos
+apps/backend/uploads/videos/*
+!apps/backend/uploads/videos/360p
+!apps/backend/uploads/videos/480p
+!apps/backend/uploads/videos/720p
+apps/backend/uploads/videos/*/*
+!apps/backend/uploads/videos/*/placeholder.mp4
 
 # editor
 .idea

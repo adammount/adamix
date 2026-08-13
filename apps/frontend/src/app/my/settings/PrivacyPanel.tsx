@@ -24,10 +24,7 @@ export const PrivacyPanel = memo(function PrivacyPanel({
 		(value: boolean) => update({ profileVisibility: value }),
 		[update]
 	)
-	const onWatchHistory = useCallback(
-		(value: boolean) => update({ watchHistory: value }),
-		[update]
-	)
+	const onWatchHistory = useCallback((value: boolean) => update({ watchHistory: value }), [update])
 	const onActivityStatus = useCallback(
 		(value: boolean) => update({ activityStatus: value }),
 		[update]

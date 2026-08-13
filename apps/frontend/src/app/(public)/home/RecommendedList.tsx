@@ -4,38 +4,34 @@ import { useInfiniteQuery } from '@tanstack/react-query'
 
 import { SkeletonLoader } from '@/ui/SkeletonLoader'
 
-import { RecommendedCard } from './RecommendedCard'
 import { useAuth } from '@/hooks/useAuth'
 import { useEffectScroll } from '@/hooks/useEffectScroll'
+
+import { RecommendedCard } from './RecommendedCard'
 import { videoService } from '@/services/video.service'
 
 export function RecommendedList() {
 	const { user } = useAuth()
 
-	const { data, isLoading, isFetchingNextPage, fetchNextPage, hasNextPage } =
-		useInfiniteQuery({
-			queryKey: ['explore'],
-			queryFn: ({ pageParam }) =>
-				videoService.getExploreVideos(
-					user?.id,
-					{
-						page: pageParam.page,
-						limit: 10
-					},
-					pageParam.excludeIds
-				),
-			initialPageParam: { page: 1, excludeIds: [] as string[] },
-			getNextPageParam: (lastPage, allPages) => {
-				const { page, totalPages } = lastPage
-				const allVideoIds = allPages.flatMap(page =>
-					page.videos.map(video => video.id)
-				)
+	const { data, isLoading, isFetchingNextPage, fetchNextPage, hasNextPage } = useInfiniteQuery({
+		queryKey: ['explore'],
+		queryFn: ({ pageParam }) =>
+			videoService.getExploreVideos(
+				user?.id,
+				{
+					page: pageParam.page,
+					limit: 10
+				},
+				pageParam.excludeIds
+			),
+		initialPageParam: { page: 1, excludeIds: [] as string[] },
+		getNextPageParam: (lastPage, allPages) => {
+			const { page, totalPages } = lastPage
+			const allVideoIds = allPages.flatMap(page => page.videos.map(video => video.id))
 
-				return page < totalPages
-					? { page: page + 1, excludeIds: allVideoIds }
-					: undefined
-			}
-		})
+			return page < totalPages ? { page: page + 1, excludeIds: allVideoIds } : undefined
+		}
+	})
 
 	useEffectScroll({
 		fetchNextPage,

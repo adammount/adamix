@@ -14,9 +14,10 @@ import { STUDIO_PAGE } from '@/config/studio-page'
 import { useAuth } from '@/hooks/useAuth'
 import { useProfileSelector } from '@/hooks/useProfile'
 
+import { transformCount } from '@/utils/transform-count'
+
 import { channelService } from '@/services/channel.service'
 import type { IChannelDetail } from '@/types/channel.types'
-import { transformCount } from '@/utils/transform-count'
 
 export function ChannelHeader({ channel }: { channel: IChannelDetail }) {
 	const queryClient = useQueryClient()
@@ -25,8 +26,7 @@ export function ChannelHeader({ channel }: { channel: IChannelDetail }) {
 
 	const status = useProfileSelector(data => ({
 		isOwner: data?.channel?.slug === channel.slug,
-		isSubscribed:
-			data?.subscriptions.some(sub => sub.slug === channel.slug) ?? false
+		isSubscribed: data?.subscriptions.some(sub => sub.slug === channel.slug) ?? false
 	}))
 	const isOwner = status?.isOwner ?? false
 	const isSubscribed = status?.isSubscribed ?? false
@@ -73,9 +73,7 @@ export function ChannelHeader({ channel }: { channel: IChannelDetail }) {
 					<div className='flex flex-col gap-[4rem] pb-[8rem]'>
 						<PageHeading className='flex items-center gap-[8rem] text-[24rem] leading-[24rem] text-white md:text-[36rem] md:leading-[40rem]'>
 							{channel.user?.name}
-							{channel.isVerified && (
-								<VerifiedIcon className='size-[16rem] md:size-[20rem]' />
-							)}
+							{channel.isVerified && <VerifiedIcon className='size-[16rem] md:size-[20rem]' />}
 						</PageHeading>
 						<p className='text-[12rem] leading-[16rem] text-white-60 md:text-[14rem] md:leading-[20rem]'>
 							{transformCount(channel._count.subscribers)} subscribers
@@ -111,11 +109,7 @@ export function ChannelHeader({ channel }: { channel: IChannelDetail }) {
 							disabled={isPending}
 							className='glass-pill h-[36rem] rounded-full px-[17rem] text-[12rem] font-semibold disabled-state md:h-[44rem] md:rounded-[24rem] md:px-[21rem] md:text-[14rem]'
 						>
-							{isPending
-								? 'Subscribing...'
-								: isSubscribed
-									? 'Subscribed'
-									: 'Subscribe'}
+							{isPending ? 'Subscribing...' : isSubscribed ? 'Subscribed' : 'Subscribe'}
 						</button>
 					)}
 				</div>

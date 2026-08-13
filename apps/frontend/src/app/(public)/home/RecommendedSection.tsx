@@ -22,9 +22,7 @@ const DynamicRecommendedList = dynamic(
 export function RecommendedSection() {
 	return (
 		<section className='flex flex-col gap-[8rem] pb-[20rem]'>
-			<h2 className='font-heading text-[18rem] text-white/80'>
-				Recommended for You
-			</h2>
+			<h2 className='font-heading text-[18rem] text-white/80'>Recommended for You</h2>
 			<DynamicRecommendedList />
 		</section>
 	)

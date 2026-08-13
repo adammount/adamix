@@ -16,10 +16,7 @@ export function SubscriptionCircle({ channel }: { channel: IChannel }) {
 			<div className='relative w-full'>
 				<div className='transition-base flex size-[52rem] items-center justify-center rounded-full border border-brown-light bg-white-15 p-[3rem] group-hover:bg-white-25 md:size-[72rem]'>
 					<Image
-						src={
-							channel.avatarUrl ||
-							`https://picsum.photos/seed/${channel.slug}/144/144`
-						}
+						src={channel.avatarUrl || `https://picsum.photos/seed/${channel.slug}/144/144`}
 						alt={channel.user?.name || channel.slug}
 						width={144}
 						height={144}

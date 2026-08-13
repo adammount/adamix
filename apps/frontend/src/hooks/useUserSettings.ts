@@ -1,12 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
-import { settingsService } from '@/services/settings.service'
-import type {
-	IUserSettings,
-	IUserSettingsUpdate
-} from '@/types/settings.types'
-
 import { useAuth } from './useAuth'
+import { settingsService } from '@/services/settings.service'
+import type { IUserSettings, IUserSettingsUpdate } from '@/types/settings.types'
 
 const QUERY_KEY = ['user-settings']
 
@@ -22,8 +18,7 @@ export function useUserSettings() {
 
 	const { mutate } = useMutation({
 		mutationKey: ['update-user-settings'],
-		mutationFn: (patch: IUserSettingsUpdate) =>
-			settingsService.updateSettings(patch),
+		mutationFn: (patch: IUserSettingsUpdate) => settingsService.updateSettings(patch),
 		onMutate: patch => {
 			queryClient.setQueryData<{ data: IUserSettings }>(QUERY_KEY, prev =>
 				prev ? { ...prev, data: { ...prev.data, ...patch } } : prev

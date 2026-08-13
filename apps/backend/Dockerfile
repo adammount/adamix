@@ -22,7 +22,7 @@ RUN bun run build
 
 FROM node:22-slim AS runner
 
-RUN apt-get update && apt-get install -y --no-install-recommends openssl \
+RUN apt-get update && apt-get install -y --no-install-recommends openssl ffmpeg \
 	&& rm -rf /var/lib/apt/lists/*
 
 ENV NODE_ENV=production
@@ -36,10 +36,12 @@ COPY --from=builder --chown=node:node /repo/apps/backend/package.json ./package.
 COPY --from=builder --chown=node:node /repo/apps/backend/tsconfig.json ./tsconfig.json
 COPY --from=builder --chown=node:node /repo/apps/backend/seeder ./seeder
 COPY --from=builder --chown=node:node /repo/apps/backend/src ./src
+COPY --from=builder --chown=node:node /repo/apps/backend/uploads ./uploads-seed
 
-RUN mkdir -p uploads && chown -R node:node /repo/apps/backend
+RUN mkdir -p uploads/videos uploads/avatars uploads/banners uploads/thumbnails \
+	&& chown -R node:node /repo/apps/backend
 USER node
 
 EXPOSE 4200
 
-CMD ["sh", "-c", "npx prisma db push && node dist/src/main"]
+CMD ["sh", "-c", "cp -rn uploads-seed/. uploads/ 2>/dev/null; npx prisma db push && node dist/src/main"]

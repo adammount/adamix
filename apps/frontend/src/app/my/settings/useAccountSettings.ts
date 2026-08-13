@@ -2,8 +2,8 @@ import { useMutation } from '@tanstack/react-query'
 
 import { useProfile } from '@/hooks/useProfile'
 
-import { userService } from '@/services/studio/user.service'
 import type { ISettingsData } from '@/app/studio/settings/settings.types'
+import { userService } from '@/services/studio/user.service'
 
 export function useAccountSettings() {
 	const { profile, refetch } = useProfile()

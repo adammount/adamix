@@ -14,10 +14,7 @@ export function HeaderAvatar() {
 		isVerified: data?.channel?.isVerified ?? false
 	}))
 
-	if (!channel)
-		return (
-			<SkeletonLoader className='size-[22rem] mb-0 rounded-full md:size-[32rem]' />
-		)
+	if (!channel) return <SkeletonLoader className='mb-0 size-[28rem] rounded-full md:size-[32rem]' />
 
 	return (
 		<div className='relative shrink-0'>
@@ -29,7 +26,7 @@ export function HeaderAvatar() {
 				<Avatar
 					src={channel.avatarUrl || 'https://picsum.photos/seed/avatar/64/64'}
 					size={32}
-					sizeClassName='size-[22rem] md:size-[32rem]'
+					sizeClassName='size-[28rem] md:size-[32rem]'
 				/>
 			</Link>
 

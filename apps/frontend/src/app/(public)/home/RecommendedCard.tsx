@@ -6,6 +6,7 @@ import { VideoThumbnail } from '@/ui/VideoThumbnail'
 import { PAGE } from '@/config/public-page.config'
 
 import { transformCount } from '@/utils/transform-count'
+
 import type { IVideo } from '@/types/video.types'
 
 export function RecommendedCard({ video }: { video: IVideo }) {
@@ -30,9 +31,7 @@ export function RecommendedCard({ video }: { video: IVideo }) {
 					className='text-[10rem] text-white-60'
 					verifiedClassName='size-[6rem]'
 				/>
-				<span className='text-[9rem] text-white-60'>
-					{transformCount(video.viewsCount)} views
-				</span>
+				<span className='text-[9rem] text-white-60'>{transformCount(video.viewsCount)} views</span>
 			</div>
 		</Link>
 	)

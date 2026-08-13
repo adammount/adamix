@@ -20,21 +20,20 @@ export function SearchContent() {
 	const searchParams = useSearchParams()
 	const term = searchParams.get('term') ?? ''
 
-	const { data, isLoading, isFetchingNextPage, fetchNextPage, hasNextPage } =
-		useInfiniteQuery({
-			queryKey: ['search', term],
-			queryFn: async ({ pageParam }) => {
-				const res = await videoService.getAll(term, {
-					page: pageParam,
-					limit: LIMIT
-				})
-				return res.data
-			},
-			initialPageParam: 1,
-			getNextPageParam: lastPage =>
-				lastPage.page < lastPage.totalPages ? lastPage.page + 1 : undefined,
-			enabled: !!term
-		})
+	const { data, isLoading, isFetchingNextPage, fetchNextPage, hasNextPage } = useInfiniteQuery({
+		queryKey: ['search', term],
+		queryFn: async ({ pageParam }) => {
+			const res = await videoService.getAll(term, {
+				page: pageParam,
+				limit: LIMIT
+			})
+			return res.data
+		},
+		initialPageParam: 1,
+		getNextPageParam: lastPage =>
+			lastPage.page < lastPage.totalPages ? lastPage.page + 1 : undefined,
+		enabled: !!term
+	})
 
 	useEffectScroll({ fetchNextPage, hasNextPage, isFetchingNextPage })
 
@@ -42,9 +41,7 @@ export function SearchContent() {
 
 	return (
 		<section className='flex flex-col gap-[20rem] md:gap-[36rem]'>
-			<PageHeading className='text-[30rem] md:text-[36rem]'>
-				Search “{term}”
-			</PageHeading>
+			<PageHeading className='text-[30rem] md:text-[36rem]'>Search “{term}”</PageHeading>
 
 			<div className='flex flex-wrap gap-[12rem] md:gap-[18rem]'>
 				{!isClient || (isLoading && !videos.length) ? (

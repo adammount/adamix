@@ -26,9 +26,7 @@ export function SettingsForm() {
 
 	return (
 		<section className='flex flex-col gap-[20rem] md:gap-[36rem]'>
-			<PageHeading className='text-[30rem] md:text-[36rem]'>
-				Channel Settings
-			</PageHeading>
+			<PageHeading className='text-[30rem] md:text-[36rem]'>Channel Settings</PageHeading>
 
 			{isProfileLoading ? (
 				<p className='text-[16rem] text-white-60'>Loading...</p>

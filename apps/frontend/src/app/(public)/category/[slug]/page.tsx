@@ -1,9 +1,9 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
-import { PAGE } from '@/config/public-page.config'
-
 import { PageHeading } from '@/ui/PageHeading'
+
+import { PAGE } from '@/config/public-page.config'
 
 import { CategoryVideos } from './CategoryVideos'
 import { categoryService } from '@/services/category.service'
@@ -37,9 +37,7 @@ export default async function CategoryPage({ params }: Props) {
 
 	return (
 		<section className='flex flex-col gap-[20rem] md:gap-[36rem]'>
-			<PageHeading className='text-[30rem] md:text-[36rem]'>
-				{data.category.name}
-			</PageHeading>
+			<PageHeading className='text-[30rem] md:text-[36rem]'>{data.category.name}</PageHeading>
 			<CategoryVideos slug={slug} />
 		</section>
 	)

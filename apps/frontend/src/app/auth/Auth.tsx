@@ -5,8 +5,8 @@ import { forwardRef, useState } from 'react'
 import ReCAPTCHA from 'react-google-recaptcha'
 import { useForm } from 'react-hook-form'
 
-import { Logo } from '@/ui/icons/Logo'
 import { SkeletonLoader } from '@/ui/SkeletonLoader'
+import { Logo } from '@/ui/icons/Logo'
 
 import { AuthField } from './AuthField'
 import { SwitchAuth } from './SwitchAuth'
@@ -89,8 +89,7 @@ export function Auth() {
 									type='password'
 									registration={register('confirmPassword', {
 										required: 'Password confirmation is required!',
-										validate: value =>
-											value === watch('password') || 'Passwords don`t match!'
+										validate: value => value === watch('password') || 'Passwords don`t match!'
 									})}
 									error={errors.confirmPassword?.message}
 									placeholder='Enter password again'

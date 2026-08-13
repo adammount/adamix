@@ -1,5 +1,5 @@
-import { memo, type ReactNode } from 'react'
 import type { LucideIcon } from 'lucide-react'
+import { type ReactNode, memo } from 'react'
 
 interface Props {
 	icon?: LucideIcon
@@ -24,9 +24,7 @@ export const SettingsRow = memo(function SettingsRow({
 				)}
 				<div className='flex flex-col gap-[4rem]'>
 					<span className='text-[14rem] text-white'>{label}</span>
-					{description && (
-						<span className='text-[12rem] text-white-60'>{description}</span>
-					)}
+					{description && <span className='text-[12rem] text-white-60'>{description}</span>}
 				</div>
 			</div>
 			{children}

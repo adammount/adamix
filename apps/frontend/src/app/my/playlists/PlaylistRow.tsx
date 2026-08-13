@@ -5,6 +5,7 @@ import { VideoThumbnail } from '@/ui/VideoThumbnail'
 import { PAGE } from '@/config/public-page.config'
 
 import { getPlaylistCover } from '@/utils/get-playlist-cover'
+
 import type { IPlaylist } from '@/types/playlist.types'
 
 export function PlaylistRow({ playlist }: { playlist: IPlaylist }) {
@@ -28,9 +29,7 @@ export function PlaylistRow({ playlist }: { playlist: IPlaylist }) {
 				<h3 className='line-clamp-1 font-heading text-[18rem] font-semibold text-white md:text-[30rem]'>
 					{playlist.title}
 				</h3>
-				<span className='text-[14rem] text-white-60'>
-					{playlist.videos.length} videos
-				</span>
+				<span className='text-[14rem] text-white-60'>{playlist.videos.length} videos</span>
 			</div>
 		</Link>
 	)

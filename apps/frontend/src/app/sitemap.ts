@@ -19,22 +19,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 			categoryService.getAll()
 		])
 
-		const videoRoutes: MetadataRoute.Sitemap = videosRes.data.videos.map(
-			video => ({
-				url: `${SITE_URL}/v/${video.publicId}`,
-				lastModified: video.createdAt,
-				changeFrequency: 'weekly',
-				priority: 0.7
-			})
-		)
+		const videoRoutes: MetadataRoute.Sitemap = videosRes.data.videos.map(video => ({
+			url: `${SITE_URL}/v/${video.publicId}`,
+			lastModified: video.createdAt,
+			changeFrequency: 'weekly',
+			priority: 0.7
+		}))
 
-		const categoryRoutes: MetadataRoute.Sitemap = categoriesRes.data.map(
-			category => ({
-				url: `${SITE_URL}/category/${category.slug}`,
-				changeFrequency: 'weekly',
-				priority: 0.6
-			})
-		)
+		const categoryRoutes: MetadataRoute.Sitemap = categoriesRes.data.map(category => ({
+			url: `${SITE_URL}/category/${category.slug}`,
+			changeFrequency: 'weekly',
+			priority: 0.6
+		}))
 
 		return [...staticRoutes, ...categoryRoutes, ...videoRoutes]
 	} catch {

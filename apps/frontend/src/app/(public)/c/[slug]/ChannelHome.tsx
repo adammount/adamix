@@ -7,10 +7,11 @@ import { VideoThumbnail } from '@/ui/VideoThumbnail'
 
 import { PAGE } from '@/config/public-page.config'
 
-import { transformCount } from '@/utils/transform-count'
 import { stripHtml } from '@/utils/strip-html'
-import { transformDuration } from '@/utils/transform-duration'
+import { transformCount } from '@/utils/transform-count'
 import { transformFullDate } from '@/utils/transform-date'
+import { transformDuration } from '@/utils/transform-duration'
+
 import type { IVideo } from '@/types/video.types'
 
 function UploadRow({ video }: { video: IVideo }) {
@@ -49,9 +50,7 @@ export function ChannelHome({ videos }: { videos: IVideo[] }) {
 	const recent = videos.slice(0, 3)
 
 	if (!featured) {
-		return (
-			<p className='text-[16rem] text-white-60'>No videos on this channel yet</p>
-		)
+		return <p className='text-[16rem] text-white-60'>No videos on this channel yet</p>
 	}
 
 	return (

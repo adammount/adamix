@@ -10,8 +10,9 @@ import { VerifiedIcon } from '@/ui/icons/VerifiedIcon'
 
 import { PAGE } from '@/config/public-page.config'
 
-import { commentService } from '@/services/comment.service'
 import { transformDate } from '@/utils/transform-date'
+
+import { commentService } from '@/services/comment.service'
 import type { ISingleVideoResponse } from '@/types/video.types'
 
 const DynamicCommentActions = dynamic(
@@ -85,20 +86,19 @@ export function CommentItem({ comment, refetch }: Props) {
 					/>
 				</Link>
 			) : (
-				<Avatar name={comment.user.name} size={36} />
+				<Avatar
+					name={comment.user.name}
+					size={36}
+				/>
 			)}
 
 			<div className='flex min-w-0 flex-1 flex-col gap-[6rem]'>
 				<div className='flex items-center gap-[8rem]'>
 					<span className='flex items-center gap-[4rem] text-[12rem] font-semibold text-white'>
 						{comment.user.name}
-						{comment.user.channel?.isVerified && (
-							<VerifiedIcon className='size-[10rem]' />
-						)}
+						{comment.user.channel?.isVerified && <VerifiedIcon className='size-[10rem]' />}
 					</span>
-					<span className='text-[9rem] text-white-60'>
-						{transformDate(comment.createdAt)}
-					</span>
+					<span className='text-[9rem] text-white-60'>{transformDate(comment.createdAt)}</span>
 				</div>
 
 				{isEditing ? (
@@ -115,9 +115,7 @@ export function CommentItem({ comment, refetch }: Props) {
 							className='glass-input disabled-state h-auto resize-none py-[10rem] text-[12rem] leading-[18rem]'
 						/>
 						<span className='text-[9rem] text-white-40'>
-							{isPending
-								? 'Saving...'
-								: 'Enter to save · Esc to cancel'}
+							{isPending ? 'Saving...' : 'Enter to save · Esc to cancel'}
 						</span>
 					</div>
 				) : (
