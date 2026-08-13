@@ -10,5 +10,12 @@
 .env.*
 **/.env
 **/.env.*
-apps/backend/uploads
+apps/backend/uploads/*
+!apps/backend/uploads/videos
+apps/backend/uploads/videos/*
+!apps/backend/uploads/videos/360p
+!apps/backend/uploads/videos/480p
+!apps/backend/uploads/videos/720p
+apps/backend/uploads/videos/*/*
+!apps/backend/uploads/videos/*/placeholder.mp4
 apps/backend/src/generated
