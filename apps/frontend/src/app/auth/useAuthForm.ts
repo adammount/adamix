@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import axios from 'axios'
 import { useRouter } from 'next/navigation'
 import { useRef, useTransition } from 'react'
@@ -12,6 +12,7 @@ import { authService } from '@/services/auth.service'
 
 export function useAuthForm(type: 'login' | 'register', reset: UseFormReset<IAuthForm>) {
 	const router = useRouter()
+	const queryClient = useQueryClient()
 
 	const [isPending, startTransition] = useTransition()
 
@@ -48,9 +49,12 @@ export function useAuthForm(type: 'login' | 'register', reset: UseFormReset<IAut
 			{
 				loading: 'Loading...',
 				success: () => {
+					queryClient.clear()
+
 					startTransition(() => {
 						reset()
-						router.push(PAGE.HOME)
+						router.replace(PAGE.HOME)
+						router.refresh()
 					})
 
 					return 'Success login!'
