@@ -45,10 +45,14 @@ export class AuthService {
 		})
 
 		const apiUrl = process.env.API_URL || 'http://localhost:4200'
-		await this.emailService.sendVerification(
-			user.email,
-			`${apiUrl}/verify-email?token=${user.verificationToken}`
-		)
+		this.emailService
+			.sendVerification(
+				user.email,
+				`${apiUrl}/verify-email?token=${user.verificationToken}`
+			)
+			.catch(err => {
+				console.error('Не удалось отправить письмо подтверждения:', err)
+			})
 
 		return this.buildResponseObject(user)
 	}

@@ -12,7 +12,10 @@ export const getMailerConfig = async (
 		auth: {
 			user: configService.get('SMTP_LOGIN'),
 			pass: configService.get('SMTP_PASSWORD')
-		}
+		},
+		connectionTimeout: 10000,
+		greetingTimeout: 10000,
+		socketTimeout: 15000
 	},
 	defaults: {
 		from: '"htmllessons" <no-reply@htmllessons.ru>'
