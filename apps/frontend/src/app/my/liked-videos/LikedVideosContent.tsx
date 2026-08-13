@@ -31,7 +31,7 @@ export function LikedVideosContent() {
 				/>
 			</div>
 
-			<div className='flex flex-col gap-[36rem]'>
+			<div className='flex min-w-0 flex-1 flex-col gap-[36rem]'>
 				<PageHeading className='hidden md:block'>Liked videos</PageHeading>
 				<div className='flex flex-col gap-[20rem]'>
 					{!isClient || (isLoading && !videos.length) ? (

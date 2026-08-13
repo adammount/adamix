@@ -1,7 +1,8 @@
 'use client'
 
-import { CircleAlert } from 'lucide-react'
-import { usePathname } from 'next/navigation'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { CircleAlert, LogOut } from 'lucide-react'
+import { usePathname, useRouter } from 'next/navigation'
 import { match } from 'path-to-regexp'
 import { useEffect, useState } from 'react'
 
@@ -13,13 +14,30 @@ import { PAGE } from '@/config/public-page.config'
 import { useProfile } from '@/hooks/useProfile'
 
 import { MobileMenuItem } from './MobileMenuItem'
+import { authService } from '@/services/auth.service'
 import { useTypedSelector } from '@/store'
 
 export function MobileMenu({ onClose }: { onClose: () => void }) {
 	const pathname = usePathname()
+	const router = useRouter()
+	const queryClient = useQueryClient()
 	const { isLoggedIn } = useTypedSelector(state => state.auth)
 	const { profile } = useProfile()
 	const [isFeedbackOpen, setIsFeedbackOpen] = useState(false)
+
+	const { mutate: logout, isPending: isLoggingOut } = useMutation({
+		mutationKey: ['logout'],
+		mutationFn: () => authService.logout(),
+		onSettled: () => {
+			authService.removeFromStorage()
+			queryClient.clear()
+
+			const isProtected = pathname.startsWith('/studio') || pathname.startsWith('/my')
+			router.push(isProtected ? PAGE.HOME : pathname)
+			router.refresh()
+			onClose()
+		}
+	})
 
 	useEffect(() => {
 		document.body.style.overflow = 'hidden'
@@ -83,6 +101,15 @@ export function MobileMenu({ onClose }: { onClose: () => void }) {
 					onClick={() => setIsFeedbackOpen(true)}
 					onNavigate={() => {}}
 				/>
+
+				{isLoggedIn && (
+					<MobileMenuItem
+						icon={LogOut}
+						label={isLoggingOut ? 'Please wait...' : 'Logout'}
+						onClick={() => logout()}
+						onNavigate={() => {}}
+					/>
+				)}
 			</nav>
 
 			{isFeedbackOpen && (

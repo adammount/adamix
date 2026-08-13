@@ -3,6 +3,7 @@
 import { memo } from 'react'
 
 import { FeedbackButton } from './FeedbackButton'
+import { Logout } from './Logout'
 import { SidebarMenu } from './menus/SidebarMenu'
 import { SidebarSubscriptions } from './menus/subscriptions/SidebarSubscriptions'
 import { BOTTOM_SIDEBAR_DATA, SIDEBAR_DATA } from './sidebar.data'
@@ -33,6 +34,7 @@ export const Sidebar = memo(function Sidebar({ isShowedSidebar }: { isShowedSide
 					isShowedSidebar={isShowedSidebar}
 				/>
 				<FeedbackButton />
+				<Logout />
 			</div>
 		</aside>
 	)

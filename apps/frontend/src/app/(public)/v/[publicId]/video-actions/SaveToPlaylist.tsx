@@ -1,5 +1,8 @@
 import { useMutation } from '@tanstack/react-query'
 import { Check, ListVideo } from 'lucide-react'
+import Link from 'next/link'
+
+import { PAGE } from '@/config/public-page.config'
 
 import { useOutside } from '@/hooks/useOutside'
 
@@ -15,6 +18,8 @@ export function SaveToPlaylist({ video }: Props) {
 	const { data, refetch: refetchPlaylists } = useUserPlaylists()
 
 	const { isShow, ref, setIsShow } = useOutside<HTMLDivElement>(false)
+
+	const playlists = data?.data ?? []
 
 	const { mutate: togglePlaylist, isPending } = useMutation({
 		mutationKey: ['toggle video'],
@@ -50,25 +55,37 @@ export function SaveToPlaylist({ video }: Props) {
 				data-open={isShow}
 				className='popover glass-strong absolute right-0 top-[44rem] flex w-max max-w-[200rem] flex-col gap-[8rem] rounded-[20rem] p-[12rem] md:top-[52rem]'
 			>
-				{data?.data.map(playlist => (
-					<li key={playlist.id}>
-						<button
-							onClick={() => {
-								togglePlaylist(playlist.id)
-							}}
-							className='disabled-state flex w-full items-center gap-[6rem] rounded-[12rem] px-[8rem] py-[6rem] text-left text-[14rem] text-white-60 transition-fast not-disabled:hover-desktop:bg-white-15 not-disabled:hover-desktop:text-white'
-							disabled={isPending}
+				{playlists.length ? (
+					playlists.map(playlist => (
+						<li key={playlist.id}>
+							<button
+								onClick={() => {
+									togglePlaylist(playlist.id)
+								}}
+								className='disabled-state flex w-full items-center gap-[6rem] rounded-[12rem] px-[8rem] py-[6rem] text-left text-[14rem] text-white-60 transition-fast not-disabled:hover-desktop:bg-white-15 not-disabled:hover-desktop:text-white'
+								disabled={isPending}
+							>
+								{playlist.videos.some(v => v.id === video.id) && (
+									<Check
+										className='size-[14rem] text-brown-light'
+										aria-hidden='true'
+									/>
+								)}
+								{playlist.title}
+							</button>
+						</li>
+					))
+				) : (
+					<li className='flex flex-col gap-[6rem] px-[8rem] py-[4rem]'>
+						<span className='text-[13rem] text-white-60'>No playlists yet</span>
+						<Link
+							href={PAGE.PLAYLISTS()}
+							className='text-[13rem] text-brown-light transition-fast hover-desktop:opacity-80'
 						>
-							{playlist.videos.some(v => v.id === video.id) && (
-								<Check
-									className='size-[14rem] text-brown-light'
-									aria-hidden='true'
-								/>
-							)}
-							{playlist.title}
-						</button>
+							Create one
+						</Link>
 					</li>
-				))}
+				)}
 			</ul>
 		</div>
 	)

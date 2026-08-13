@@ -23,7 +23,7 @@ export function PlaylistHeader({ playlist }: { playlist: IPlaylistDetail }) {
 	const shuffle = () => {
 		if (!videos.length) return
 		const random = videos[Math.floor(Math.random() * videos.length)]
-		push(PAGE.VIDEO(random.publicId))
+		push(`${PAGE.VIDEO(random.publicId)}?autoplay=1`)
 	}
 
 	return (
@@ -49,7 +49,7 @@ export function PlaylistHeader({ playlist }: { playlist: IPlaylistDetail }) {
 				</div>
 				<div className='flex items-start gap-[12rem]'>
 					<GlassButton
-						href={firstVideo ? PAGE.VIDEO(firstVideo.publicId) : '#'}
+						href={firstVideo ? `${PAGE.VIDEO(firstVideo.publicId)}?autoplay=1` : '#'}
 						variant='gradient'
 						icon={<Play className='size-[12rem] md:size-[14rem]' />}
 						className='h-[36rem] px-[17rem] text-[12rem] md:h-[46rem] md:px-[21rem] md:text-[14rem]'

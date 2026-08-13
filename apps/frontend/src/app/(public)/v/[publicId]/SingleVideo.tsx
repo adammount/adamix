@@ -1,7 +1,7 @@
 'use client'
 
 import dynamic from 'next/dynamic'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { useCallback, useState } from 'react'
 
 import { VideoPlayer } from '@/ui/video-player/VideoPlayer'
@@ -27,15 +27,17 @@ interface Props {
 export function SingleVideo({ video }: Props) {
 	const [isTheaterMode, setIsTheaterMode] = useState(false)
 	const router = useRouter()
+	const searchParams = useSearchParams()
 	const { settings } = useUserSettings()
 
 	useUpdateViews({ video })
 
+	const shouldAutoPlay = searchParams.get('autoplay') === '1'
 	const nextVideo = video.similarVideos[0]
 
 	const handleEnded = useCallback(() => {
 		if (!settings?.autoplay || !nextVideo) return
-		router.push(PAGE.VIDEO(nextVideo.publicId))
+		router.push(`${PAGE.VIDEO(nextVideo.publicId)}?autoplay=1`)
 	}, [settings?.autoplay, nextVideo, router])
 
 	return (
@@ -47,6 +49,7 @@ export function SingleVideo({ video }: Props) {
 						toggleTheaterMode={() => setIsTheaterMode(!isTheaterMode)}
 						maxResolution={video.maxResolution}
 						onEnded={handleEnded}
+						shouldAutoPlay={shouldAutoPlay}
 					/>
 				</div>
 

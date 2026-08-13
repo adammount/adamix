@@ -14,14 +14,22 @@ interface Props {
 	toggleTheaterMode: () => void
 	maxResolution: EnumVideoPlayerQuality
 	onEnded?: () => void
+	shouldAutoPlay?: boolean
 }
 
-export function VideoPlayer({ fileName, toggleTheaterMode, maxResolution, onEnded }: Props) {
+export function VideoPlayer({
+	fileName,
+	toggleTheaterMode,
+	maxResolution,
+	onEnded,
+	shouldAutoPlay
+}: Props) {
 	const { fn, playerRef, bgRef, containerRef, state } = useVideoPlayer({
 		fileName,
 		toggleTheaterMode,
 		maxResolution,
-		onEnded
+		onEnded,
+		shouldAutoPlay
 	})
 
 	const playPauseLabel = state.isPlaying ? 'Pause' : 'Play'

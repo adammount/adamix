@@ -2,6 +2,8 @@ import { useRef, useState } from 'react'
 
 import { type EnumVideoPlayerQuality, type HTMLCustomVideoElement } from '../video-player.types'
 
+import { useAmbientSync } from './useAmbientSync'
+import { useAutoPlay } from './useAutoPlay'
 import { useFullScreen } from './useFullScreen'
 import { useOnSeek } from './useOnSeek'
 import { usePlayPause } from './usePlayPause'
@@ -17,9 +19,16 @@ interface Props {
 	toggleTheaterMode: () => void
 	maxResolution: EnumVideoPlayerQuality
 	onEnded?: () => void
+	shouldAutoPlay?: boolean
 }
 
-export function useVideoPlayer({ fileName, toggleTheaterMode, maxResolution, onEnded }: Props) {
+export function useVideoPlayer({
+	fileName,
+	toggleTheaterMode,
+	maxResolution,
+	onEnded,
+	shouldAutoPlay = false
+}: Props) {
 	const playerRef = useRef<HTMLCustomVideoElement>(null)
 	const bgRef = useRef<HTMLCustomVideoElement>(null)
 	const containerRef = useRef<HTMLDivElement>(null)
@@ -41,6 +50,8 @@ export function useVideoPlayer({ fileName, toggleTheaterMode, maxResolution, onE
 	const { onSeek } = useOnSeek(playerRef, bgRef, setCurrentTime)
 
 	useVideoEnded(playerRef, { setIsPlaying, onEnded })
+	useAutoPlay(playerRef, bgRef, { isEnabled: shouldAutoPlay, setIsPlaying })
+	useAmbientSync(playerRef, bgRef, { isLightingMode, isPlaying })
 
 	const fn = {
 		togglePlayPause,

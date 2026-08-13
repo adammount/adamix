@@ -1,9 +1,12 @@
-import { useMutation } from '@tanstack/react-query'
+'use client'
+
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { LogOut } from 'lucide-react'
 import { usePathname, useRouter } from 'next/navigation'
 
+import { SidebarItem } from '@/components/layout/sidebar/SidebarItem'
+
 import { PAGE } from '@/config/public-page.config'
-import { STUDIO_PAGE } from '@/config/studio-page'
 
 import { authService } from '@/services/auth.service'
 import { useTypedSelector } from '@/store'
@@ -11,29 +14,30 @@ import { useTypedSelector } from '@/store'
 export function Logout() {
 	const router = useRouter()
 	const pathname = usePathname()
+	const queryClient = useQueryClient()
+
+	const { isLoggedIn } = useTypedSelector(state => state.auth)
 
 	const { mutate, isPending } = useMutation({
 		mutationKey: ['logout'],
 		mutationFn: () => authService.logout(),
-		onSuccess: () => {
-			if (pathname.includes(STUDIO_PAGE.HOME) || pathname.includes(STUDIO_PAGE.SETTINGS)) {
-				router.push(PAGE.HOME)
-			}
+		onSettled: () => {
+			authService.removeFromStorage()
+			queryClient.clear()
+
+			const isProtected = pathname.startsWith('/studio') || pathname.startsWith('/my')
+			router.push(isProtected ? PAGE.HOME : pathname)
+			router.refresh()
 		}
 	})
-
-	const { isLoggedIn } = useTypedSelector(state => state.auth)
 
 	if (!isLoggedIn) return null
 
 	return (
-		<button
+		<SidebarItem
+			icon={LogOut}
+			label={isPending ? 'Please wait...' : 'Logout'}
 			onClick={() => mutate()}
-			className={'group py-3 flex items-center gap-5'}
-			title='Logout'
-		>
-			<LogOut className={'min-w-6 group-hover:text-primary transition group-hover:rotate-6'} />
-			<span>{isPending ? 'Please wait...' : 'Logout'}</span>
-		</button>
+		/>
 	)
 }

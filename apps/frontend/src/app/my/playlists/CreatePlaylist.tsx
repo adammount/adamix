@@ -34,9 +34,13 @@ export function CreatePlaylist({ refetch, onClose }: Props) {
 			const { toast } = await import('react-hot-toast')
 			toast.success('Playlist successfully created!')
 		},
-		async onError() {
+		async onError(error: unknown) {
 			const { toast } = await import('react-hot-toast')
-			toast.error('Playlist has error!')
+			const axios = (await import('axios')).default
+			const message = axios.isAxiosError(error)
+				? (error.response?.data?.message ?? 'Failed to create playlist')
+				: 'Failed to create playlist'
+			toast.error(message)
 		}
 	})
 
