@@ -28,28 +28,32 @@ const adapter = new PrismaPg({
 const prisma = new PrismaClient({ adapter })
 
 async function main() {
-	if (
-		process.env.NODE_ENV === 'production' &&
-		process.env.SEED_CONFIRM !== 'yes'
-	) {
-		throw new Error(
-			'Сидер удаляет все данные. Для запуска в production задайте SEED_CONFIRM=yes'
-		)
-	}
+	const isKeepData = process.env.SEED_KEEP_DATA === 'true'
 
 	console.log('Начало заполнения базы данных...')
 
-	console.log('Очистка существующих данных...')
-	await prisma.watchHistory.deleteMany()
-	await prisma.videoComment.deleteMany()
-	await prisma.videoLike.deleteMany()
-	await prisma.playlist.deleteMany()
-	await prisma.video.deleteMany()
-	await prisma.videoTag.deleteMany()
-	await prisma.category.deleteMany()
-	await prisma.channel.deleteMany()
-	await prisma.user.deleteMany()
-	console.log('Данные очищены.')
+	if (isKeepData) {
+		const existingVideos = await prisma.video.count()
+		if (existingVideos > 0) {
+			console.log(
+				`SEED_KEEP_DATA=true, в базе уже ${existingVideos} видео — сидер пропущен.`
+			)
+			return
+		}
+		console.log('SEED_KEEP_DATA=true, база пустая — заполняем без очистки.')
+	} else {
+		console.log('Очистка существующих данных...')
+		await prisma.watchHistory.deleteMany()
+		await prisma.videoComment.deleteMany()
+		await prisma.videoLike.deleteMany()
+		await prisma.playlist.deleteMany()
+		await prisma.video.deleteMany()
+		await prisma.videoTag.deleteMany()
+		await prisma.category.deleteMany()
+		await prisma.channel.deleteMany()
+		await prisma.user.deleteMany()
+		console.log('Данные очищены.')
+	}
 
 	// Массивы для хранения созданных пользователей и каналов
 	const users = []

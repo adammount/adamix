@@ -1,6 +1,5 @@
 'use client'
 
-import cn from 'clsx'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/navigation'
 import { useCallback, useState } from 'react'
@@ -42,9 +41,7 @@ export function SingleVideo({ video }: Props) {
 	return (
 		<section className='flex flex-col items-start gap-[12rem] md:flex-row md:gap-[16rem]'>
 			<div className='flex w-full min-w-0 flex-1 flex-col gap-[12rem]'>
-				<div
-					className={cn(isTheaterMode ? 'md:absolute md:left-0 md:top-0 md:w-full' : 'relative')}
-				>
+				<div className='relative'>
 					<VideoPlayer
 						fileName={video.videoFileName}
 						toggleTheaterMode={() => setIsTheaterMode(!isTheaterMode)}
@@ -54,12 +51,7 @@ export function SingleVideo({ video }: Props) {
 				</div>
 
 				<div className='flex flex-col gap-[12rem] px-[8rem] md:px-0'>
-					<div
-						className={cn(
-							'flex flex-col gap-[6rem] md:flex-row md:items-start md:justify-between md:gap-[16rem]',
-							{ 'md:pt-[55rem]': isTheaterMode }
-						)}
-					>
+					<div className='flex flex-col gap-[6rem] md:flex-row md:items-start md:justify-between md:gap-[16rem]'>
 						<div className='flex min-w-0 flex-col gap-[2rem]'>
 							<h1 className='max-w-[500rem] font-heading text-[22rem] font-semibold text-white md:text-[30rem]'>
 								{video.title}
@@ -79,7 +71,7 @@ export function SingleVideo({ video }: Props) {
 				</div>
 			</div>
 
-			<VideoAside video={video} />
+			{!isTheaterMode && <VideoAside video={video} />}
 		</section>
 	)
 }

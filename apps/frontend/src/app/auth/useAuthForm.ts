@@ -19,11 +19,7 @@ export function useAuthForm(type: 'login' | 'register', reset: UseFormReset<IAut
 
 	const { mutateAsync, isPending: isAuthPending } = useMutation({
 		mutationKey: [type],
-		mutationFn: ({ recaptchaToken, ...data }: IAuthData & { recaptchaToken?: string | null }) =>
-			authService.main(type, data, recaptchaToken),
-		onSettled() {
-			recaptchaRef.current?.reset()
-		}
+		mutationFn: (data: IAuthData) => authService.main(type, data, recaptchaRef.current?.getValue())
 	})
 
 	const onSubmit: SubmitHandler<IAuthForm> = async ({ email, password }) => {
@@ -42,8 +38,7 @@ export function useAuthForm(type: 'login' | 'register', reset: UseFormReset<IAut
 		toast.promise(
 			mutateAsync({
 				email,
-				password,
-				recaptchaToken: token
+				password
 			}),
 			{
 				loading: 'Loading...',
@@ -57,9 +52,8 @@ export function useAuthForm(type: 'login' | 'register', reset: UseFormReset<IAut
 				},
 				error: (e: unknown) => {
 					if (axios.isAxiosError(e)) {
-						return e.response?.data?.message ?? 'Something went wrong'
+						return e.response?.data?.message
 					}
-					return 'Something went wrong'
 				}
 			}
 		)

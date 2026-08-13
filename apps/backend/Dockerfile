@@ -44,4 +44,4 @@ USER node
 
 EXPOSE 4200
 
-CMD ["sh", "-c", "cp -rn uploads-seed/. uploads/ 2>/dev/null; npx prisma db push && node dist/src/main"]
+CMD ["sh", "-c", "cp -rn uploads-seed/. uploads/ 2>/dev/null; npx prisma db push && (npm run seed:prod || echo 'Seed failed, continuing') && node dist/src/main"]
