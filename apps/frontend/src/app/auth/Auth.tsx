@@ -5,7 +5,6 @@ import { forwardRef, useState } from 'react'
 import ReCAPTCHA from 'react-google-recaptcha'
 import { useForm } from 'react-hook-form'
 
-import { SkeletonLoader } from '@/ui/SkeletonLoader'
 import { Logo } from '@/ui/icons/Logo'
 
 import { AuthField } from './AuthField'
@@ -62,43 +61,39 @@ export function Auth() {
 					onSubmit={handleSubmit(onSubmit)}
 					className='flex flex-col gap-[16rem]'
 				>
-					{isLoading ? (
-						<SkeletonLoader
-							count={3}
-							className='h-[44rem] rounded-[16rem]'
+					<div className='flex flex-col gap-[16rem]'>
+						<AuthField
+							label='Email'
+							type='email'
+							registration={register('email', { required: 'Email is required!' })}
+							error={errors.email?.message}
+							placeholder='Enter email'
+							disabled={isLoading}
 						/>
-					) : (
-						<>
+						<AuthField
+							label='Password'
+							type='password'
+							registration={register('password', { required: 'Password is required!' })}
+							error={errors.password?.message}
+							placeholder='Enter password'
+							disabled={isLoading}
+						/>
+						{!isLogin && (
 							<AuthField
-								label='Email'
-								type='email'
-								registration={register('email', { required: 'Email is required!' })}
-								error={errors.email?.message}
-								placeholder='Enter email'
-							/>
-							<AuthField
-								label='Password'
+								label='Password confirmation'
 								type='password'
-								registration={register('password', { required: 'Password is required!' })}
-								error={errors.password?.message}
-								placeholder='Enter password'
+								registration={register('confirmPassword', {
+									required: 'Password confirmation is required!',
+									validate: value => value === watch('password') || 'Passwords don`t match!'
+								})}
+								error={errors.confirmPassword?.message}
+								placeholder='Enter password again'
+								disabled={isLoading}
 							/>
-							{!isLogin && (
-								<AuthField
-									label='Password confirmation'
-									type='password'
-									registration={register('confirmPassword', {
-										required: 'Password confirmation is required!',
-										validate: value => value === watch('password') || 'Passwords don`t match!'
-									})}
-									error={errors.confirmPassword?.message}
-									placeholder='Enter password again'
-								/>
-							)}
+						)}
 
-							<ForwardedRefRecaptcha ref={recaptchaRef} />
-						</>
-					)}
+						<ForwardedRefRecaptcha ref={recaptchaRef} />
+					</div>
 
 					<button
 						type='submit'

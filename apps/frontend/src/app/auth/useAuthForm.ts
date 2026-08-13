@@ -19,7 +19,11 @@ export function useAuthForm(type: 'login' | 'register', reset: UseFormReset<IAut
 
 	const { mutateAsync, isPending: isAuthPending } = useMutation({
 		mutationKey: [type],
-		mutationFn: (data: IAuthData) => authService.main(type, data, recaptchaRef.current?.getValue())
+		mutationFn: ({ recaptchaToken, ...data }: IAuthData & { recaptchaToken?: string | null }) =>
+			authService.main(type, data, recaptchaToken),
+		onSettled() {
+			recaptchaRef.current?.reset()
+		}
 	})
 
 	const onSubmit: SubmitHandler<IAuthForm> = async ({ email, password }) => {
@@ -38,7 +42,8 @@ export function useAuthForm(type: 'login' | 'register', reset: UseFormReset<IAut
 		toast.promise(
 			mutateAsync({
 				email,
-				password
+				password,
+				recaptchaToken: token
 			}),
 			{
 				loading: 'Loading...',
