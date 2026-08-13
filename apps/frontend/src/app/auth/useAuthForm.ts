@@ -52,8 +52,9 @@ export function useAuthForm(type: 'login' | 'register', reset: UseFormReset<IAut
 				},
 				error: (e: unknown) => {
 					if (axios.isAxiosError(e)) {
-						return e.response?.data?.message
+						return e.response?.data?.message ?? 'Something went wrong'
 					}
+					return 'Something went wrong'
 				}
 			}
 		)
