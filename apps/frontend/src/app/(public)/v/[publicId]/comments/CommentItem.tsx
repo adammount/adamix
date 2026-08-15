@@ -26,6 +26,7 @@ interface Props {
 }
 
 export function CommentItem({ comment, refetch }: Props) {
+	const authorName = comment.user.name?.trim() || 'Anonym'
 	const [isEditing, setIsEditing] = useState(false)
 	const [text, setText] = useState(comment.text)
 	const textareaRef = useRef<HTMLTextAreaElement>(null)
@@ -81,13 +82,13 @@ export function CommentItem({ comment, refetch }: Props) {
 				>
 					<Avatar
 						src={comment.user.channel.avatarUrl}
-						name={comment.user.name}
+						name={authorName}
 						size={36}
 					/>
 				</Link>
 			) : (
 				<Avatar
-					name={comment.user.name}
+					name={authorName}
 					size={36}
 				/>
 			)}
@@ -95,7 +96,7 @@ export function CommentItem({ comment, refetch }: Props) {
 			<div className='flex min-w-0 flex-1 flex-col gap-[6rem]'>
 				<div className='flex items-center gap-[8rem]'>
 					<span className='flex items-center gap-[4rem] text-[12rem] font-semibold text-white'>
-						{comment.user.name}
+						{authorName}
 						{comment.user.channel?.isVerified && <VerifiedIcon className='size-[10rem]' />}
 					</span>
 					<span className='text-[9rem] text-white-60'>{transformDate(comment.createdAt)}</span>
