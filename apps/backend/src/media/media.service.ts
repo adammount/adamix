@@ -43,23 +43,26 @@ export class MediaService {
 			const { width: inputWidth, height: inputHeight } =
 				await this.getVideoResolution(filePath)
 
-			const maxResolution = this.mapResolution(inputWidth, inputHeight)
+			const available = this.getAvailableResolutions(inputWidth, inputHeight)
+			const maxResolution = available[0].name as EnumVideoPlayerQuality
 
-			this.processingStatus.set(uniqueFileName, 0)
+			const playbackFileName = `${path.parse(uniqueFileName).name}.mp4`
 
-			this.processVideo(filePath, uniqueFileName, folderLowerCase)
+			this.processingStatus.set(playbackFileName, 0)
+
+			this.processVideo(filePath, playbackFileName, folderLowerCase)
 				.then(() => {
-					this.processingStatus.set(uniqueFileName, 100)
+					this.processingStatus.set(playbackFileName, 100)
 				})
 				.catch(err => {
-					this.processingStatus.set(uniqueFileName, -1)
-					console.error('Ошибка при обработке видео:', err)
+					this.processingStatus.set(playbackFileName, -1)
+					console.error('Video processing failed:', err)
 				})
 
 			return [
 				{
-					url: `/uploads/${folderLowerCase}/${uniqueFileName}`,
-					name: uniqueFileName,
+					url: `/uploads/${folderLowerCase}/${playbackFileName}`,
+					name: playbackFileName,
 					maxResolution
 				}
 			]
@@ -79,6 +82,18 @@ export class MediaService {
 		return file.mimetype.startsWith('video/')
 	}
 
+	private getAvailableResolutions(
+		inputWidth: number,
+		inputHeight: number
+	): IResolution[] {
+		const matched = RESOLUTIONS.filter(
+			resolution =>
+				resolution.width <= inputWidth && resolution.height <= inputHeight
+		)
+
+		return matched.length ? matched : [RESOLUTIONS[RESOLUTIONS.length - 1]]
+	}
+
 	private async processVideo(
 		inputPath: string,
 		fileName: string,
@@ -88,14 +103,10 @@ export class MediaService {
 			const { width: inputWidth, height: inputHeight } =
 				await this.getVideoResolution(inputPath)
 
-			const matched = RESOLUTIONS.filter(
-				resolution =>
-					resolution.width <= inputWidth && resolution.height <= inputHeight
+			const availableResolutions = this.getAvailableResolutions(
+				inputWidth,
+				inputHeight
 			)
-
-			const availableResolutions = matched.length
-				? matched
-				: [RESOLUTIONS[RESOLUTIONS.length - 1]]
 
 			const totalResolutions = availableResolutions.length
 
@@ -158,7 +169,20 @@ export class MediaService {
 
 		return new Promise<void>((resolve, reject) => {
 			ffmpeg(inputPath)
-				.size(`${resolution.width}x${resolution.height}`)
+				.videoCodec('libx264')
+				.audioCodec('aac')
+				.outputOptions([
+					'-vf',
+					`scale=-2:${resolution.height}`,
+					'-preset',
+					'veryfast',
+					'-crf',
+					'23',
+					'-movflags',
+					'+faststart',
+					'-f',
+					'mp4'
+				])
 				.output(outputPath)
 				.on('progress', progress => {
 					const percent = progress.percent || 0
@@ -183,22 +207,4 @@ export class MediaService {
 		return status === undefined ? 100 : status
 	}
 
-	private mapResolution(width: number, height: number): EnumVideoPlayerQuality {
-		const resolutions = [
-			{ width: 3840, height: 2160, name: EnumVideoPlayerQuality['4K'] },
-			{ width: 2560, height: 1440, name: EnumVideoPlayerQuality['2K'] },
-			{ width: 1920, height: 1080, name: EnumVideoPlayerQuality['1080p'] },
-			{ width: 1280, height: 720, name: EnumVideoPlayerQuality['720p'] },
-			{ width: 854, height: 480, name: EnumVideoPlayerQuality['480p'] },
-			{ width: 640, height: 360, name: EnumVideoPlayerQuality['360p'] }
-		]
-
-		for (const res of resolutions) {
-			if (width >= res.width && height >= res.height) {
-				return res.name
-			}
-		}
-
-		return EnumVideoPlayerQuality['720p']
-	}
 }
