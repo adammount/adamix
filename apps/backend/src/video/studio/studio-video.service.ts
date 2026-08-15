@@ -1,5 +1,6 @@
 import { PrismaService } from '@/prisma.service'
 import { buildPagination, getPaginationSkip } from '@/utils/pagination.util'
+import { generateUniqueSlug, slugifyEmail } from '@/utils/slug.util'
 import { nanoid } from 'nanoid'
 
 import {
@@ -35,13 +36,47 @@ export class StudioVideoService {
 		return video
 	}
 
-	async create(channelId: string, dto: CreateVideoDto) {
-		if (!channelId) {
+	async create(channelId: string, dto: CreateVideoDto, userId?: string) {
+		const targetChannelId = channelId || (await this.ensureChannel(userId))
+
+		const video = await this.createVideo(targetChannelId, dto)
+		return video.id
+	}
+
+	private async ensureChannel(userId?: string) {
+		if (!userId) {
 			throw new BadRequestException('You need a channel to publish videos')
 		}
 
-		const video = await this.createVideo(channelId, dto)
-		return video.id
+		const existing = await this.prisma.channel.findUnique({
+			where: { userId },
+			select: { id: true }
+		})
+		if (existing) return existing.id
+
+		const user = await this.prisma.user.findUnique({
+			where: { id: userId },
+			select: { email: true }
+		})
+		if (!user) throw new NotFoundException('User not found')
+
+		const slug = await generateUniqueSlug(
+			slugifyEmail(user.email),
+			async candidate =>
+				Boolean(
+					await this.prisma.channel.findUnique({
+						where: { slug: candidate },
+						select: { id: true }
+					})
+				)
+		)
+
+		const channel = await this.prisma.channel.create({
+			data: { userId, slug },
+			select: { id: true }
+		})
+
+		return channel.id
 	}
 
 	async update(channelId: string, id: string, dto: UpdateVideoDto) {

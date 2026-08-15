@@ -29,7 +29,12 @@ export class StudioVideoController {
 		@CurrentUser('channel') channel: Channel | undefined,
 		@Query() { limit, page, searchTerm }: PaginationQueryDto
 	) {
-		return this.studioVideoService.getAll(channel?.id ?? '', searchTerm, page, limit)
+		return this.studioVideoService.getAll(
+			channel?.id ?? '',
+			searchTerm,
+			page,
+			limit
+		)
 	}
 
 	@Get(':id')
@@ -46,10 +51,11 @@ export class StudioVideoController {
 	@HttpCode(200)
 	@Auth()
 	async create(
+		@CurrentUser('id') userId: string,
 		@CurrentUser('channel') channel: Channel | undefined,
 		@Body() dto: CreateVideoDto
 	) {
-		return this.studioVideoService.create(channel?.id ?? '', dto)
+		return this.studioVideoService.create(channel?.id ?? '', dto, userId)
 	}
 
 	@UsePipes(new ValidationPipe())

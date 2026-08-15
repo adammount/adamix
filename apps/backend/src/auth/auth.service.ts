@@ -1,6 +1,7 @@
 import { EmailService } from '@/email/email.service'
 import { PrismaService } from '@/prisma.service'
 import { UserService } from '@/user/user.service'
+import { generateUniqueSlug, slugifyEmail } from '@/utils/slug.util'
 import {
 	BadRequestException,
 	Injectable,
@@ -40,7 +41,12 @@ export class AuthService {
 		const user = await this.prisma.user.create({
 			data: {
 				...dto,
-				password: await hash(dto.password)
+				password: await hash(dto.password),
+				channel: {
+					create: {
+						slug: await this.generateChannelSlug(dto.email)
+					}
+				}
 			}
 		})
 
@@ -55,6 +61,17 @@ export class AuthService {
 			})
 
 		return this.buildResponseObject(user)
+	}
+
+	private async generateChannelSlug(email: string) {
+		return generateUniqueSlug(slugifyEmail(email), async candidate =>
+			Boolean(
+				await this.prisma.channel.findUnique({
+					where: { slug: candidate },
+					select: { id: true }
+				})
+			)
+		)
 	}
 
 	async getNewTokens(refreshToken: string) {

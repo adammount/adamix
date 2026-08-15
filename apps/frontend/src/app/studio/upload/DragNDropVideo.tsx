@@ -1,5 +1,5 @@
 import { Upload } from 'lucide-react'
-import { type ChangeEvent, type DragEvent, useState } from 'react'
+import { type ChangeEvent, type DragEvent, useRef, useState } from 'react'
 import type { UseFormReset } from 'react-hook-form'
 import { twMerge } from 'tailwind-merge'
 
@@ -14,6 +14,8 @@ interface Props {
 const MAX_VIDEO_SIZE = 3 * 1024 * 1024 * 1024
 
 export function DragNDropVideo({ reset }: Props) {
+	const originalNameRef = useRef('')
+
 	const { uploadFile, isLoading: isUploading } = useUpload({
 		maxFileSize: MAX_VIDEO_SIZE,
 		folder: 'videos',
@@ -24,7 +26,7 @@ export function DragNDropVideo({ reset }: Props) {
 			reset({
 				videoFileName: file.name,
 				maxResolution: file.maxResolution,
-				title: file.name
+				title: originalNameRef.current
 			})
 
 			const { toast } = await import('react-hot-toast')
@@ -33,6 +35,12 @@ export function DragNDropVideo({ reset }: Props) {
 	})
 
 	const [isDragging, setIsDragging] = useState(false)
+
+	const handleSelect = (e: ChangeEvent<HTMLInputElement>) => {
+		const file = e.target.files?.[0]
+		if (file) originalNameRef.current = file.name.replace(/\.[^.]+$/, '')
+		uploadFile(e)
+	}
 
 	const handleDragOver = (e: DragEvent) => {
 		e.preventDefault()
@@ -45,7 +53,11 @@ export function DragNDropVideo({ reset }: Props) {
 		e.preventDefault()
 		setIsDragging(false)
 		const file = e.dataTransfer.files?.[0]
-		if (file) uploadFile({ target: { files: [file] } } as unknown as ChangeEvent<HTMLInputElement>)
+		if (file) {
+			handleSelect({
+				target: { files: [file] }
+			} as unknown as ChangeEvent<HTMLInputElement>)
+		}
 	}
 
 	return isUploading ? (
@@ -73,7 +85,7 @@ export function DragNDropVideo({ reset }: Props) {
 				type='file'
 				accept='video/*'
 				className='hidden'
-				onChange={uploadFile}
+				onChange={handleSelect}
 			/>
 		</label>
 	)
