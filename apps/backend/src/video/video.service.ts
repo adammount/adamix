@@ -345,9 +345,7 @@ export class VideoService {
 					}
 				}
 			},
-			orderBy: {
-				createdAt: 'desc'
-			},
+			orderBy: [{ createdAt: 'desc' }, { id: 'asc' }],
 			take: 6
 		})
 

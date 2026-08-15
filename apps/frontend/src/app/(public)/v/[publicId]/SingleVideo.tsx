@@ -2,7 +2,7 @@
 
 import dynamic from 'next/dynamic'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { useCallback, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 
 import { VideoPlayer } from '@/ui/video-player/VideoPlayer'
 
@@ -24,6 +24,8 @@ interface Props {
 	video: ISingleVideoResponse
 }
 
+const QUEUE_LIMIT = 20
+
 export function SingleVideo({ video }: Props) {
 	const [isTheaterMode, setIsTheaterMode] = useState(false)
 	const router = useRouter()
@@ -33,12 +35,26 @@ export function SingleVideo({ video }: Props) {
 	useUpdateViews({ video })
 
 	const shouldAutoPlay = searchParams.get('autoplay') === '1'
-	const nextVideo = video.similarVideos[0]
+
+	const watchedIds = useMemo(() => {
+		const queue = searchParams.get('queue')
+		return queue ? queue.split(',') : []
+	}, [searchParams])
+
+	const nextVideo = useMemo(
+		() =>
+			video.similarVideos.find(
+				item => item.publicId !== video.publicId && !watchedIds.includes(item.publicId)
+			),
+		[video.similarVideos, video.publicId, watchedIds]
+	)
 
 	const handleEnded = useCallback(() => {
 		if (!settings?.autoplay || !nextVideo) return
-		router.push(`${PAGE.VIDEO(nextVideo.publicId)}?autoplay=1`)
-	}, [settings?.autoplay, nextVideo, router])
+
+		const queue = [...watchedIds, video.publicId].slice(-QUEUE_LIMIT).join(',')
+		router.push(`${PAGE.VIDEO(nextVideo.publicId)}?autoplay=1&queue=${queue}`)
+	}, [settings?.autoplay, nextVideo, watchedIds, video.publicId, router])
 
 	return (
 		<section className='flex flex-col items-start gap-[12rem] md:flex-row md:gap-[16rem]'>
