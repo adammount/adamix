@@ -43,6 +43,7 @@ export function VideoForm({
 						<Controller
 							control={control}
 							name='description'
+							rules={{ required: 'Description is required!' }}
 							render={({ field: { onChange, value }, fieldState: { error } }) => (
 								<Textarea
 									label='Description'
@@ -58,6 +59,7 @@ export function VideoForm({
 						<Controller
 							control={control}
 							name='thumbnailUrl'
+							rules={{ required: 'Thumbnail is required!' }}
 							render={({ field: { onChange, value }, fieldState: { error } }) => (
 								<UploadField
 									label='Thumbnail'

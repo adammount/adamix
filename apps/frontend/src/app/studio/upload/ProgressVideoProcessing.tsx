@@ -23,15 +23,28 @@ export function ProgressVideoProcessing({
 			return data.data.status
 		},
 		refetchInterval: query => {
-			const queryProgress = query.state.data?.data
-			return queryProgress !== undefined && queryProgress.status < 100 ? 3500 : false
+			const status = query.state.data?.data.status
+			return status === undefined || (status >= 0 && status < 100) ? 3000 : false
 		},
 		enabled: !!fileName && !isReadyToPublish
 	})
 
 	const progress = processingData ?? 0
+	const isFailed = progress < 0
 
 	useEffect(() => {
+		if (isFailed) {
+			setIsReadyToPublish(true)
+
+			const toastError = async () => {
+				const { toast } = await import('react-hot-toast')
+				toast.error('Video processing failed, quality options may be limited')
+			}
+
+			toastError()
+			return
+		}
+
 		if (progress !== 100) return
 
 		setIsReadyToPublish(true)
@@ -42,21 +55,19 @@ export function ProgressVideoProcessing({
 		}
 
 		toastSuccess()
-	}, [progress, setIsReadyToPublish])
+	}, [progress, isFailed, setIsReadyToPublish])
+
+	if (isFailed || progress >= 100) return null
 
 	return (
-		progress > 0 && (
-			<div className='relative flex h-[36rem] w-full items-center justify-center overflow-hidden rounded-[24rem] border border-white-15 bg-white-15'>
-				<div
-					className='absolute inset-y-0 left-0 animate-pulse bg-gradient-to-r from-white-15 to-brown-light/50 transition-all'
-					style={{
-						width: progress ? `${progress}%` : 0
-					}}
-				/>
-				<span className='relative text-[14rem] font-medium text-white'>
-					Processing video ({Math.round(progress)}%)
-				</span>
-			</div>
-		)
+		<div className='relative flex h-[36rem] w-full items-center justify-center overflow-hidden rounded-[24rem] border border-white-15 bg-white-15'>
+			<div
+				className='absolute inset-y-0 left-0 animate-pulse bg-gradient-to-r from-white-15 to-brown-light/50 transition-all'
+				style={{ width: `${progress}%` }}
+			/>
+			<span className='relative text-[14rem] font-medium text-white'>
+				Processing video ({Math.round(progress)}%)
+			</span>
+		</div>
 	)
 }

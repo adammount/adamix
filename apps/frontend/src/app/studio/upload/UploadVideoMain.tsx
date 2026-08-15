@@ -42,11 +42,13 @@ export function UploadVideoMain() {
 
 				{!fileName && <DragNDropVideo reset={form.reset} />}
 
-				<ProgressVideoProcessing
-					isReadyToPublish={isReadyToPublish}
-					setIsReadyToPublish={setIsReadyToPublish}
-					fileName={fileName}
-				/>
+				{!!fileName && (
+					<ProgressVideoProcessing
+						isReadyToPublish={isReadyToPublish}
+						setIsReadyToPublish={setIsReadyToPublish}
+						fileName={fileName}
+					/>
+				)}
 
 				{!!fileName && (
 					<CreateVideoForm

@@ -17,6 +17,7 @@ interface Props {
 
 export function CreateVideoForm({ form, isReadyToPublish }: Props) {
 	const router = useRouter()
+	const { isValid } = form.formState
 
 	const { mutate, isPending } = useMutation({
 		mutationKey: ['create a video'],
@@ -45,7 +46,7 @@ export function CreateVideoForm({ form, isReadyToPublish }: Props) {
 			<VideoForm form={form} />
 			<button
 				type='submit'
-				disabled={!isReadyToPublish || isPending}
+				disabled={!isReadyToPublish || isPending || !isValid}
 				className='glass-action self-end px-[17rem] py-[8rem] text-[12rem] md:px-[24rem] md:py-[12rem] md:text-[14rem]'
 			>
 				{isPending ? 'Publishing...' : isReadyToPublish ? 'Publish' : 'Wait processing...'}

@@ -3,6 +3,7 @@ import { buildPagination, getPaginationSkip } from '@/utils/pagination.util'
 import { nanoid } from 'nanoid'
 
 import {
+	BadRequestException,
 	ForbiddenException,
 	Injectable,
 	NotFoundException
@@ -35,6 +36,10 @@ export class StudioVideoService {
 	}
 
 	async create(channelId: string, dto: CreateVideoDto) {
+		if (!channelId) {
+			throw new BadRequestException('You need a channel to publish videos')
+		}
+
 		const video = await this.createVideo(channelId, dto)
 		return video.id
 	}

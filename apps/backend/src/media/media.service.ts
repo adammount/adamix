@@ -88,10 +88,14 @@ export class MediaService {
 			const { width: inputWidth, height: inputHeight } =
 				await this.getVideoResolution(inputPath)
 
-			const availableResolutions = RESOLUTIONS.filter(
+			const matched = RESOLUTIONS.filter(
 				resolution =>
 					resolution.width <= inputWidth && resolution.height <= inputHeight
 			)
+
+			const availableResolutions = matched.length
+				? matched
+				: [RESOLUTIONS[RESOLUTIONS.length - 1]]
 
 			const totalResolutions = availableResolutions.length
 
@@ -175,7 +179,8 @@ export class MediaService {
 	}
 
 	getProcessingStatus(fileName: string): number {
-		return this.processingStatus.get(fileName) || 0
+		const status = this.processingStatus.get(fileName)
+		return status === undefined ? 100 : status
 	}
 
 	private mapResolution(width: number, height: number): EnumVideoPlayerQuality {
