@@ -1,6 +1,8 @@
 import { useQuery } from '@tanstack/react-query'
 import { type Dispatch, type SetStateAction, useEffect } from 'react'
 
+import { QUERY_KEYS } from '@/config/query-keys.config'
+
 import { fileService } from '@/services/studio/file.service'
 
 interface Props {
@@ -15,7 +17,7 @@ export function ProgressVideoProcessing({
 	isReadyToPublish
 }: Props) {
 	const { data: processingData } = useQuery({
-		queryKey: ['processing video', fileName],
+		queryKey: QUERY_KEYS.PROCESSING_VIDEO(fileName),
 		queryFn: () => fileService.getProcessingStatus(fileName),
 		select(data) {
 			return data.data.status

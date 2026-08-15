@@ -13,12 +13,7 @@ const DynamicSettingsMediaFields = dynamic(() =>
 
 export function SettingsForm() {
 	const {
-		formObject: {
-			handleSubmit,
-			register,
-			formState: { errors },
-			control
-		},
+		formObject: { handleSubmit, register, control },
 		isLoading,
 		isProfileLoading,
 		onSubmit
@@ -37,30 +32,6 @@ export function SettingsForm() {
 				>
 					<div className='grid grid-cols-1 gap-[24rem] md:grid-cols-2'>
 						<div className='flex flex-col gap-[16rem]'>
-							<Field
-								label='Email'
-								type='email'
-								placeholder='Enter email'
-								error={errors.email?.message}
-								registration={register('email', {
-									required: 'Email is required!'
-								})}
-							/>
-
-							<Field
-								label='Password'
-								type='password'
-								placeholder='Enter password'
-								registration={register('password')}
-							/>
-
-							<Field
-								label='Name'
-								type='text'
-								placeholder='Enter name'
-								registration={register('name')}
-							/>
-
 							<Field
 								label='Slug (alias)'
 								type='text'

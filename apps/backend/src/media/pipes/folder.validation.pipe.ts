@@ -9,7 +9,7 @@ const allowedFolders = ['avatars', 'banners', 'thumbnails', 'videos']
 
 @Injectable()
 export class FolderValidationPipe implements PipeTransform {
-	transform(value: any, metadata: ArgumentMetadata) {
+	transform(value: unknown, metadata: ArgumentMetadata) {
 		if (metadata.type !== 'query') {
 			return value
 		}

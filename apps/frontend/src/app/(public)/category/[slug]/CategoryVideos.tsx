@@ -5,6 +5,8 @@ import { useInfiniteQuery } from '@tanstack/react-query'
 import { EmptyState } from '@/ui/EmptyState'
 import { SkeletonLoader } from '@/ui/SkeletonLoader'
 
+import { QUERY_KEYS } from '@/config/query-keys.config'
+
 import { useEffectScroll } from '@/hooks/useEffectScroll'
 
 import { RecommendedCard } from '../../home/RecommendedCard'
@@ -15,7 +17,7 @@ const LIMIT = 30
 
 export function CategoryVideos({ slug }: { slug: string }) {
 	const { data, isLoading, isFetchingNextPage, fetchNextPage, hasNextPage } = useInfiniteQuery({
-		queryKey: ['category-videos', slug],
+		queryKey: QUERY_KEYS.CATEGORY_VIDEOS(slug),
 		queryFn: async ({ pageParam }) => {
 			const res = await categoryService.getBySlug(slug, {
 				page: pageParam,

@@ -1,7 +1,8 @@
 import toast from 'react-hot-toast'
 
-// default 2mb
-export const validateFileSize = (file: File, maxFileSize = 2 * 1024 * 1024) => {
+const DEFAULT_MAX_FILE_SIZE = 2 * 1024 * 1024
+
+export const validateFileSize = (file: File, maxFileSize = DEFAULT_MAX_FILE_SIZE) => {
 	let maxSizeFormatted: string
 	if (maxFileSize >= 1024 * 1024 * 1024) {
 		maxSizeFormatted = (maxFileSize / (1024 * 1024 * 1024)).toFixed(0) + ' GB'

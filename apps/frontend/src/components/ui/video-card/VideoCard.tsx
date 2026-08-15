@@ -6,6 +6,7 @@ import { VideoThumbnail } from '@/ui/VideoThumbnail'
 
 import { PAGE } from '@/config/public-page.config'
 
+import { getAvatarUrl } from '@/utils/get-placeholder-image'
 import { transformCount } from '@/utils/transform-count'
 
 import type { IVideo } from '@/types/video.types'
@@ -29,10 +30,7 @@ export function VideoCard({ video }: { video: IVideo }) {
 				<h3 className='line-clamp-1 font-heading text-[18rem] text-white'>{video.title}</h3>
 				<div className='flex items-center gap-[4rem]'>
 					<Avatar
-						src={
-							video.channel?.avatarUrl ||
-							`https://picsum.photos/seed/${video.channel?.slug || video.id}/72/72`
-						}
+						src={getAvatarUrl(video.channel?.avatarUrl, video.channel?.slug || video.id, 72)}
 						name={video.channel?.user?.name}
 						size={36}
 					/>

@@ -43,7 +43,6 @@ class AuthService {
 		}
 	}
 
-	// CLIENT
 	async getNewTokens() {
 		try {
 			const response = await axiosClassic.post<IAuthResponse>(`${this._AUTH}/access-token`)

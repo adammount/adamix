@@ -4,7 +4,12 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import type { AxiosResponse } from 'axios'
 import cn from 'clsx'
 import { Heart } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 
+import { PAGE } from '@/config/public-page.config'
+import { QUERY_KEYS } from '@/config/query-keys.config'
+
+import { useAuth } from '@/hooks/useAuth'
 import { useProfile, useProfileSelector } from '@/hooks/useProfile'
 
 import { transformCount } from '@/utils/transform-count'
@@ -18,6 +23,8 @@ type ProfileQueryData = AxiosResponse<IProfileResponse>
 
 export function VideoActions({ video }: { video: ISingleVideoResponse }) {
 	const queryClient = useQueryClient()
+	const router = useRouter()
+	const { isLoggedIn } = useAuth()
 	const { profile } = useProfile()
 
 	const isLiked =
@@ -30,10 +37,10 @@ export function VideoActions({ video }: { video: ISingleVideoResponse }) {
 		mutationKey: ['like', video.id],
 		mutationFn: () => userService.toggleLike(video.id),
 		async onMutate() {
-			await queryClient.cancelQueries({ queryKey: ['profile'] })
-			const previousProfile = queryClient.getQueryData<ProfileQueryData>(['profile'])
+			await queryClient.cancelQueries({ queryKey: QUERY_KEYS.PROFILE })
+			const previousProfile = queryClient.getQueryData<ProfileQueryData>(QUERY_KEYS.PROFILE)
 
-			queryClient.setQueryData<ProfileQueryData>(['profile'], old => {
+			queryClient.setQueryData<ProfileQueryData>(QUERY_KEYS.PROFILE, old => {
 				if (!old?.data) return old
 				return {
 					...old,
@@ -58,24 +65,29 @@ export function VideoActions({ video }: { video: ISingleVideoResponse }) {
 		},
 		onError(_err, _variables, context) {
 			if (context?.previousProfile) {
-				queryClient.setQueryData(['profile'], context.previousProfile)
+				queryClient.setQueryData(QUERY_KEYS.PROFILE, context.previousProfile)
 			}
 		},
 		onSettled() {
-			queryClient.invalidateQueries({ queryKey: ['profile'] })
+			queryClient.invalidateQueries({ queryKey: QUERY_KEYS.PROFILE })
 			queryClient.invalidateQueries({
-				queryKey: ['liked-videos'],
+				queryKey: QUERY_KEYS.LIKED_VIDEOS,
 				refetchType: 'inactive'
 			})
 		}
 	})
+
+	const handleLike = () => {
+		if (isLoggedIn) mutate()
+		else router.push(PAGE.AUTH)
+	}
 
 	return (
 		<div className='flex flex-wrap items-start justify-end gap-[12rem]'>
 			<SaveToPlaylist video={video} />
 			<button
 				className='glass-pill h-[36rem] gap-[8rem] px-[17rem] text-[12rem] md:h-[44rem] md:px-[21rem] md:text-[14rem]'
-				onClick={() => mutate()}
+				onClick={handleLike}
 				title={isLiked ? 'Remove like' : 'Like'}
 			>
 				<Heart

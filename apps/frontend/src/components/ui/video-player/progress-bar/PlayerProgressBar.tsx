@@ -9,10 +9,11 @@ interface Props {
 	currentTime: number
 	duration: number
 	progress: number
+	buffered: number
 	onSeek: (time: number) => void
 }
 
-export function PlayerProgressBar({ currentTime, progress, duration, onSeek }: Props) {
+export function PlayerProgressBar({ currentTime, progress, duration, buffered, onSeek }: Props) {
 	const [isDragging, setIsDragging] = useState(false)
 
 	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -26,6 +27,11 @@ export function PlayerProgressBar({ currentTime, progress, duration, onSeek }: P
 
 	return (
 		<div className='relative flex w-full items-center rounded-full bg-white-15'>
+			<div
+				className='absolute left-0 top-0 h-[4rem] rounded-full bg-white-40'
+				style={{ width: `${buffered}%` }}
+			/>
+
 			<div
 				className='absolute left-0 top-0 h-[4rem] rounded-full'
 				style={{

@@ -4,6 +4,8 @@ import { type SubmitHandler, type UseFormReturn } from 'react-hook-form'
 
 import { STUDIO_PAGE } from '@/config/studio-page'
 
+import { getErrorMessage } from '@/utils/get-error-message'
+
 import { VideoForm } from './VideoForm'
 import { studioVideoService } from '@/services/studio/studio-video.service'
 import type { IVideoFormData } from '@/types/studio-video.types'
@@ -25,9 +27,9 @@ export function CreateVideoForm({ form, isReadyToPublish }: Props) {
 			toast.success('Video successfully published!')
 			router.push(STUDIO_PAGE.HOME)
 		},
-		async onError() {
+		async onError(error: unknown) {
 			const { toast } = await import('react-hot-toast')
-			toast.error('Video creating has error!')
+			toast.error(getErrorMessage(error, 'Video creating has error!'))
 		}
 	})
 

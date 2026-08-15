@@ -7,6 +7,7 @@ export function useVideoProgress(playerRef: RefObject<HTMLCustomVideoElement | n
 	const [currentTime, setCurrentTime] = useState(0)
 	const [videoTime, setVideoTime] = useState(0)
 	const [progress, setProgress] = useState(0)
+	const [buffered, setBuffered] = useState(0)
 
 	useEffect(() => {
 		const player = playerRef?.current
@@ -21,7 +22,6 @@ export function useVideoProgress(playerRef: RefObject<HTMLCustomVideoElement | n
 
 		player.addEventListener('loadedmetadata', handleLoadedMetadata)
 
-		// Если метаданные уже загружены, вызываем обработчик сразу
 		if (player.readyState >= 1) {
 			handleLoadedMetadata()
 		}
@@ -42,9 +42,33 @@ export function useVideoProgress(playerRef: RefObject<HTMLCustomVideoElement | n
 		}
 
 		player.addEventListener('timeupdate', updateProgress)
+		player.addEventListener('seeking', updateProgress)
+		player.addEventListener('seeked', updateProgress)
 
 		return () => {
 			player.removeEventListener('timeupdate', updateProgress)
+			player.removeEventListener('seeking', updateProgress)
+			player.removeEventListener('seeked', updateProgress)
+		}
+	}, [playerRef])
+
+	useEffect(() => {
+		const player = playerRef?.current
+		if (!player) return
+
+		const updateBuffered = () => {
+			if (!player.buffered.length || !player.duration) return
+
+			const end = player.buffered.end(player.buffered.length - 1)
+			setBuffered((end / player.duration) * 100)
+		}
+
+		player.addEventListener('progress', updateBuffered)
+		player.addEventListener('timeupdate', updateBuffered)
+
+		return () => {
+			player.removeEventListener('progress', updateBuffered)
+			player.removeEventListener('timeupdate', updateBuffered)
 		}
 	}, [playerRef])
 
@@ -52,6 +76,7 @@ export function useVideoProgress(playerRef: RefObject<HTMLCustomVideoElement | n
 		currentTime,
 		setCurrentTime,
 		progress,
-		videoTime
+		videoTime,
+		buffered
 	}
 }

@@ -5,12 +5,13 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 import { PAGE } from '@/config/public-page.config'
+import { QUERY_KEYS } from '@/config/query-keys.config'
 
 import { studioVideoService } from '@/services/studio/studio-video.service'
 
 export function RecentUploads() {
 	const { data } = useQuery({
-		queryKey: ['recent-uploads'],
+		queryKey: QUERY_KEYS.RECENT_UPLOADS,
 		queryFn: () => studioVideoService.getAll({ page: 1, limit: 3 })
 	})
 

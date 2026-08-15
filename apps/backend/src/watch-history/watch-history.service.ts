@@ -1,4 +1,6 @@
 import { PrismaService } from '@/prisma.service'
+import { getPaginationSkip, getTotalPages } from '@/utils/pagination.util'
+
 import { Injectable } from '@nestjs/common'
 
 @Injectable()
@@ -6,7 +8,7 @@ export class WatchHistoryService {
 	constructor(private readonly prisma: PrismaService) {}
 
 	async getByUserId(userId: string, page = 1, limit = 30) {
-		const skip = (page - 1) * limit
+		const skip = getPaginationSkip(page, limit)
 
 		const [items, totalCount] = await Promise.all([
 			this.prisma.watchHistory.findMany({
@@ -37,7 +39,7 @@ export class WatchHistoryService {
 			page,
 			limit,
 			totalCount,
-			totalPages: Math.ceil(totalCount / limit)
+			totalPages: getTotalPages(totalCount, limit)
 		}
 	}
 

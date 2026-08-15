@@ -4,6 +4,8 @@ import { useInfiniteQuery } from '@tanstack/react-query'
 
 import { SkeletonLoader } from '@/ui/SkeletonLoader'
 
+import { QUERY_KEYS } from '@/config/query-keys.config'
+
 import { useAuth } from '@/hooks/useAuth'
 import { useEffectScroll } from '@/hooks/useEffectScroll'
 
@@ -14,7 +16,7 @@ export function RecommendedList() {
 	const { user } = useAuth()
 
 	const { data, isLoading, isFetchingNextPage, fetchNextPage, hasNextPage } = useInfiniteQuery({
-		queryKey: ['explore'],
+		queryKey: QUERY_KEYS.EXPLORE,
 		queryFn: ({ pageParam }) =>
 			videoService.getExploreVideos(
 				user?.id,

@@ -1,5 +1,7 @@
 import { useInfiniteQuery } from '@tanstack/react-query'
 
+import { QUERY_KEYS } from '@/config/query-keys.config'
+
 import { useAuth } from './useAuth'
 import { userService } from '@/services/studio/user.service'
 
@@ -9,7 +11,7 @@ export function useLikedVideos() {
 	const { isLoggedIn } = useAuth()
 
 	const { data, isLoading, isFetchingNextPage, fetchNextPage, hasNextPage } = useInfiniteQuery({
-		queryKey: ['liked-videos'],
+		queryKey: QUERY_KEYS.LIKED_VIDEOS,
 		queryFn: async ({ pageParam }) => {
 			const res = await userService.getLikedVideos({
 				page: pageParam,

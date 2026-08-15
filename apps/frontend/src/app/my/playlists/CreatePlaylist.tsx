@@ -6,6 +6,8 @@ import { type SubmitHandler, useForm } from 'react-hook-form'
 import { Field } from '@/ui/field/Field'
 import { Modal } from '@/ui/modal/Modal'
 
+import { getErrorMessage } from '@/utils/get-error-message'
+
 import { playlistService } from '@/services/playlist.service'
 import type { IPlaylistData } from '@/types/playlist.types'
 
@@ -36,11 +38,7 @@ export function CreatePlaylist({ refetch, onClose }: Props) {
 		},
 		async onError(error: unknown) {
 			const { toast } = await import('react-hot-toast')
-			const axios = (await import('axios')).default
-			const message = axios.isAxiosError(error)
-				? (error.response?.data?.message ?? 'Failed to create playlist')
-				: 'Failed to create playlist'
-			toast.error(message)
+			toast.error(getErrorMessage(error, 'Failed to create playlist'))
 		}
 	})
 

@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 import { DurationBadge } from '@/ui/DurationBadge'
+import { EmptyState } from '@/ui/EmptyState'
 import { PlayOverlay } from '@/ui/PlayOverlay'
 import { VideoThumbnail } from '@/ui/VideoThumbnail'
 
@@ -50,7 +51,7 @@ export function ChannelHome({ videos }: { videos: IVideo[] }) {
 	const recent = videos.slice(0, 3)
 
 	if (!featured) {
-		return <p className='text-[16rem] text-white-60'>No videos on this channel yet</p>
+		return <EmptyState title='No videos on this channel yet' />
 	}
 
 	return (

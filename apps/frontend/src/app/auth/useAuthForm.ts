@@ -1,11 +1,12 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import axios from 'axios'
 import { useRouter } from 'next/navigation'
 import { useRef, useTransition } from 'react'
 import ReCAPTCHA from 'react-google-recaptcha'
 import type { SubmitHandler, UseFormReset } from 'react-hook-form'
 
 import { PAGE } from '@/config/public-page.config'
+
+import { getErrorMessage } from '@/utils/get-error-message'
 
 import type { IAuthData, IAuthForm } from './auth-form.types'
 import { authService } from '@/services/auth.service'
@@ -59,12 +60,7 @@ export function useAuthForm(type: 'login' | 'register', reset: UseFormReset<IAut
 
 					return 'Success login!'
 				},
-				error: (e: unknown) => {
-					if (axios.isAxiosError(e)) {
-						return e.response?.data?.message ?? 'Something went wrong'
-					}
-					return 'Something went wrong'
-				}
+				error: (e: unknown) => getErrorMessage(e)
 			}
 		)
 	}

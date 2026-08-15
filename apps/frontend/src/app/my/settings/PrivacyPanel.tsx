@@ -3,6 +3,7 @@ import { memo, useCallback } from 'react'
 
 import { Switch } from '@/ui/controls/Switch'
 
+import { NotImplemented } from './NotImplemented'
 import { SettingsPanel } from './SettingsPanel'
 import { SettingsRow } from './SettingsRow'
 import type { UpdateSettings } from './settings.types'
@@ -36,28 +37,34 @@ export const PrivacyPanel = memo(function PrivacyPanel({
 				icon={Eye}
 				label='Profile Visibility'
 			>
-				<Switch
-					checked={profileVisibility}
-					onChange={onProfileVisibility}
-				/>
+				<NotImplemented>
+					<Switch
+						checked={profileVisibility}
+						onChange={onProfileVisibility}
+					/>
+				</NotImplemented>
 			</SettingsRow>
 			<SettingsRow
 				icon={History}
 				label='Watch History'
 			>
-				<Switch
-					checked={watchHistory}
-					onChange={onWatchHistory}
-				/>
+				<NotImplemented>
+					<Switch
+						checked={watchHistory}
+						onChange={onWatchHistory}
+					/>
+				</NotImplemented>
 			</SettingsRow>
 			<SettingsRow
 				icon={Activity}
 				label='Activity Status'
 			>
-				<Switch
-					checked={activityStatus}
-					onChange={onActivityStatus}
-				/>
+				<NotImplemented>
+					<Switch
+						checked={activityStatus}
+						onChange={onActivityStatus}
+					/>
+				</NotImplemented>
 			</SettingsRow>
 		</SettingsPanel>
 	)

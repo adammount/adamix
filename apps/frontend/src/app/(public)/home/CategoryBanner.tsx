@@ -3,11 +3,12 @@ import Link from 'next/link'
 
 import { PAGE } from '@/config/public-page.config'
 
+import { getPlaceholderImage } from '@/utils/get-placeholder-image'
+
 import type { ICategoryWithPreview } from '@/types/category.types'
 
 export function CategoryBanner({ category }: { category: ICategoryWithPreview }) {
-	const preview =
-		category.videos?.[0]?.thumbnailUrl || `https://picsum.photos/seed/${category.slug}/572/344`
+	const preview = category.videos?.[0]?.thumbnailUrl || getPlaceholderImage(category.slug, 572, 344)
 
 	return (
 		<Link

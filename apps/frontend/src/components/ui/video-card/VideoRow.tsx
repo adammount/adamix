@@ -7,6 +7,7 @@ import { VideoThumbnail } from '@/ui/VideoThumbnail'
 
 import { PAGE } from '@/config/public-page.config'
 
+import { getAvatarUrl } from '@/utils/get-placeholder-image'
 import { transformCount } from '@/utils/transform-count'
 
 import type { IVideo } from '@/types/video.types'
@@ -40,10 +41,7 @@ export function VideoRow({ video, caption }: Props) {
 				<div className='flex flex-col gap-[12rem]'>
 					<div className='flex items-center gap-[4rem]'>
 						<Avatar
-							src={
-								video.channel?.avatarUrl ||
-								`https://picsum.photos/seed/${video.channel?.slug || video.id}/96/96`
-							}
+							src={getAvatarUrl(video.channel?.avatarUrl, video.channel?.slug || video.id, 96)}
 							name={video.channel?.user?.name}
 							size={48}
 						/>

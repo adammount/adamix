@@ -11,10 +11,11 @@ interface Props {
 	reset: UseFormReset<IVideoFormData>
 }
 
+const MAX_VIDEO_SIZE = 3 * 1024 * 1024 * 1024
+
 export function DragNDropVideo({ reset }: Props) {
 	const { uploadFile, isLoading: isUploading } = useUpload({
-		// 3gb
-		maxFileSize: 3 * 1024 * 1024 * 1024,
+		maxFileSize: MAX_VIDEO_SIZE,
 		folder: 'videos',
 		async onSuccess(data) {
 			const file = data[0]
@@ -28,10 +29,6 @@ export function DragNDropVideo({ reset }: Props) {
 
 			const { toast } = await import('react-hot-toast')
 			toast.success('File uploaded successfully!')
-		},
-		async onError() {
-			const { toast } = await import('react-hot-toast')
-			toast.error('Failed to upload the video')
 		}
 	})
 

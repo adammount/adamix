@@ -1,4 +1,6 @@
 import { PrismaService } from '@/prisma.service'
+import { getPaginationSkip, getTotalPages } from '@/utils/pagination.util'
+
 import { Injectable, NotFoundException } from '@nestjs/common'
 import { hash } from 'argon2'
 import { randomUUID } from 'crypto'
@@ -73,7 +75,7 @@ export class UserService {
 	}
 
 	async getLikedVideos(id: string, page = 1, limit = 30) {
-		const skip = (page - 1) * limit
+		const skip = getPaginationSkip(page, limit)
 
 		const [likes, totalCount] = await Promise.all([
 			this.prisma.videoLike.findMany({
@@ -104,7 +106,7 @@ export class UserService {
 			page,
 			limit,
 			totalCount,
-			totalPages: Math.ceil(totalCount / limit),
+			totalPages: getTotalPages(totalCount, limit),
 			videos: likes.map(like => ({
 				...like.video,
 				likedAt: like.createdAt
@@ -140,12 +142,14 @@ export class UserService {
 				password: user.password,
 				...dto,
 				...(isEmailChanged && { verificationToken: randomUUID() }),
-				channel: {
-					upsert: {
-						create: channel,
-						update: channel
+				...(channel && {
+					channel: {
+						upsert: {
+							create: channel,
+							update: channel
+						}
 					}
-				}
+				})
 			}
 		})
 

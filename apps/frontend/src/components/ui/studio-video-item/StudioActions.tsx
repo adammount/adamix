@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { type Toast, toast } from 'react-hot-toast'
 
 import { PAGE } from '@/config/public-page.config'
+import { QUERY_KEYS } from '@/config/query-keys.config'
 import { STUDIO_PAGE } from '@/config/studio-page'
 
 import { studioVideoService } from '@/services/studio/studio-video.service'
@@ -23,7 +24,7 @@ export function StudioActions({ video }: Props) {
 		mutationFn: () => studioVideoService.delete(video.id),
 		onSuccess: () => {
 			queryClient.invalidateQueries({
-				queryKey: ['studioVideoList']
+				queryKey: QUERY_KEYS.STUDIO_VIDEO_LIST
 			})
 			toast.success('Successfully deleted!')
 		}

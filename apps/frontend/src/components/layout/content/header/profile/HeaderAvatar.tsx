@@ -8,6 +8,8 @@ import { STUDIO_PAGE } from '@/config/studio-page'
 
 import { useProfileSelector } from '@/hooks/useProfile'
 
+import { getAvatarUrl } from '@/utils/get-placeholder-image'
+
 export function HeaderAvatar() {
 	const channel = useProfileSelector(data => ({
 		avatarUrl: data?.channel?.avatarUrl ?? null,
@@ -24,7 +26,7 @@ export function HeaderAvatar() {
 				aria-label='Open settings'
 			>
 				<Avatar
-					src={channel.avatarUrl || 'https://picsum.photos/seed/avatar/64/64'}
+					src={getAvatarUrl(channel.avatarUrl, 'avatar', 64)}
 					size={32}
 					sizeClassName='size-[28rem] md:size-[32rem]'
 				/>

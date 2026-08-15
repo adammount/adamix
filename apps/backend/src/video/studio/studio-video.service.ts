@@ -1,4 +1,5 @@
 import { PrismaService } from '@/prisma.service'
+import { buildPagination, getPaginationSkip } from '@/utils/pagination.util'
 import { nanoid } from 'nanoid'
 
 import {
@@ -14,7 +15,7 @@ export class StudioVideoService {
 	constructor(private readonly prisma: PrismaService) {}
 
 	async getAll(channelId: string, searchTerm?: string, page = 1, limit = 6) {
-		const skip = (page - 1) * limit
+		const skip = getPaginationSkip(page, limit)
 		const whereCondition = this.buildWhereCondition(channelId, searchTerm)
 
 		const videos = await this.getVideos(whereCondition, skip, limit)
@@ -23,13 +24,7 @@ export class StudioVideoService {
 			where: whereCondition
 		})
 
-		return {
-			videos,
-			page,
-			limit,
-			totalCount,
-			totalPages: Math.ceil(totalCount / limit)
-		}
+		return buildPagination(videos, page, limit, totalCount)
 	}
 
 	async byId(channelId: string, id: string) {

@@ -1,4 +1,4 @@
-import { type RefObject, useState } from 'react'
+import { type RefObject, useEffect, useState } from 'react'
 
 import type { HTMLCustomVideoElement } from '../video-player.types'
 
@@ -8,15 +8,40 @@ export function usePlayPause(
 ) {
 	const [isPlaying, setIsPlaying] = useState(false)
 
-	const togglePlayPause = () => {
-		if (isPlaying) {
-			playerRef?.current?.pause()
-			bgRef?.current?.pause()
-		} else {
-			playerRef?.current?.play()
-			bgRef?.current?.play()
+	useEffect(() => {
+		const player = playerRef.current
+		if (!player) return
+
+		const handlePlay = () => setIsPlaying(true)
+		const handlePause = () => setIsPlaying(false)
+
+		player.addEventListener('play', handlePlay)
+		player.addEventListener('pause', handlePause)
+
+		return () => {
+			player.removeEventListener('play', handlePlay)
+			player.removeEventListener('pause', handlePause)
 		}
-		setIsPlaying(!isPlaying)
+	}, [playerRef])
+
+	const togglePlayPause = async () => {
+		const player = playerRef.current
+		if (!player) return
+
+		if (player.paused) {
+			try {
+				await player.play()
+				bgRef.current?.play().catch(() => {})
+				setIsPlaying(true)
+			} catch {
+				setIsPlaying(false)
+			}
+			return
+		}
+
+		player.pause()
+		bgRef.current?.pause()
+		setIsPlaying(false)
 	}
 
 	return {

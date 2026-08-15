@@ -1,5 +1,7 @@
 import { useInfiniteQuery, useMutation } from '@tanstack/react-query'
 
+import { QUERY_KEYS } from '@/config/query-keys.config'
+
 import { useAuth } from './useAuth'
 import { watchHistoryService } from '@/services/watch-history.service'
 
@@ -10,7 +12,7 @@ export function useWatchHistory() {
 
 	const { data, isLoading, isFetchingNextPage, fetchNextPage, hasNextPage, refetch } =
 		useInfiniteQuery({
-			queryKey: ['watch-history'],
+			queryKey: QUERY_KEYS.WATCH_HISTORY,
 			queryFn: async ({ pageParam }) => {
 				const res = await watchHistoryService.getUserHistory({
 					page: pageParam,

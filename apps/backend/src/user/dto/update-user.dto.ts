@@ -19,6 +19,7 @@ export class CreateChannelDto {
 }
 
 export class CreateUserDto {
+	@IsOptional()
 	@IsString()
 	name?: string
 

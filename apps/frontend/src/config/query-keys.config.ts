@@ -1,0 +1,21 @@
+export const QUERY_KEYS = {
+	PROFILE: ['profile'],
+	USER_SETTINGS: ['user-settings'],
+	DASHBOARD: ['dashboard'],
+	CATEGORIES: ['categories'],
+	EXPLORE: ['explore'],
+	PLAYLISTS: ['playlists'],
+	LIKED_VIDEOS: ['liked-videos'],
+	WATCH_HISTORY: ['watch-history'],
+	RECENT_UPLOADS: ['recent-uploads'],
+	STUDIO_VIDEO_LIST: ['studio-video-list'],
+	PLAYLIST: (id: string) => ['playlist', id],
+	COMMENTS: (videoId: string) => ['comments', videoId],
+	SEARCH: (term: string) => ['search', term],
+	SEARCH_SUGGESTIONS: (term: string) => ['search-suggestions', term],
+	TRENDING: (category: string | null) => ['trending', category],
+	CHANNEL_VIDEOS: (channelId: string) => ['channel-videos', channelId],
+	CATEGORY_VIDEOS: (slug: string) => ['category-videos', slug],
+	STUDIO_VIDEO: (id: string) => ['studio-video', id],
+	PROCESSING_VIDEO: (fileName: string) => ['processing-video', fileName]
+} as const

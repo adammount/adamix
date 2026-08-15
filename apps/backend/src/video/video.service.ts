@@ -1,5 +1,6 @@
 import { PrismaService } from '@/prisma.service'
-import { shuffle } from 'lodash'
+
+import { buildPagination, getPaginationSkip } from '@/utils/pagination.util'
 
 import { Injectable, NotFoundException } from '@nestjs/common'
 import { Prisma, Video, VideoTag } from '@/generated/prisma'
@@ -9,7 +10,7 @@ export class VideoService {
 	constructor(private readonly prisma: PrismaService) {}
 
 	async getAll(searchTerm?: string, page = 1, limit = 10) {
-		const skip = (page - 1) * limit
+		const skip = getPaginationSkip(page, limit)
 		const whereCondition = this.buildWhereCondition(searchTerm)
 
 		const videos = await this.getVideos(whereCondition, skip, limit)
@@ -18,13 +19,7 @@ export class VideoService {
 			where: whereCondition
 		})
 
-		return {
-			videos,
-			page,
-			limit,
-			totalCount,
-			totalPages: Math.ceil(totalCount / limit)
-		}
+		return buildPagination(videos, page, limit, totalCount)
 	}
 
 	private buildWhereCondition(searchTerm?: string): Prisma.VideoWhereInput {
@@ -161,7 +156,7 @@ export class VideoService {
 		limit: number,
 		excludeIds: string[]
 	) {
-		const skip = (page - 1) * limit
+		const skip = getPaginationSkip(page, limit)
 
 		const [watchedVideos, likedVideos, subscriptions] = await Promise.all([
 			this.prisma.watchHistory.findMany({
@@ -247,8 +242,6 @@ export class VideoService {
 			take: limit
 		})
 
-		// Если недостаточно рекомендованных видео, добавляем дополнительные
-
 		if (recommendedVideos.length < limit) {
 			const additionalLimit = limit - recommendedVideos.length
 			const additionalVideos = await this.getGeneralRecommendations(
@@ -259,13 +252,7 @@ export class VideoService {
 
 			recommendedVideos = recommendedVideos.concat(additionalVideos.videos)
 		}
-		return {
-			videos: recommendedVideos,
-			page,
-			limit,
-			totalCount,
-			totalPages: Math.round(totalCount / limit)
-		}
+		return buildPagination(recommendedVideos, page, limit, totalCount)
 	}
 
 	private async getGeneralRecommendations(
@@ -273,7 +260,7 @@ export class VideoService {
 		limit: number,
 		excludeIds: string[] = []
 	) {
-		const skip = (page - 1) * limit
+		const skip = getPaginationSkip(page, limit)
 
 		const totalVideoCount = await this.prisma.video.count({
 			where: {
@@ -295,13 +282,7 @@ export class VideoService {
 			take: limit
 		})
 
-		return {
-			videos,
-			page,
-			limit,
-			totalCount: totalVideoCount,
-			totalPages: Math.round(totalVideoCount / limit)
-		}
+		return buildPagination(videos, page, limit, totalVideoCount)
 	}
 
 	private async getTitleWordsFromVideos(videoIds: string[]): Promise<string[]> {
@@ -370,7 +351,7 @@ export class VideoService {
 			take: 6
 		})
 
-		return shuffle(similarVideos)
+		return similarVideos
 	}
 
 	private extractTitleWords(title: string): string[] {
@@ -382,7 +363,7 @@ export class VideoService {
 	}
 
 	async byChannel(channelId: string, page = 1, limit = 10) {
-		const skip = (page - 1) * limit
+		const skip = getPaginationSkip(page, limit)
 
 		const videos = await this.prisma.video.findMany({
 			where: {
@@ -410,13 +391,7 @@ export class VideoService {
 			}
 		})
 
-		return {
-			videos,
-			page,
-			limit,
-			totalCount,
-			totalPages: Math.ceil(totalCount / limit)
-		}
+		return buildPagination(videos, page, limit, totalCount)
 	}
 
 	async getTrendingVideos() {

@@ -6,6 +6,7 @@ import { ChannelName } from '@/ui/ChannelName'
 
 import { PAGE } from '@/config/public-page.config'
 
+import { getAvatarUrl } from '@/utils/get-placeholder-image'
 import { transformCount } from '@/utils/transform-count'
 
 import type { IVideo } from '@/types/video.types'
@@ -31,10 +32,7 @@ export function TrendingCard({ video }: { video: IVideo }) {
 				</h3>
 				<div className='flex items-center gap-[4rem]'>
 					<Avatar
-						src={
-							video.channel?.avatarUrl ||
-							`https://picsum.photos/seed/${video.channel?.slug || video.id}/56/56`
-						}
+						src={getAvatarUrl(video.channel?.avatarUrl, video.channel?.slug || video.id, 56)}
 						name={video.channel?.user?.name}
 						size={28}
 					/>

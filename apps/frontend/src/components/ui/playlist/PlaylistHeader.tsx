@@ -6,6 +6,7 @@ import { GlassButton } from '@/ui/button/GlassButton'
 
 import { PAGE } from '@/config/public-page.config'
 
+import { getPlaceholderImage } from '@/utils/get-placeholder-image'
 import { transformCount } from '@/utils/transform-count'
 
 import type { IPlaylistDetail } from '@/types/playlist.types'
@@ -16,9 +17,7 @@ export function PlaylistHeader({ playlist }: { playlist: IPlaylistDetail }) {
 	const videos = playlist.videos
 	const firstVideo = videos[0]
 	const cover =
-		playlist.coverUrl ||
-		firstVideo?.thumbnailUrl ||
-		`https://picsum.photos/seed/${playlist.id}/512/512`
+		playlist.coverUrl || firstVideo?.thumbnailUrl || getPlaceholderImage(playlist.id, 512)
 
 	const shuffle = () => {
 		if (!videos.length) return

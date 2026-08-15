@@ -8,6 +8,8 @@ import { PageHeading } from '@/ui/PageHeading'
 import { SkeletonLoader } from '@/ui/SkeletonLoader'
 import { VideoCard } from '@/ui/video-card/VideoCard'
 
+import { QUERY_KEYS } from '@/config/query-keys.config'
+
 import { useEffectScroll } from '@/hooks/useEffectScroll'
 import { useIsClient } from '@/hooks/useIsClient'
 
@@ -21,7 +23,7 @@ export function SearchContent() {
 	const term = searchParams.get('term') ?? ''
 
 	const { data, isLoading, isFetchingNextPage, fetchNextPage, hasNextPage } = useInfiniteQuery({
-		queryKey: ['search', term],
+		queryKey: QUERY_KEYS.SEARCH(term),
 		queryFn: async ({ pageParam }) => {
 			const res = await videoService.getAll(term, {
 				page: pageParam,

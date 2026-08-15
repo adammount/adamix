@@ -19,10 +19,10 @@ export function useSettings() {
 
 		const channel = profile?.channel
 			? {
-					avatarUrl: profile?.channel?.avatarUrl,
-					bannerUrl: profile?.channel?.bannerUrl,
-					description: profile?.channel?.description,
-					slug: profile?.channel?.slug
+					avatarUrl: profile.channel.avatarUrl ?? '',
+					bannerUrl: profile.channel.bannerUrl ?? '',
+					description: profile.channel.description ?? '',
+					slug: profile.channel.slug ?? ''
 				}
 			: {}
 

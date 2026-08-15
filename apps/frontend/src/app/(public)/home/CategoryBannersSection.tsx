@@ -4,12 +4,14 @@ import { useQuery } from '@tanstack/react-query'
 
 import { SkeletonLoader } from '@/ui/SkeletonLoader'
 
+import { QUERY_KEYS } from '@/config/query-keys.config'
+
 import { CategoryBanner } from './CategoryBanner'
 import { categoryService } from '@/services/category.service'
 
 export function CategoryBannersSection() {
 	const { data, isLoading } = useQuery({
-		queryKey: ['categories'],
+		queryKey: QUERY_KEYS.CATEGORIES,
 		queryFn: () => categoryService.getAll()
 	})
 

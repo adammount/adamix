@@ -6,6 +6,8 @@ import { EmptyState } from '@/ui/EmptyState'
 import { SkeletonLoader } from '@/ui/SkeletonLoader'
 import { VideoCard } from '@/ui/video-card/VideoCard'
 
+import { QUERY_KEYS } from '@/config/query-keys.config'
+
 import { useEffectScroll } from '@/hooks/useEffectScroll'
 
 import { videoService } from '@/services/video.service'
@@ -14,7 +16,7 @@ const LIMIT = 30
 
 export function ChannelVideosTab({ channelId }: { channelId: string }) {
 	const { data, isLoading, isFetchingNextPage, fetchNextPage, hasNextPage } = useInfiniteQuery({
-		queryKey: ['channel-videos', channelId],
+		queryKey: QUERY_KEYS.CHANNEL_VIDEOS(channelId),
 		queryFn: async ({ pageParam }) => {
 			const res = await videoService.byChannel(channelId, {
 				page: pageParam,

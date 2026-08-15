@@ -38,15 +38,16 @@ export function VideoPlayer({
 	return (
 		<div
 			ref={containerRef}
-			className='relative overflow-hidden bg-white-15/5 backdrop-blur-[16rem] md:rounded-[40rem] md:border md:border-white-15'
+			className='relative bg-white-15/5 backdrop-blur-[16rem] md:rounded-[40rem] md:border md:border-white-15'
 		>
 			{state.isLightingMode && (
 				<video
 					ref={bgRef}
 					aria-hidden='true'
-					className='absolute left-0 top-0 size-full scale-[1.02] object-cover blur-3xl brightness-90 contrast-125 saturate-150 mix-blend-lighten filter'
+					className='pointer-events-none absolute left-0 top-0 -z-[1] size-full scale-110 object-cover opacity-70 blur-[80rem] saturate-200 filter'
 					src={`/uploads/videos/${EnumVideoPlayerQuality['360p']}/${fileName}`}
 					muted
+					playsInline
 				>
 					<track kind='captions' />
 				</video>
@@ -54,10 +55,11 @@ export function VideoPlayer({
 
 			<video
 				ref={playerRef}
-				className='relative z-[1] aspect-video w-full'
+				className='relative z-[1] aspect-video w-full overflow-hidden md:rounded-[40rem]'
 				controls={false}
 				src={`/uploads/videos/${maxResolution}/${fileName}`}
 				preload='metadata'
+				playsInline
 			>
 				<track kind='captions' />
 			</video>
@@ -67,6 +69,7 @@ export function VideoPlayer({
 					currentTime={state.currentTime}
 					duration={state.videoTime}
 					progress={state.progress}
+					buffered={state.buffered}
 					onSeek={fn.onSeek}
 				/>
 
@@ -96,7 +99,9 @@ export function VideoPlayer({
 							value={state.volume}
 							isMuted={state.isMuted}
 						/>
-						<span className='text-[12rem] text-white-60'>{getTime(state.videoTime)}</span>
+						<span className='text-[12rem] text-white-60'>
+							{getTime(state.currentTime)} / {getTime(state.videoTime)}
+						</span>
 					</div>
 
 					<div className='flex items-center gap-[12rem]'>

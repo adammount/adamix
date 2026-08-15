@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation'
 import { type KeyboardEvent, useRef, useState } from 'react'
 
 import { PAGE } from '@/config/public-page.config'
+import { QUERY_KEYS } from '@/config/query-keys.config'
 
 import { useOutside } from '@/hooks/useOutside'
 
@@ -21,7 +22,7 @@ export function SearchField() {
 	const timer = useRef<ReturnType<typeof setTimeout>>(null)
 
 	const { data } = useQuery({
-		queryKey: ['search-suggestions', debouncedTerm],
+		queryKey: QUERY_KEYS.SEARCH_SUGGESTIONS(debouncedTerm),
 		queryFn: () => videoService.getAll(debouncedTerm),
 		enabled: debouncedTerm.trim().length >= 2,
 		select: res => res.data.videos.slice(0, 5)

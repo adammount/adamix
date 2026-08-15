@@ -3,6 +3,8 @@
 import { useQuery } from '@tanstack/react-query'
 import dynamic from 'next/dynamic'
 
+import { QUERY_KEYS } from '@/config/query-keys.config'
+
 import { CommentItem } from './CommentItem'
 import { commentService } from '@/services/comment.service'
 import type { ISingleVideoResponse } from '@/types/video.types'
@@ -18,7 +20,7 @@ interface Props {
 
 export function Comments({ video }: Props) {
 	const { data, refetch } = useQuery({
-		queryKey: ['comments', video.id],
+		queryKey: QUERY_KEYS.COMMENTS(video.id),
 		queryFn: () => commentService.byVideoPublicId(video.publicId),
 		initialData: video.comments
 	})

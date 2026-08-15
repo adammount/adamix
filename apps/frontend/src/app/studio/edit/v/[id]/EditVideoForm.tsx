@@ -7,7 +7,10 @@ import { type SubmitHandler, useForm } from 'react-hook-form'
 
 import { PageHeading } from '@/ui/PageHeading'
 
+import { QUERY_KEYS } from '@/config/query-keys.config'
 import { STUDIO_PAGE } from '@/config/studio-page'
+
+import { getErrorMessage } from '@/utils/get-error-message'
 
 import { VideoForm } from '@/app/studio/upload/VideoForm'
 import { studioVideoService } from '@/services/studio/studio-video.service'
@@ -22,7 +25,7 @@ export function EditVideoForm() {
 	})
 
 	const { data, isLoading, isSuccess } = useQuery({
-		queryKey: ['get studio video', id],
+		queryKey: QUERY_KEYS.STUDIO_VIDEO(id as string),
 		queryFn: () => studioVideoService.byId(id as string)
 	})
 
@@ -48,15 +51,15 @@ export function EditVideoForm() {
 		mutationFn: (data: IVideoFormData) => studioVideoService.update(id as string, data),
 		async onSuccess() {
 			queryClient.invalidateQueries({
-				queryKey: ['studioVideoList']
+				queryKey: QUERY_KEYS.STUDIO_VIDEO_LIST
 			})
 			const { toast } = await import('react-hot-toast')
 			toast.success('Video successfully updated!')
 			router.push(STUDIO_PAGE.HOME)
 		},
-		async onError() {
+		async onError(error: unknown) {
 			const { toast } = await import('react-hot-toast')
-			toast.error('Video updating has error!')
+			toast.error(getErrorMessage(error, 'Video updating has error!'))
 		}
 	})
 

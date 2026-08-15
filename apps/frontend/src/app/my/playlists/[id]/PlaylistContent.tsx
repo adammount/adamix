@@ -7,6 +7,8 @@ import { SkeletonLoader } from '@/ui/SkeletonLoader'
 import { PlaylistHeader } from '@/ui/playlist/PlaylistHeader'
 import { PlaylistTrackRow } from '@/ui/playlist/PlaylistTrackRow'
 
+import { QUERY_KEYS } from '@/config/query-keys.config'
+
 import { useIsClient } from '@/hooks/useIsClient'
 
 import { OtherPlaylistsAside } from './OtherPlaylistsAside'
@@ -15,7 +17,7 @@ import { playlistService } from '@/services/playlist.service'
 export function PlaylistContent({ id }: { id: string }) {
 	const isClient = useIsClient()
 	const { data, isLoading } = useQuery({
-		queryKey: ['playlist', id],
+		queryKey: QUERY_KEYS.PLAYLIST(id),
 		queryFn: () => playlistService.getPlaylistById(id),
 		enabled: !!id
 	})

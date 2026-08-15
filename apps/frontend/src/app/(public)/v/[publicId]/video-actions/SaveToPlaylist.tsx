@@ -1,9 +1,11 @@
 import { useMutation } from '@tanstack/react-query'
 import { Check, ListVideo } from 'lucide-react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 import { PAGE } from '@/config/public-page.config'
 
+import { useAuth } from '@/hooks/useAuth'
 import { useOutside } from '@/hooks/useOutside'
 
 import { useUserPlaylists } from '@/app/my/playlists/useUserPlaylists'
@@ -15,6 +17,8 @@ interface Props {
 }
 
 export function SaveToPlaylist({ video }: Props) {
+	const router = useRouter()
+	const { isLoggedIn } = useAuth()
 	const { data, refetch: refetchPlaylists } = useUserPlaylists()
 
 	const { isShow, ref, setIsShow } = useOutside<HTMLDivElement>(false)
@@ -34,13 +38,18 @@ export function SaveToPlaylist({ video }: Props) {
 		}
 	})
 
+	const handleToggle = () => {
+		if (isLoggedIn) setIsShow(!isShow)
+		else router.push(PAGE.AUTH)
+	}
+
 	return (
 		<div
 			className='relative z-10'
 			ref={ref}
 		>
 			<button
-				onClick={() => setIsShow(!isShow)}
+				onClick={handleToggle}
 				aria-haspopup='menu'
 				aria-expanded={isShow}
 				className='glass-pill h-[36rem] gap-[8rem] px-[17rem] text-[12rem] md:h-[44rem] md:px-[21rem] md:text-[14rem]'

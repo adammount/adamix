@@ -4,6 +4,7 @@ import { memo, useCallback } from 'react'
 import { RangeSlider } from '@/ui/controls/RangeSlider'
 import { Switch } from '@/ui/controls/Switch'
 
+import { NotImplemented } from './NotImplemented'
 import { SettingsPanel } from './SettingsPanel'
 import { SettingsRow } from './SettingsRow'
 import type { UpdateSettings } from './settings.types'
@@ -40,44 +41,54 @@ export const NotificationsPanel = memo(function NotificationsPanel({
 				icon={Mail}
 				label='Email Notifications'
 			>
-				<Switch
-					checked={emailNotifications}
-					onChange={onEmail}
-				/>
+				<NotImplemented>
+					<Switch
+						checked={emailNotifications}
+						onChange={onEmail}
+					/>
+				</NotImplemented>
 			</SettingsRow>
 			<SettingsRow
 				icon={Bell}
 				label='Push Notifications'
 			>
-				<Switch
-					checked={pushNotifications}
-					onChange={onPush}
-				/>
+				<NotImplemented>
+					<Switch
+						checked={pushNotifications}
+						onChange={onPush}
+					/>
+				</NotImplemented>
 			</SettingsRow>
 			<SettingsRow
 				icon={Video}
 				label='New Video Alerts'
 			>
-				<Switch
-					checked={newVideoAlerts}
-					onChange={onNewVideo}
-				/>
+				<NotImplemented>
+					<Switch
+						checked={newVideoAlerts}
+						onChange={onNewVideo}
+					/>
+				</NotImplemented>
 			</SettingsRow>
 			<SettingsRow
 				icon={MessageSquare}
 				label='Comment Mentions'
 			>
-				<Switch
-					checked={commentMentions}
-					onChange={onCommentMentions}
-				/>
+				<NotImplemented>
+					<Switch
+						checked={commentMentions}
+						onChange={onCommentMentions}
+					/>
+				</NotImplemented>
 			</SettingsRow>
 			<SettingsRow label='Frequency'>
-				<RangeSlider
-					className='flex-1'
-					value={frequency}
-					onChange={onFrequency}
-				/>
+				<NotImplemented>
+					<RangeSlider
+						className='flex-1'
+						value={frequency}
+						onChange={onFrequency}
+					/>
+				</NotImplemented>
 			</SettingsRow>
 		</SettingsPanel>
 	)

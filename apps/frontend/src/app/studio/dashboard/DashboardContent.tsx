@@ -13,6 +13,7 @@ import { PAGE } from '@/config/public-page.config'
 
 import { useIsClient } from '@/hooks/useIsClient'
 
+import { getAvatarUrl } from '@/utils/get-placeholder-image'
 import { transformCount } from '@/utils/transform-count'
 import { transformDate, transformFullDate } from '@/utils/transform-date'
 
@@ -203,10 +204,7 @@ export function DashboardContent() {
 									className='flex items-start gap-[12rem]'
 								>
 									<Avatar
-										src={
-											comment.user.channel?.avatarUrl ||
-											`https://picsum.photos/seed/${comment.id}/84/84`
-										}
+										src={getAvatarUrl(comment.user.channel?.avatarUrl, comment.id, 84)}
 										name={comment.user.name}
 										size={42}
 									/>

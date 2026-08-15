@@ -8,6 +8,8 @@ import { PlaylistAside } from '@/ui/playlist-aside/PlaylistAside'
 
 import { PAGE } from '@/config/public-page.config'
 
+import { notifyNotImplemented } from '@/utils/notify-not-implemented'
+
 import type { ILikedVideo } from '@/types/video.types'
 
 interface Props {
@@ -51,6 +53,7 @@ export function LikedPlaylistAside({ count, videos }: Props) {
 					Shuffle
 				</GlassButton>
 				<GlassButton
+					onClick={notifyNotImplemented}
 					icon={<Download className='size-[13rem] md:size-[15rem]' />}
 					className='gap-[8rem] text-[12rem] md:gap-[16rem] md:text-[14rem]'
 				>

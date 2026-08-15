@@ -1,54 +1,28 @@
 'use client'
 
-import { useMutation, useQueryClient } from '@tanstack/react-query'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 
 import { PageHeading } from '@/ui/PageHeading'
 import { VerifiedIcon } from '@/ui/icons/VerifiedIcon'
 
-import { PAGE } from '@/config/public-page.config'
 import { STUDIO_PAGE } from '@/config/studio-page'
 
-import { useAuth } from '@/hooks/useAuth'
-import { useProfileSelector } from '@/hooks/useProfile'
+import { useSubscription } from '@/hooks/useSubscription'
 
+import { getAvatarUrl, getPlaceholderImage } from '@/utils/get-placeholder-image'
 import { transformCount } from '@/utils/transform-count'
 
-import { channelService } from '@/services/channel.service'
 import type { IChannelDetail } from '@/types/channel.types'
 
 export function ChannelHeader({ channel }: { channel: IChannelDetail }) {
-	const queryClient = useQueryClient()
-	const router = useRouter()
-	const { isLoggedIn } = useAuth()
-
-	const status = useProfileSelector(data => ({
-		isOwner: data?.channel?.slug === channel.slug,
-		isSubscribed: data?.subscriptions.some(sub => sub.slug === channel.slug) ?? false
-	}))
-	const isOwner = status?.isOwner ?? false
-	const isSubscribed = status?.isSubscribed ?? false
-
-	const { mutate, isPending } = useMutation({
-		mutationKey: ['subscribe', channel.slug],
-		mutationFn: () => channelService.toggleSubscribe(channel.slug),
-		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ['profile'] })
-		}
-	})
-
-	const onSubscribe = () => {
-		if (isLoggedIn) mutate()
-		else router.push(PAGE.AUTH)
-	}
+	const { isOwner, isSubscribed, isPending, onSubscribe } = useSubscription(channel.slug)
 
 	return (
 		<div className='flex flex-col'>
 			<div className='relative z-0 -mx-[8rem] h-[160rem] overflow-hidden rounded-[24rem] md:mx-0 md:h-[192rem] md:rounded-[40rem]'>
 				<Image
-					src={channel.bannerUrl || `https://picsum.photos/seed/${channel.slug}-banner/1172/192`}
+					src={channel.bannerUrl || getPlaceholderImage(`${channel.slug}-banner`, 1172, 192)}
 					alt={channel.user?.name || channel.slug}
 					fill
 					sizes='1172px'
@@ -62,7 +36,7 @@ export function ChannelHeader({ channel }: { channel: IChannelDetail }) {
 					<div className='size-[64rem] shrink-0 rounded-full border-4 border-white-25 bg-bg p-[4rem] backdrop-blur-[8rem] md:size-[128rem] md:border-[10rem] md:p-[10rem]'>
 						<div className='relative size-full overflow-hidden rounded-full'>
 							<Image
-								src={channel.avatarUrl || `https://picsum.photos/seed/${channel.slug}/128/128`}
+								src={getAvatarUrl(channel.avatarUrl, channel.slug, 128)}
 								alt={channel.user?.name || channel.slug}
 								fill
 								sizes='128px'

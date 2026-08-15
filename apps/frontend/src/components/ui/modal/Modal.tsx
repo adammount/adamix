@@ -6,6 +6,7 @@ import { type ReactNode, useEffect, useId, useRef } from 'react'
 import { createPortal } from 'react-dom'
 
 import { useIsClient } from '@/hooks/useIsClient'
+import { useLockBodyScroll } from '@/hooks/useLockBodyScroll'
 
 interface Props {
 	title: string
@@ -19,6 +20,8 @@ export function Modal({ title, onClose, children, className }: Props) {
 	const titleId = useId()
 	const dialogRef = useRef<HTMLDivElement>(null)
 	const triggerRef = useRef<HTMLElement | null>(null)
+
+	useLockBodyScroll()
 
 	useEffect(() => {
 		triggerRef.current = document.activeElement as HTMLElement

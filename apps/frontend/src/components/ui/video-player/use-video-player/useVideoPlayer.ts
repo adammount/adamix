@@ -36,14 +36,14 @@ export function useVideoPlayer({
 	const [isLightingMode, setIsLightingMode] = useState(true)
 
 	const { isPlaying, togglePlayPause, setIsPlaying } = usePlayPause(playerRef, bgRef)
-	const { currentTime, progress, videoTime, setCurrentTime } = useVideoProgress(playerRef)
+	const { currentTime, progress, videoTime, buffered, setCurrentTime } = useVideoProgress(playerRef)
 	const { quality, changeQuality } = useVideoQuality(playerRef, {
 		fileName,
 		currentTime,
 		setIsPlaying,
 		maxResolution
 	})
-	const { toggleFullScreen } = useFullScreen(containerRef)
+	const { toggleFullScreen } = useFullScreen(containerRef, playerRef)
 	const { skipTime } = useSkipTime(playerRef, bgRef)
 
 	const { changeVolume, isMuted, toggleMute, volume } = useVideoVolume(playerRef)
@@ -75,7 +75,8 @@ export function useVideoPlayer({
 			quality,
 			isMuted,
 			volume,
-			isLightingMode
+			isLightingMode,
+			buffered
 		},
 		fn,
 		playerRef,

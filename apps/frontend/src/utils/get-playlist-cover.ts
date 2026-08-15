@@ -1,3 +1,5 @@
+import { getPlaceholderImage } from './get-placeholder-image'
+
 interface CoverSource {
 	id: string
 	coverUrl?: string | null
@@ -6,8 +8,6 @@ interface CoverSource {
 
 export function getPlaylistCover(playlist: CoverSource, size = 512): string {
 	return (
-		playlist.coverUrl ||
-		playlist.videos[0]?.thumbnailUrl ||
-		`https://picsum.photos/seed/${playlist.id}/${size}/${size}`
+		playlist.coverUrl || playlist.videos[0]?.thumbnailUrl || getPlaceholderImage(playlist.id, size)
 	)
 }

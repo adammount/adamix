@@ -8,6 +8,8 @@ import { PageHeading } from '@/ui/PageHeading'
 import { SkeletonLoader } from '@/ui/SkeletonLoader'
 import { VideoCard } from '@/ui/video-card/VideoCard'
 
+import { QUERY_KEYS } from '@/config/query-keys.config'
+
 import { useEffectScroll } from '@/hooks/useEffectScroll'
 
 import { TrendingTabs } from './TrendingTabs'
@@ -20,13 +22,13 @@ export function TrendingPageContent() {
 	const [activeCategory, setActiveCategory] = useState<string | null>(null)
 
 	const { data: categories } = useQuery({
-		queryKey: ['categories'],
+		queryKey: QUERY_KEYS.CATEGORIES,
 		queryFn: () => categoryService.getAll(),
 		select: res => res.data.map(category => ({ slug: category.slug, name: category.name }))
 	})
 
 	const { data, isLoading, isFetchingNextPage, fetchNextPage, hasNextPage } = useInfiniteQuery({
-		queryKey: ['trending', activeCategory],
+		queryKey: QUERY_KEYS.TRENDING(activeCategory),
 		queryFn: async ({ pageParam }) => {
 			if (activeCategory) {
 				const res = await categoryService.getBySlug(activeCategory, {

@@ -8,5 +8,4 @@ export const getGoogleRecaptchaConfig = async (
 	secretKey: configService.get<string>('RECAPTCHA_SECRET_KEY'),
 	response: req => req.headers.recaptcha,
 	skipIf: () => isDev(configService)
-	// debug: isDev(configService)
 })

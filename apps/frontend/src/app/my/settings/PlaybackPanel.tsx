@@ -4,6 +4,7 @@ import { RangeSlider } from '@/ui/controls/RangeSlider'
 import { Select } from '@/ui/controls/Select'
 import { Switch } from '@/ui/controls/Switch'
 
+import { NotImplemented } from './NotImplemented'
 import { SettingsPanel } from './SettingsPanel'
 import { SettingsRow } from './SettingsRow'
 import type { UpdateSettings } from './settings.types'
@@ -53,11 +54,13 @@ export const PlaybackPanel = memo(function PlaybackPanel({
 	return (
 		<SettingsPanel title='Playback and Performance'>
 			<SettingsRow label='Default Video Quality'>
-				<Select
-					value={defaultQuality}
-					onChange={onQuality}
-					options={QUALITY_OPTIONS}
-				/>
+				<NotImplemented>
+					<Select
+						value={defaultQuality}
+						onChange={onQuality}
+						options={QUALITY_OPTIONS}
+					/>
+				</NotImplemented>
 			</SettingsRow>
 			<SettingsRow label='Autoplay'>
 				<Select
@@ -67,24 +70,30 @@ export const PlaybackPanel = memo(function PlaybackPanel({
 				/>
 			</SettingsRow>
 			<SettingsRow label='Language'>
-				<Select
-					value={language}
-					onChange={onLanguage}
-					options={LANGUAGE_OPTIONS}
-				/>
+				<NotImplemented>
+					<Select
+						value={language}
+						onChange={onLanguage}
+						options={LANGUAGE_OPTIONS}
+					/>
+				</NotImplemented>
 			</SettingsRow>
 			<SettingsRow label='Data Saver'>
-				<Switch
-					checked={dataSaver}
-					onChange={onDataSaver}
-				/>
+				<NotImplemented>
+					<Switch
+						checked={dataSaver}
+						onChange={onDataSaver}
+					/>
+				</NotImplemented>
 			</SettingsRow>
 			<SettingsRow label='Buffer Size'>
-				<RangeSlider
-					className='flex-1'
-					value={bufferSize}
-					onChange={onBufferSize}
-				/>
+				<NotImplemented>
+					<RangeSlider
+						className='flex-1'
+						value={bufferSize}
+						onChange={onBufferSize}
+					/>
+				</NotImplemented>
 			</SettingsRow>
 		</SettingsPanel>
 	)

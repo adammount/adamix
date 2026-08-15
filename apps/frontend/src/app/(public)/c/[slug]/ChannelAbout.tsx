@@ -1,46 +1,20 @@
 'use client'
 
-import { useMutation, useQueryClient } from '@tanstack/react-query'
 import Image from 'next/image'
-import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
-import { PAGE } from '@/config/public-page.config'
+import { useSubscription } from '@/hooks/useSubscription'
 
-import { useAuth } from '@/hooks/useAuth'
-import { useProfileSelector } from '@/hooks/useProfile'
-
+import { getAvatarUrl } from '@/utils/get-placeholder-image'
 import { stripHtmlWithBreak } from '@/utils/strip-html'
 import { transformCount } from '@/utils/transform-count'
 
-import { channelService } from '@/services/channel.service'
 import type { IChannelDetail } from '@/types/channel.types'
 
 export function ChannelAbout({ channel }: { channel: IChannelDetail }) {
-	const queryClient = useQueryClient()
-	const router = useRouter()
-	const { isLoggedIn } = useAuth()
 	const [expanded, setExpanded] = useState(false)
 
-	const status = useProfileSelector(data => ({
-		isOwner: data?.channel?.slug === channel.slug,
-		isSubscribed: data?.subscriptions.some(sub => sub.slug === channel.slug) ?? false
-	}))
-	const isOwner = status?.isOwner ?? false
-	const isSubscribed = status?.isSubscribed ?? false
-
-	const { mutate, isPending } = useMutation({
-		mutationKey: ['subscribe', channel.slug],
-		mutationFn: () => channelService.toggleSubscribe(channel.slug),
-		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: ['profile'] })
-		}
-	})
-
-	const onSubscribe = () => {
-		if (isLoggedIn) mutate()
-		else router.push(PAGE.AUTH)
-	}
+	const { isOwner, isSubscribed, isPending, onSubscribe } = useSubscription(channel.slug)
 
 	const description = channel.description
 		? stripHtmlWithBreak(channel.description)
@@ -55,7 +29,7 @@ export function ChannelAbout({ channel }: { channel: IChannelDetail }) {
 						<div className='size-[48rem] shrink-0 rounded-full border border-white-15 bg-white-15 p-[3rem]'>
 							<div className='relative size-full overflow-hidden rounded-full'>
 								<Image
-									src={channel.avatarUrl || `https://picsum.photos/seed/${channel.slug}/96/96`}
+									src={getAvatarUrl(channel.avatarUrl, channel.slug, 96)}
 									alt={channel.user?.name || channel.slug}
 									fill
 									sizes='48px'

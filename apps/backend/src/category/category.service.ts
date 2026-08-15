@@ -1,4 +1,5 @@
 import { PrismaService } from '@/prisma.service'
+import { getPaginationSkip, getTotalPages } from '@/utils/pagination.util'
 
 import { Injectable, NotFoundException } from '@nestjs/common'
 
@@ -34,7 +35,7 @@ export class CategoryService {
 			throw new NotFoundException('Category not found')
 		}
 
-		const skip = (page - 1) * limit
+		const skip = getPaginationSkip(page, limit)
 
 		const videos = await this.prisma.video.findMany({
 			where: {
@@ -72,7 +73,7 @@ export class CategoryService {
 			page,
 			limit,
 			totalCount,
-			totalPages: Math.ceil(totalCount / limit)
+			totalPages: getTotalPages(totalCount, limit)
 		}
 	}
 }

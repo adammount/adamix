@@ -5,13 +5,15 @@ import { useInfiniteQuery } from '@tanstack/react-query'
 import { SkeletonLoader } from '@/ui/SkeletonLoader'
 import { StudioVideoItem } from '@/ui/studio-video-item/StudioVideoItem'
 
+import { QUERY_KEYS } from '@/config/query-keys.config'
+
 import { useEffectScroll } from '@/hooks/useEffectScroll'
 
 import { studioVideoService } from '@/services/studio/studio-video.service'
 
 export function StudioVideoList() {
 	const { data, isLoading, isFetchingNextPage, fetchNextPage, hasNextPage } = useInfiniteQuery({
-		queryKey: ['studioVideoList'],
+		queryKey: QUERY_KEYS.STUDIO_VIDEO_LIST,
 		queryFn: ({ pageParam }) =>
 			studioVideoService.getAll({
 				page: pageParam.page,
