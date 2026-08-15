@@ -57,7 +57,7 @@ export function SingleVideo({ video }: Props) {
 	}, [settings?.autoplay, nextVideo, watchedIds, video.publicId, router])
 
 	return (
-		<section className='flex flex-col items-start gap-[12rem] overflow-x-clip md:flex-row md:gap-[16rem]'>
+		<section className='flex flex-col items-start gap-[12rem] md:flex-row md:gap-[16rem]'>
 			<div className='flex w-full min-w-0 flex-1 flex-col gap-[12rem]'>
 				<div className='relative'>
 					<VideoPlayer

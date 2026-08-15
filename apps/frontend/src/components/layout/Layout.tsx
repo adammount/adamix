@@ -51,7 +51,7 @@ export function Layout({ children }: PropsWithChildren<unknown>) {
 			{isMobileMenuOpen && <MobileMenu onClose={closeMobileMenu} />}
 			<main
 				className={cn(
-					'flex flex-1 gap-[16rem] pb-[16rem] pt-[12rem] md:px-[16rem] md:pt-0',
+					'flex flex-1 gap-[16rem] overflow-x-clip pb-[16rem] pt-[12rem] md:px-[16rem] md:pt-0',
 					isVideoPage ? 'px-0' : 'px-[8rem]',
 					styles.initialSidebar,
 					isShowedSidebar ? styles.showedSidebar : styles.hidedSidebar

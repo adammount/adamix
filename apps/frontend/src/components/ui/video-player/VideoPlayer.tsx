@@ -44,7 +44,7 @@ export function VideoPlayer({
 				<video
 					ref={bgRef}
 					aria-hidden='true'
-					className='pointer-events-none absolute left-0 top-0 -z-[1] size-full scale-110 object-cover opacity-70 blur-[80rem] saturate-200 filter'
+					className='pointer-events-none absolute inset-0 -z-[1] size-full scale-105 object-cover opacity-70 blur-[80rem] saturate-200 filter'
 					src={`/uploads/videos/${EnumVideoPlayerQuality['360p']}/${fileName}`}
 					muted
 					playsInline
