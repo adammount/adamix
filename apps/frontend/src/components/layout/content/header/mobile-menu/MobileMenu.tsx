@@ -1,7 +1,7 @@
 'use client'
 
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { CircleAlert, LogOut } from 'lucide-react'
+import { CircleAlert, LogOut, X } from 'lucide-react'
 import { usePathname, useRouter } from 'next/navigation'
 import { match } from 'path-to-regexp'
 import { useEffect, useState } from 'react'
@@ -63,8 +63,18 @@ export function MobileMenu({ onClose }: { onClose: () => void }) {
 		<>
 			<nav
 				aria-label='Mobile menu'
-				className='animate-fade-in fixed inset-x-0 bottom-0 top-[42rem] z-40 flex flex-col gap-[12rem] overflow-y-auto bg-dark-brown px-[8rem] pb-[32rem] pt-[24rem] md:hidden'
+				className='animate-fade-in fixed inset-x-0 bottom-0 top-[42rem] z-40 flex flex-col gap-[12rem] overflow-y-auto bg-dark-brown px-[8rem] pb-[32rem] pt-[52rem] md:hidden'
 			>
+				<button
+					type='button'
+					onClick={onClose}
+					title='Close menu'
+					aria-label='Close menu'
+					className='transition-fast absolute right-[16rem] top-[12rem] text-white-60 hover-desktop:text-white'
+				>
+					<X className='size-[24rem]' />
+				</button>
+
 				{menu.map(item => {
 					const isMyChannel = item.link === PAGE.MY_CHANNEL
 

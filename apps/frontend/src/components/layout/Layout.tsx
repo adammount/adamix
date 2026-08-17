@@ -4,6 +4,8 @@ import cn from 'clsx'
 import { usePathname } from 'next/navigation'
 import { type PropsWithChildren, useCallback, useEffect, useState } from 'react'
 
+import { useSidebarState } from '@/hooks/useSidebarState'
+
 import { Content } from './content/Content'
 import { Header } from './content/header/Header'
 import { MobileMenu } from './content/header/mobile-menu/MobileMenu'
@@ -13,15 +15,11 @@ import { authService } from '@/services/auth.service'
 import styles from './Layout.module.scss'
 
 export function Layout({ children }: PropsWithChildren<unknown>) {
-	const [isShowedSidebar, setIsShowedSidebar] = useState(true)
+	const { isShowedSidebar, toggleSidebar } = useSidebarState()
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
 	const pathname = usePathname()
 	const isVideoPage = pathname.startsWith('/v/')
-
-	const toggleSidebar = useCallback(() => {
-		setIsShowedSidebar(prev => !prev)
-	}, [])
 
 	const toggleMobileMenu = useCallback(() => {
 		setIsMobileMenuOpen(prev => !prev)

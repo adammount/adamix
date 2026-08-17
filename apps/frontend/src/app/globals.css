@@ -168,6 +168,12 @@ html {
 	html {
 		font-size: calc(100 / 375 * 1vw);
 	}
+
+	input,
+	textarea,
+	select {
+		font-size: 16px;
+	}
 }
 
 body {

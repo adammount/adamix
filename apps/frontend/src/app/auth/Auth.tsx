@@ -1,11 +1,15 @@
 'use client'
 
+import { X } from 'lucide-react'
 import dynamic from 'next/dynamic'
+import Link from 'next/link'
 import { forwardRef, useState } from 'react'
 import ReCAPTCHA from 'react-google-recaptcha'
 import { useForm } from 'react-hook-form'
 
 import { Logo } from '@/ui/icons/Logo'
+
+import { PAGE } from '@/config/public-page.config'
 
 import { AuthField } from './AuthField'
 import { SwitchAuth } from './SwitchAuth'
@@ -44,7 +48,16 @@ export function Auth() {
 				<div className='blob-3 absolute -left-[123rem] top-[408rem] size-[500rem] rounded-full bg-brown-light/20 blur-[150rem]' />
 			</div>
 
-			<div className='flex w-[400rem] max-w-full flex-col gap-[24rem] rounded-[40rem] border border-white-15 bg-white-15 p-[32rem] backdrop-blur-[16rem]'>
+			<div className='relative flex w-[400rem] max-w-full flex-col gap-[24rem] rounded-[40rem] border border-white-15 bg-white-15 p-[32rem] backdrop-blur-[16rem]'>
+				<Link
+					href={PAGE.HOME}
+					title='Close'
+					aria-label='Close'
+					className='transition-fast absolute right-[24rem] top-[24rem] text-white-60 hover-desktop:text-white'
+				>
+					<X className='size-[20rem]' />
+				</Link>
+
 				<div className='flex flex-col items-center gap-[12rem]'>
 					<Logo className='h-[48rem] w-auto' />
 					<h1 className='font-heading text-[24rem] text-white'>
