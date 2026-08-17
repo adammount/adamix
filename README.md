@@ -1,17 +1,16 @@
 # Adamix
 
+**Русский** · [English](./README.en.md)
+
 Видеоплатформа с загрузкой и транскодингом видео, каналами, плейлистами и студией автора — self-hosted альтернатива YouTube.
 
-[![Live Demo](https://img.shields.io/badge/Live_Demo-online-0A84FF?style=for-the-badge)](#)
-[![Source](https://img.shields.io/badge/Source-GitHub-181717?style=for-the-badge&logo=github)](#)
+[![Live Demo](https://img.shields.io/badge/Live_Demo-adamics.uk-0A84FF?style=for-the-badge)](https://adamics.uk)
+[![Source](https://img.shields.io/badge/Source-GitHub-181717?style=for-the-badge&logo=github)](https://github.com/adammount/adamix)
 
-<!-- TODO: заменить `#` в бейджах на реальные ссылки — прод-URL и репозиторий GitHub -->
-
-> Тестовый аккаунт: <!-- TODO: email / пароль демо-пользователя, если оставляете открытый доступ -->
+> **Тестовый аккаунт:** `maddixmusic@test.com` / `123456`
+> Любой канал из демо-данных доступен по схеме `<slug>@test.com` с тем же паролем — например `johnsummit@test.com`, `novasessions@test.com`.
 
 ![Demo](./assets/demo.gif)
-
-<!-- TODO: положить запись экрана в ./assets/demo.gif -->
 
 ## Стек
 
@@ -90,7 +89,7 @@ docker-compose.dev.yml   # dev: только PostgreSQL
 Требуется [Bun](https://bun.sh) ≥ 1.2.8, Docker и установленный ffmpeg.
 
 ```bash
-git clone <repo-url>
+git clone https://github.com/adammount/adamix.git
 cd adamix
 bun install
 
@@ -117,7 +116,11 @@ docker compose up -d --build
 
 Обязательные переменные: `DATABASE_URL`, `JWT_SECRET`, `CLIENT_URL`, `API_URL`, `RECAPTCHA_SECRET_KEY`, SMTP-доступы, `NEXT_PUBLIC_API_URL`, `NEXT_PUBLIC_RECAPTCHA_SITE_KEY` — полный список в `.env.example`.
 
+## Дизайн
+
+Макет и визуальная система — собственная разработка: сетка на масштабируемом `rem`, стеклянные поверхности, ambient-подсветка плеера от кадра видео.
+
 ---
 
-**Кейс в портфолио:** <!-- TODO: ссылка на страницу кейса на сайте портфолио -->
-**Профиль:** <!-- TODO: ссылка на GitHub / LinkedIn / персональный сайт -->
+**Автор:** Шамиль Айдемиров
+[Сайт](https://adammount.org/) · [GitHub](https://github.com/adammount) · [LinkedIn](https://www.linkedin.com/in/shamil-aydemirov-18a761429)
